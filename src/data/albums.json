@@ -1,0 +1,62 @@
+[
+  {
+    "id": "album-1",
+    "title": "Neon Horizons",
+    "artistId": "artist-1",
+    "artistName": "Luna Wave",
+    "coverUrl": "https://picsum.photos/seed/album1/300/300",
+    "year": 2024,
+    "genre": "Electronic",
+    "songIds": ["song-1", "song-2", "song-3", "song-4"]
+  },
+  {
+    "id": "album-2",
+    "title": "Rust & Gold",
+    "artistId": "artist-2",
+    "artistName": "The Velvet Chains",
+    "coverUrl": "https://picsum.photos/seed/album2/300/300",
+    "year": 2023,
+    "genre": "Rock",
+    "songIds": ["song-5", "song-6", "song-7", "song-8"]
+  },
+  {
+    "id": "album-3",
+    "title": "Daylight",
+    "artistId": "artist-3",
+    "artistName": "Aria Chen",
+    "coverUrl": "https://picsum.photos/seed/album3/300/300",
+    "year": 2024,
+    "genre": "Pop",
+    "songIds": ["song-9", "song-10", "song-11", "song-12"]
+  },
+  {
+    "id": "album-4",
+    "title": "Street Frequency",
+    "artistId": "artist-4",
+    "artistName": "MC Flux",
+    "coverUrl": "https://picsum.photos/seed/album4/300/300",
+    "year": 2023,
+    "genre": "Hip-Hop",
+    "songIds": ["song-13", "song-14", "song-15", "song-16"]
+  },
+  {
+    "id": "album-5",
+    "title": "Smoky Room",
+    "artistId": "artist-5",
+    "artistName": "The Jazz Collective",
+    "coverUrl": "https://picsum.photos/seed/album5/300/300",
+    "year": 2022,
+    "genre": "Jazz",
+    "songIds": ["song-17", "song-18", "song-19", "song-20"]
+  },
+  {
+    "id": "album-6",
+    "title": "Quiet Moments",
+    "artistId": "artist-1",
+    "artistName": "Luna Wave",
+    "coverUrl": "https://picsum.photos/seed/album6/300/300",
+    "year": 2024,
+    "genre": "Lo-Fi",
+    "songIds": ["song-21", "song-22", "song-23", "song-24"]
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "artist-1",
+    "name": "Luna Wave",
+    "imageUrl": "https://picsum.photos/seed/artist1/300/300",
+    "bio": "Luna Wave is an electronic music producer known for blending ambient textures with driving beats. With two albums spanning electronic and lo-fi genres, Luna Wave has carved out a unique space in the modern music landscape.",
+    "genres": ["Electronic", "Lo-Fi"],
+    "albumIds": ["album-1", "album-6"],
+    "topSongIds": ["song-1", "song-3", "song-21"]
+  },
+  {
+    "id": "artist-2",
+    "name": "The Velvet Chains",
+    "imageUrl": "https://picsum.photos/seed/artist2/300/300",
+    "bio": "The Velvet Chains are a four-piece rock band delivering raw energy and heartfelt lyrics. Their debut album Rust & Gold captures the essence of modern rock with a vintage soul.",
+    "genres": ["Rock"],
+    "albumIds": ["album-2"],
+    "topSongIds": ["song-5", "song-6", "song-7"]
+  },
+  {
+    "id": "artist-3",
+    "name": "Aria Chen",
+    "imageUrl": "https://picsum.photos/seed/artist3/300/300",
+    "bio": "Aria Chen is a pop singer-songwriter whose warm vocals and uplifting melodies have captured hearts worldwide. Her album Daylight is a celebration of optimism and joy.",
+    "genres": ["Pop"],
+    "albumIds": ["album-3"],
+    "topSongIds": ["song-9", "song-10", "song-12"]
+  },
+  {
+    "id": "artist-4",
+    "name": "MC Flux",
+    "imageUrl": "https://picsum.photos/seed/artist4/300/300",
+    "bio": "MC Flux is a hip-hop artist and lyricist from the city streets, known for sharp wordplay and beats that hit hard. Street Frequency is a journey through urban life and ambition.",
+    "genres": ["Hip-Hop"],
+    "albumIds": ["album-4"],
+    "topSongIds": ["song-13", "song-14", "song-15"]
+  },
+  {
+    "id": "artist-5",
+    "name": "The Jazz Collective",
+    "imageUrl": "https://picsum.photos/seed/artist5/300/300",
+    "bio": "The Jazz Collective is an ensemble of seasoned jazz musicians who bring the spirit of smoky jazz clubs to the modern stage. Their improvisational style and tight arrangements make every performance unique.",
+    "genres": ["Jazz"],
+    "albumIds": ["album-5"],
+    "topSongIds": ["song-17", "song-18", "song-20"]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "genre-pop",
+    "name": "Pop",
+    "color": "#E8115B",
+    "imageUrl": "https://picsum.photos/seed/genrepop/300/300"
+  },
+  {
+    "id": "genre-rock",
+    "name": "Rock",
+    "color": "#E91429",
+    "imageUrl": "https://picsum.photos/seed/genrerock/300/300"
+  },
+  {
+    "id": "genre-electronic",
+    "name": "Electronic",
+    "color": "#7358FF",
+    "imageUrl": "https://picsum.photos/seed/genreelectronic/300/300"
+  },
+  {
+    "id": "genre-hiphop",
+    "name": "Hip-Hop",
+    "color": "#BA5D07",
+    "imageUrl": "https://picsum.photos/seed/genrehiphop/300/300"
+  },
+  {
+    "id": "genre-jazz",
+    "name": "Jazz",
+    "color": "#1E3264",
+    "imageUrl": "https://picsum.photos/seed/genrejazz/300/300"
+  },
+  {
+    "id": "genre-lofi",
+    "name": "Lo-Fi",
+    "color": "#537AA1",
+    "imageUrl": "https://picsum.photos/seed/genrelofi/300/300"
+  }
+]
