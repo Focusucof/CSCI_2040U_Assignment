@@ -1,0 +1,51 @@
+[
+  {
+    "id": "artist-0",
+    "name": "Various Artists",
+    "image": "https://picsum.photos/seed/artist0/400/400",
+    "monthlyListeners": "3.7M",
+    "bio": ""
+  },
+  {
+    "id": "artist-1",
+    "name": "Masicka",
+    "image": "https://picsum.photos/seed/artist1/400/400",
+    "monthlyListeners": "4.2M",
+    "bio": "Dancehall artist from Jamaica."
+  },
+  {
+    "id": "artist-2",
+    "name": "Kraff Gad",
+    "image": "https://picsum.photos/seed/artist2/400/400",
+    "monthlyListeners": "2.8M",
+    "bio": "Dancehall artist from Jamaica."
+  },
+  {
+    "id": "artist-3",
+    "name": "Sable",
+    "image": "https://picsum.photos/seed/artist3/400/400",
+    "monthlyListeners": "6.1M",
+    "bio": "R&B vocalist with a velvet tone. Blending soul, jazz, and modern production."
+  },
+  {
+    "id": "artist-4",
+    "name": "Hollow Pine",
+    "image": "https://picsum.photos/seed/artist4/400/400",
+    "monthlyListeners": "1.9M",
+    "bio": "Folk singer-songwriter. Acoustic tales of wandering and wonder."
+  },
+  {
+    "id": "artist-5",
+    "name": "Drift Collective",
+    "image": "https://picsum.photos/seed/artist5/400/400",
+    "monthlyListeners": "3.5M",
+    "bio": "Lo-fi hip hop producers creating beats for late-night study sessions."
+  },
+  {
+    "id": "artist-6",
+    "name": "Reverie",
+    "image": "https://picsum.photos/seed/artist6/400/400",
+    "monthlyListeners": "5.3M",
+    "bio": "Dream pop duo crafting shimmering melodies and hazy atmospheres."
+  }
+]

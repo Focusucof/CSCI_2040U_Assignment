@@ -1,0 +1,50 @@
+[
+  {
+    "id": "playlist-1",
+    "name": "Night Drive",
+    "description": "Moody electronics and smooth vocals for late night cruising",
+    "cover": "https://picsum.photos/seed/playlist1/400/400",
+    "createdBy": "Aurion",
+    "songIds": ["song-001", "song-004", "song-016", "song-017", "song-027", "song-032"]
+  },
+  {
+    "id": "playlist-2",
+    "name": "Morning Clarity",
+    "description": "Start fresh with acoustic warmth and gentle melodies",
+    "cover": "https://picsum.photos/seed/playlist2/400/400",
+    "createdBy": "Aurion",
+    "songIds": ["song-025", "song-026", "song-027", "song-012", "song-013"]
+  },
+  {
+    "id": "playlist-3",
+    "name": "Deep Focus",
+    "description": "Instrumentals and lo-fi beats for concentration",
+    "cover": "https://picsum.photos/seed/playlist3/400/400",
+    "createdBy": "Aurion",
+    "songIds": ["song-031", "song-032", "song-033", "song-034", "song-035", "song-036"]
+  },
+  {
+    "id": "playlist-4",
+    "name": "Velvet Vibes",
+    "description": "Smooth R&B and soul for the perfect evening",
+    "cover": "https://picsum.photos/seed/playlist4/400/400",
+    "createdBy": "Aurion",
+    "songIds": ["song-016", "song-017", "song-018", "song-019", "song-020", "song-021"]
+  },
+  {
+    "id": "playlist-5",
+    "name": "Indie Spectrum",
+    "description": "The best of indie rock, from gentle to loud",
+    "cover": "https://picsum.photos/seed/playlist5/400/400",
+    "createdBy": "Aurion",
+    "songIds": ["song-009", "song-010", "song-011", "song-051", "song-052", "song-053"]
+  },
+  {
+    "id": "playlist-6",
+    "name": "Dream State",
+    "description": "Ethereal dream pop and ambient textures",
+    "cover": "https://picsum.photos/seed/playlist6/400/400",
+    "createdBy": "Aurion",
+    "songIds": ["song-038", "song-039", "song-040", "song-041", "song-042", "song-005"]
+  }
+]

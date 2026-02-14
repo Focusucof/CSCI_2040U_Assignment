@@ -1,0 +1,569 @@
+[
+  {
+    "id": "song-001",
+    "title": "Rich Sex",
+    "artistId": "artist-1",
+    "albumId": "album-1",
+    "duration": "3:42",
+    "audioSrc": "/audio/MASICKA - RICH SEX.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-002",
+    "title": "Ms Pretty Rockstar",
+    "artistId": "artist-2",
+    "albumId": "album-1",
+    "duration": "4:18",
+    "audioSrc": "/audio/Kraff Gad - Ms Pretty Rockstar.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-003",
+    "title": "Neon Cascade",
+    "artistId": "artist-1",
+    "albumId": "album-1",
+    "duration": "3:55",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-004",
+    "title": "Drift Away",
+    "artistId": "artist-1",
+    "albumId": "album-1",
+    "duration": "5:01",
+    "audioSrc": "/audio/track-04.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-005",
+    "title": "Afterglow",
+    "artistId": "artist-1",
+    "albumId": "album-1",
+    "duration": "4:33",
+    "audioSrc": "/audio/track-05.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-006",
+    "title": "Luminance",
+    "artistId": "artist-1",
+    "albumId": "album-1",
+    "duration": "6:12",
+    "audioSrc": "/audio/track-06.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-007",
+    "title": "Vapor Trail",
+    "artistId": "artist-1",
+    "albumId": "album-1",
+    "duration": "3:28",
+    "audioSrc": "/audio/track-07.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-008",
+    "title": "Eclipse",
+    "artistId": "artist-1",
+    "albumId": "album-1",
+    "duration": "4:45",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "liked": false
+  },
+
+  {
+    "id": "song-009",
+    "title": "Shattered",
+    "artistId": "artist-2",
+    "albumId": "album-2",
+    "duration": "3:22",
+    "audioSrc": "/audio/track-02.mp3",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-010",
+    "title": "Mosaic",
+    "artistId": "artist-2",
+    "albumId": "album-2",
+    "duration": "4:05",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-011",
+    "title": "Refracted",
+    "artistId": "artist-2",
+    "albumId": "album-2",
+    "duration": "3:48",
+    "audioSrc": "/audio/track-04.mp3",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-012",
+    "title": "Prism",
+    "artistId": "artist-2",
+    "albumId": "album-2",
+    "duration": "4:30",
+    "audioSrc": "/audio/track-05.mp3",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-013",
+    "title": "Clarity",
+    "artistId": "artist-2",
+    "albumId": "album-2",
+    "duration": "3:15",
+    "audioSrc": "/audio/track-06.mp3",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-014",
+    "title": "Through the Pane",
+    "artistId": "artist-2",
+    "albumId": "album-2",
+    "duration": "5:22",
+    "audioSrc": "/audio/track-07.mp3",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-015",
+    "title": "Fractured Glass",
+    "artistId": "artist-2",
+    "albumId": "album-2",
+    "duration": "4:18",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "liked": false
+  },
+
+  {
+    "id": "song-016",
+    "title": "Midnight Satin",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "3:58",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-017",
+    "title": "Golden",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "3:32",
+    "audioSrc": "/audio/track-04.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-018",
+    "title": "Slow Burn",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "4:15",
+    "audioSrc": "/audio/track-05.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-019",
+    "title": "Velvet Hours",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "4:48",
+    "audioSrc": "/audio/track-06.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-020",
+    "title": "Honey Wine",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "3:22",
+    "audioSrc": "/audio/track-07.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-021",
+    "title": "Dusk",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "5:10",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-022",
+    "title": "Tender",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "3:45",
+    "audioSrc": "/audio/track-01.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-023",
+    "title": "Silhouette",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "4:02",
+    "audioSrc": "/audio/track-02.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-024",
+    "title": "Last Dance",
+    "artistId": "artist-3",
+    "albumId": "album-3",
+    "duration": "4:35",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "liked": false
+  },
+
+  {
+    "id": "song-025",
+    "title": "Trailhead",
+    "artistId": "artist-4",
+    "albumId": "album-4",
+    "duration": "3:12",
+    "audioSrc": "/audio/track-04.mp3",
+    "cover": "https://picsum.photos/seed/album4/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-026",
+    "title": "Open Road",
+    "artistId": "artist-4",
+    "albumId": "album-4",
+    "duration": "4:22",
+    "audioSrc": "/audio/track-05.mp3",
+    "cover": "https://picsum.photos/seed/album4/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-027",
+    "title": "Campfire Stories",
+    "artistId": "artist-4",
+    "albumId": "album-4",
+    "duration": "3:55",
+    "audioSrc": "/audio/track-06.mp3",
+    "cover": "https://picsum.photos/seed/album4/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-028",
+    "title": "Wanderer",
+    "artistId": "artist-4",
+    "albumId": "album-4",
+    "duration": "4:40",
+    "audioSrc": "/audio/track-07.mp3",
+    "cover": "https://picsum.photos/seed/album4/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-029",
+    "title": "Pine & Smoke",
+    "artistId": "artist-4",
+    "albumId": "album-4",
+    "duration": "3:30",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album4/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-030",
+    "title": "Homebound",
+    "artistId": "artist-4",
+    "albumId": "album-4",
+    "duration": "5:15",
+    "audioSrc": "/audio/track-01.mp3",
+    "cover": "https://picsum.photos/seed/album4/400/400",
+    "liked": false
+  },
+
+  {
+    "id": "song-031",
+    "title": "2am Thoughts",
+    "artistId": "artist-5",
+    "albumId": "album-5",
+    "duration": "2:48",
+    "audioSrc": "/audio/track-05.mp3",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-032",
+    "title": "Rain on Glass",
+    "artistId": "artist-5",
+    "albumId": "album-5",
+    "duration": "3:15",
+    "audioSrc": "/audio/track-06.mp3",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-033",
+    "title": "Sleepless",
+    "artistId": "artist-5",
+    "albumId": "album-5",
+    "duration": "2:55",
+    "audioSrc": "/audio/track-07.mp3",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-034",
+    "title": "Coffee Stains",
+    "artistId": "artist-5",
+    "albumId": "album-5",
+    "duration": "3:30",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-035",
+    "title": "Faded Polaroid",
+    "artistId": "artist-5",
+    "albumId": "album-5",
+    "duration": "2:42",
+    "audioSrc": "/audio/track-01.mp3",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-036",
+    "title": "Quiet Streets",
+    "artistId": "artist-5",
+    "albumId": "album-5",
+    "duration": "3:08",
+    "audioSrc": "/audio/track-02.mp3",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-037",
+    "title": "Late Nights",
+    "artistId": "artist-5",
+    "albumId": "album-5",
+    "duration": "3:45",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "liked": false
+  },
+
+  {
+    "id": "song-038",
+    "title": "Blur",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "4:02",
+    "audioSrc": "/audio/track-06.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-039",
+    "title": "Soft Focus",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "3:48",
+    "audioSrc": "/audio/track-07.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-040",
+    "title": "Haze",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "5:15",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-041",
+    "title": "Daydream",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "3:32",
+    "audioSrc": "/audio/track-01.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-042",
+    "title": "Pastel Skies",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "4:20",
+    "audioSrc": "/audio/track-02.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-043",
+    "title": "Dissolve",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "4:55",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-044",
+    "title": "Reverie",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "3:40",
+    "audioSrc": "/audio/track-04.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-045",
+    "title": "Fading Light",
+    "artistId": "artist-6",
+    "albumId": "album-6",
+    "duration": "4:12",
+    "audioSrc": "/audio/track-05.mp3",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "liked": false
+  },
+
+  {
+    "id": "song-046",
+    "title": "Transmission",
+    "artistId": "artist-1",
+    "albumId": "album-7",
+    "duration": "3:35",
+    "audioSrc": "/audio/track-07.mp3",
+    "cover": "https://picsum.photos/seed/album7/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-047",
+    "title": "Frequency",
+    "artistId": "artist-1",
+    "albumId": "album-7",
+    "duration": "4:10",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album7/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-048",
+    "title": "Signal",
+    "artistId": "artist-1",
+    "albumId": "album-7",
+    "duration": "5:25",
+    "audioSrc": "/audio/track-01.mp3",
+    "cover": "https://picsum.photos/seed/album7/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-049",
+    "title": "Static",
+    "artistId": "artist-1",
+    "albumId": "album-7",
+    "duration": "3:48",
+    "audioSrc": "/audio/track-02.mp3",
+    "cover": "https://picsum.photos/seed/album7/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-050",
+    "title": "Wavelength",
+    "artistId": "artist-1",
+    "albumId": "album-7",
+    "duration": "4:02",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album7/400/400",
+    "liked": false
+  },
+
+  {
+    "id": "song-051",
+    "title": "Spark",
+    "artistId": "artist-2",
+    "albumId": "album-8",
+    "duration": "3:18",
+    "audioSrc": "/audio/track-08.mp3",
+    "cover": "https://picsum.photos/seed/album8/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-052",
+    "title": "Wildfire",
+    "artistId": "artist-2",
+    "albumId": "album-8",
+    "duration": "4:05",
+    "audioSrc": "/audio/track-01.mp3",
+    "cover": "https://picsum.photos/seed/album8/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-053",
+    "title": "Ember",
+    "artistId": "artist-2",
+    "albumId": "album-8",
+    "duration": "3:52",
+    "audioSrc": "/audio/track-02.mp3",
+    "cover": "https://picsum.photos/seed/album8/400/400",
+    "liked": true
+  },
+  {
+    "id": "song-054",
+    "title": "Ash & Dust",
+    "artistId": "artist-2",
+    "albumId": "album-8",
+    "duration": "4:30",
+    "audioSrc": "/audio/track-03.mp3",
+    "cover": "https://picsum.photos/seed/album8/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-055",
+    "title": "Flicker",
+    "artistId": "artist-2",
+    "albumId": "album-8",
+    "duration": "3:42",
+    "audioSrc": "/audio/track-04.mp3",
+    "cover": "https://picsum.photos/seed/album8/400/400",
+    "liked": false
+  },
+  {
+    "id": "song-056",
+    "title": "Burning Bright",
+    "artistId": "artist-2",
+    "albumId": "album-8",
+    "duration": "4:58",
+    "audioSrc": "/audio/track-05.mp3",
+    "cover": "https://picsum.photos/seed/album8/400/400",
+    "liked": false
+  }
+]

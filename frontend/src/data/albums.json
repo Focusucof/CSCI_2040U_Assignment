@@ -1,0 +1,66 @@
+[
+  {
+    "id": "album-1",
+    "title": "Story Book Riddim",
+    "artistId": "artist-0",
+    "cover": "https://picsum.photos/seed/album1/400/400",
+    "year": 2025,
+    "genre": "Dancehall"
+  },
+  {
+    "id": "album-2",
+    "title": "Fractured Glass",
+    "artistId": "artist-2",
+    "cover": "https://picsum.photos/seed/album2/400/400",
+    "year": 2023,
+    "genre": "Indie Rock"
+  },
+  {
+    "id": "album-3",
+    "title": "Velvet Hours",
+    "artistId": "artist-3",
+    "cover": "https://picsum.photos/seed/album3/400/400",
+    "year": 2024,
+    "genre": "R&B"
+  },
+  {
+    "id": "album-4",
+    "title": "Wanderer",
+    "artistId": "artist-4",
+    "cover": "https://picsum.photos/seed/album4/400/400",
+    "year": 2023,
+    "genre": "Folk"
+  },
+  {
+    "id": "album-5",
+    "title": "Late Nights Vol. 3",
+    "artistId": "artist-5",
+    "cover": "https://picsum.photos/seed/album5/400/400",
+    "year": 2024,
+    "genre": "Lo-fi"
+  },
+  {
+    "id": "album-6",
+    "title": "Haze",
+    "artistId": "artist-6",
+    "cover": "https://picsum.photos/seed/album6/400/400",
+    "year": 2024,
+    "genre": "Dream Pop"
+  },
+  {
+    "id": "album-7",
+    "title": "Signal",
+    "artistId": "artist-1",
+    "cover": "https://picsum.photos/seed/album7/400/400",
+    "year": 2023,
+    "genre": "Electronic"
+  },
+  {
+    "id": "album-8",
+    "title": "Ember",
+    "artistId": "artist-2",
+    "cover": "https://picsum.photos/seed/album8/400/400",
+    "year": 2024,
+    "genre": "Indie Rock"
+  }
+]
