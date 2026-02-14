@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 import AlbumCard from "@/components/AlbumCard";
 import ArtistCard from "@/components/ArtistCard";
 import PlaylistCard from "@/components/PlaylistCard";
-import { albums, artists, playlists } from "@/data/mock";
+import SongCard from "@/components/SongCard";
+import { albums, artists, playlists, singles } from "@/data/mock";
 
-const tabs = ["Playlists", "Albums", "Artists"] as const;
+const tabs = ["Playlists", "Albums", "Singles", "Artists"] as const;
 type Tab = (typeof tabs)[number];
 
 export default function LibraryPage() {
@@ -56,6 +57,20 @@ export default function LibraryPage() {
           {albums.map((album, i) => (
             <AlbumCard key={album.id} album={album} index={i} />
           ))}
+        </div>
+      )}
+
+      {activeTab === "Singles" && (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+          {singles.length > 0 ? (
+            singles.map((song, i) => (
+              <SongCard key={song.id} song={song} index={i} />
+            ))
+          ) : (
+            <p className="text-muted text-sm col-span-full text-center py-12">
+              No singles yet
+            </p>
+          )}
         </div>
       )}
 

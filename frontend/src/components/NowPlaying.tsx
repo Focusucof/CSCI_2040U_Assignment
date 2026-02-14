@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePlayerStore } from "@/lib/store";
+import { artistNames } from "@/data/mock";
 
 function formatTime(seconds: number): string {
   if (!seconds || isNaN(seconds)) return "0:00";
@@ -46,7 +47,7 @@ export default function NowPlaying() {
   if (!currentSong) {
     return (
       <div className="fixed bottom-0 left-0 right-0 h-[88px] bg-surface/80 backdrop-blur-xl border-t border-border z-40 flex items-center justify-center">
-        <span className="text-muted text-sm">No song playing — pick something to listen to</span>
+        <span className="text-muted text-sm">No song playing - pick something to listen to</span>
       </div>
     );
   }
@@ -80,7 +81,7 @@ export default function NowPlaying() {
               {currentSong.title}
             </p>
             <p className="text-xs text-muted truncate">
-              {currentSong.artist.name}
+              {artistNames(currentSong.artists)}
             </p>
           </div>
           <button

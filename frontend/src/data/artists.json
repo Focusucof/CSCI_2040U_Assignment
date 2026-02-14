@@ -1,51 +1,184 @@
 [
   {
-    "id": "artist-0",
+    "id": "artist-various",
     "name": "Various Artists",
-    "image": "https://picsum.photos/seed/artist0/400/400",
-    "monthlyListeners": "3.7M",
+    "image": "https://picsum.photos/seed/artist-various/400/400",
+    "monthlyListeners": "",
     "bio": ""
   },
   {
-    "id": "artist-1",
+    "id": "artist-masicka",
     "name": "Masicka",
-    "image": "https://picsum.photos/seed/artist1/400/400",
+    "image": "https://picsum.photos/seed/artist-masicka/400/400",
     "monthlyListeners": "4.2M",
-    "bio": "Dancehall artist from Jamaica."
+    "bio": "Dancehall artist from Kingston, Jamaica. Known for hard-hitting lyrics and melodic flows."
   },
   {
-    "id": "artist-2",
+    "id": "artist-kraff-gad",
     "name": "Kraff Gad",
-    "image": "https://picsum.photos/seed/artist2/400/400",
-    "monthlyListeners": "2.8M",
+    "image": "https://picsum.photos/seed/artist-kraff-gad/400/400",
+    "monthlyListeners": "500K",
     "bio": "Dancehall artist from Jamaica."
   },
   {
-    "id": "artist-3",
-    "name": "Sable",
-    "image": "https://picsum.photos/seed/artist3/400/400",
-    "monthlyListeners": "6.1M",
-    "bio": "R&B vocalist with a velvet tone. Blending soul, jazz, and modern production."
+    "id": "artist-full-blown",
+    "name": "Full Blown",
+    "image": "https://picsum.photos/seed/artist-full-blown/400/400",
+    "monthlyListeners": "200K",
+    "bio": "Soca artist from Trinidad and Tobago."
   },
   {
-    "id": "artist-4",
-    "name": "Hollow Pine",
-    "image": "https://picsum.photos/seed/artist4/400/400",
-    "monthlyListeners": "1.9M",
-    "bio": "Folk singer-songwriter. Acoustic tales of wandering and wonder."
+    "id": "artist-tlc",
+    "name": "TLC",
+    "image": "https://picsum.photos/seed/artist-tlc/400/400",
+    "monthlyListeners": "12M",
+    "bio": "Iconic American girl group known for hits like No Scrubs, Waterfalls, and Creep."
   },
   {
-    "id": "artist-5",
-    "name": "Drift Collective",
-    "image": "https://picsum.photos/seed/artist5/400/400",
+    "id": "artist-enrique",
+    "name": "Enrique Iglesias",
+    "image": "https://picsum.photos/seed/artist-enrique/400/400",
+    "monthlyListeners": "28M",
+    "bio": "Spanish singer and songwriter. The King of Latin Pop."
+  },
+  {
+    "id": "artist-sean-paul",
+    "name": "Sean Paul",
+    "image": "https://picsum.photos/seed/artist-sean-paul/400/400",
+    "monthlyListeners": "18M",
+    "bio": "Jamaican dancehall artist and Grammy Award winner."
+  },
+  {
+    "id": "artist-future-fambo",
+    "name": "Future Fambo",
+    "image": "https://picsum.photos/seed/artist-future-fambo/400/400",
+    "monthlyListeners": "300K",
+    "bio": "Jamaican dancehall and reggae artist."
+  },
+  {
+    "id": "artist-beenie-man",
+    "name": "Beenie Man",
+    "image": "https://picsum.photos/seed/artist-beenie-man/400/400",
+    "monthlyListeners": "5.8M",
+    "bio": "The King of Dancehall. Grammy Award-winning Jamaican artist."
+  },
+  {
+    "id": "artist-taio-cruz",
+    "name": "Taio Cruz",
+    "image": "https://picsum.photos/seed/artist-taio-cruz/400/400",
+    "monthlyListeners": "10M",
+    "bio": "British singer, songwriter, and producer. Known for worldwide smash Dynamite."
+  },
+  {
+    "id": "artist-kardinal",
+    "name": "Kardinal Offishall",
+    "image": "https://picsum.photos/seed/artist-kardinal/400/400",
+    "monthlyListeners": "2.5M",
+    "bio": "Canadian rapper and dancehall artist from Toronto."
+  },
+  {
+    "id": "artist-akon",
+    "name": "Akon",
+    "image": "https://picsum.photos/seed/artist-akon/400/400",
+    "monthlyListeners": "22M",
+    "bio": "Senegalese-American singer, songwriter, and producer."
+  },
+  {
+    "id": "artist-alison-hinds",
+    "name": "Alison Hinds",
+    "image": "https://picsum.photos/seed/artist-alison-hinds/400/400",
+    "monthlyListeners": "800K",
+    "bio": "The Queen of Soca. Barbadian soca artist and former lead singer of Square One."
+  },
+  {
+    "id": "artist-charly-black",
+    "name": "Charly Black",
+    "image": "https://picsum.photos/seed/artist-charly-black/400/400",
     "monthlyListeners": "3.5M",
-    "bio": "Lo-fi hip hop producers creating beats for late-night study sessions."
+    "bio": "Jamaican dancehall artist. Known for the viral hit Gyal You A Party Animal."
   },
   {
-    "id": "artist-6",
-    "name": "Reverie",
-    "image": "https://picsum.photos/seed/artist6/400/400",
-    "monthlyListeners": "5.3M",
-    "bio": "Dream pop duo crafting shimmering melodies and hazy atmospheres."
+    "id": "artist-bad-bunny",
+    "name": "Bad Bunny",
+    "image": "https://picsum.photos/seed/artist-bad-bunny/400/400",
+    "monthlyListeners": "65M",
+    "bio": "Puerto Rican rapper and singer. The biggest Latin music artist in the world."
+  },
+  {
+    "id": "artist-jhay-cortez",
+    "name": "Jhay Cortez",
+    "image": "https://picsum.photos/seed/artist-jhay-cortez/400/400",
+    "monthlyListeners": "18M",
+    "bio": "Puerto Rican singer and songwriter known for reggaeton and Latin trap."
+  },
+  {
+    "id": "artist-konshens",
+    "name": "Konshens",
+    "image": "https://picsum.photos/seed/artist-konshens/400/400",
+    "monthlyListeners": "4M",
+    "bio": "Jamaican dancehall singjay known for energetic party anthems."
+  },
+  {
+    "id": "artist-moliy",
+    "name": "Moliy",
+    "image": "https://picsum.photos/seed/artist-moliy/400/400",
+    "monthlyListeners": "1.5M",
+    "bio": "Ghanaian-American Afrobeats and dancehall artist."
+  },
+  {
+    "id": "artist-silent-addy",
+    "name": "Silent Addy",
+    "image": "https://picsum.photos/seed/artist-silent-addy/400/400",
+    "monthlyListeners": "600K",
+    "bio": "Ghanaian music producer and artist."
+  },
+  {
+    "id": "artist-skillibeng",
+    "name": "Skillibeng",
+    "image": "https://picsum.photos/seed/artist-skillibeng/400/400",
+    "monthlyListeners": "3M",
+    "bio": "Jamaican dancehall artist known for his unique style and viral tracks."
+  },
+  {
+    "id": "artist-shenseea",
+    "name": "Shenseea",
+    "image": "https://picsum.photos/seed/artist-shenseea/400/400",
+    "monthlyListeners": "5M",
+    "bio": "Jamaican dancehall and pop artist. Rising international star."
+  },
+  {
+    "id": "artist-rihanna",
+    "name": "Rihanna",
+    "image": "https://picsum.photos/seed/artist-rihanna/400/400",
+    "monthlyListeners": "55M",
+    "bio": "Barbadian singer, actress, and businesswoman. One of the best-selling artists of all time."
+  },
+  {
+    "id": "artist-calvin-harris",
+    "name": "Calvin Harris",
+    "image": "https://picsum.photos/seed/artist-calvin-harris/400/400",
+    "monthlyListeners": "32M",
+    "bio": "Scottish DJ, record producer, and songwriter."
+  },
+  {
+    "id": "artist-shaggy",
+    "name": "Shaggy",
+    "image": "https://picsum.photos/seed/artist-shaggy/400/400",
+    "monthlyListeners": "12M",
+    "bio": "Jamaican-American reggae and dancehall artist. Known for Boombastic, It Wasn't Me, and Angel."
+  },
+  {
+    "id": "artist-rayvon",
+    "name": "Rayvon",
+    "image": "https://picsum.photos/seed/artist-rayvon/400/400",
+    "monthlyListeners": "1M",
+    "bio": "Barbadian-American reggae singer. Frequent collaborator with Shaggy."
+  },
+  {
+    "id": "artist-vybz-kartel",
+    "name": "Vybz Kartel",
+    "image": "https://picsum.photos/seed/artist-vybz-kartel/400/400",
+    "monthlyListeners": "8M",
+    "bio": "Jamaican dancehall legend. One of the most influential artists in the genre."
   }
 ]

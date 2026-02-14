@@ -27,12 +27,12 @@ export default function SearchPage() {
       songs: allSongs.filter(
         (s) =>
           s.title.toLowerCase().includes(q) ||
-          s.artist.name.toLowerCase().includes(q)
+          s.artists.some((a) => a.name.toLowerCase().includes(q))
       ).slice(0, 6),
       albumResults: albums.filter(
         (a) =>
           a.title.toLowerCase().includes(q) ||
-          a.artist.name.toLowerCase().includes(q)
+          a.artists.some((ar) => ar.name.toLowerCase().includes(q))
       ),
       artistResults: artists.filter((a) =>
         a.name.toLowerCase().includes(q)
@@ -108,25 +108,26 @@ export default function SearchPage() {
         </div>
       ) : (
         /* Browse genres */
-        <div>
-          <h2 className="text-lg font-bold text-foreground mb-4">Browse All</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {genres.map((genre, i) => (
-              <motion.div
-                key={genre.name}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: i * 0.05 }}
-                onClick={() => setQuery(genre.name)}
-                className={`relative h-32 rounded-2xl overflow-hidden cursor-pointer bg-gradient-to-br ${genre.color} hover:scale-[1.02] transition-transform`}
-              >
-                <div className="absolute inset-0 flex items-end p-5">
-                  <span className="text-lg font-bold text-white">{genre.name}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        // <div>
+        //   <h2 className="text-lg font-bold text-foreground mb-4">Browse All</h2>
+        //   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        //     {genres.map((genre, i) => (
+        //       <motion.div
+        //         key={genre.name}
+        //         initial={{ opacity: 0, y: 15 }}
+        //         animate={{ opacity: 1, y: 0 }}
+        //         transition={{ duration: 0.3, delay: i * 0.05 }}
+        //         onClick={() => setQuery(genre.name)}
+        //         className={`relative h-32 rounded-2xl overflow-hidden cursor-pointer bg-gradient-to-br ${genre.color} hover:scale-[1.02] transition-transform`}
+        //       >
+        //         <div className="absolute inset-0 flex items-end p-5">
+        //           <span className="text-lg font-bold text-white">{genre.name}</span>
+        //         </div>
+        //       </motion.div>
+        //     ))}
+        //   </div>
+        // </div>
+        ""
       )}
     </div>
   );

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aurion — Music Player",
-  description: "A premium music experience",
+  title: "Streamly — Music Player",
+  description: "",
 };
 
 export default function RootLayout({

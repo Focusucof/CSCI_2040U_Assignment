@@ -25,7 +25,7 @@ export default function Sidebar() {
             <Disc3 className="w-5 h-5 text-white" />
           </div>
           <span className="text-lg font-bold tracking-tight text-foreground">
-            Aurion
+            Streamly  
           </span>
         </Link>
       </div>

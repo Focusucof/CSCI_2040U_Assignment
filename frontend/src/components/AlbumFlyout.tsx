@@ -5,6 +5,7 @@ import Link from "next/link";
 import { X, Play, Clock, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePlayerStore } from "@/lib/store";
+import { artistNames } from "@/data/mock";
 import SongRow from "./SongRow";
 
 export default function AlbumFlyout() {
@@ -67,7 +68,7 @@ export default function AlbumFlyout() {
                       {flyoutAlbum.title}
                     </h2>
                     <p className="text-sm text-muted">
-                      {flyoutAlbum.artist.name} · {flyoutAlbum.year} · {flyoutAlbum.genre}
+                      {artistNames(flyoutAlbum.artists)} · {flyoutAlbum.year} · {flyoutAlbum.genre}
                     </p>
                   </div>
                 </div>

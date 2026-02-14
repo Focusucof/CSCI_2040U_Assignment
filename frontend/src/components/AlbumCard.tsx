@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Album } from "@/data/mock";
+import { artistNames } from "@/data/mock";
 import { usePlayerStore } from "@/lib/store";
 
 interface AlbumCardProps {
@@ -48,7 +49,7 @@ export default function AlbumCard({ album, index = 0 }: AlbumCardProps) {
         {album.title}
       </h3>
       <p className="text-xs text-muted truncate px-0.5 mt-0.5">
-        {album.artist.name} · {album.year}
+        {artistNames(album.artists)} · {album.year}
       </p>
     </motion.div>
   );

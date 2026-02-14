@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Play, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Song } from "@/data/mock";
+import { artistNames } from "@/data/mock";
 import { usePlayerStore } from "@/lib/store";
 
 interface SongRowProps {
@@ -53,7 +54,7 @@ export default function SongRow({ song, index, showCover = true, showAlbum = fal
         <p className={`text-sm font-medium truncate ${isActive ? "text-accent" : "text-foreground"}`}>
           {song.title}
         </p>
-        <p className="text-xs text-muted truncate">{song.artist.name}</p>
+        <p className="text-xs text-muted truncate">{artistNames(song.artists)}</p>
       </div>
 
       {/* Album name */}

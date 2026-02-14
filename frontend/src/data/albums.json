@@ -1,66 +1,66 @@
 [
   {
-    "id": "album-1",
+    "id": "album-storybook-riddim",
     "title": "Story Book Riddim",
-    "artistId": "artist-0",
-    "cover": "https://picsum.photos/seed/album1/400/400",
+    "artistId": "artist-various",
+    "cover": "https://picsum.photos/seed/album-storybook/400/400",
     "year": 2025,
     "genre": "Dancehall"
   },
   {
-    "id": "album-2",
-    "title": "Fractured Glass",
-    "artistId": "artist-2",
-    "cover": "https://picsum.photos/seed/album2/400/400",
-    "year": 2023,
-    "genre": "Indie Rock"
-  },
-  {
-    "id": "album-3",
-    "title": "Velvet Hours",
-    "artistId": "artist-3",
-    "cover": "https://picsum.photos/seed/album3/400/400",
-    "year": 2024,
+    "id": "album-fanmail",
+    "title": "FanMail",
+    "artistId": "artist-tlc",
+    "cover": "https://picsum.photos/seed/album-fanmail/400/400",
+    "year": 1999,
     "genre": "R&B"
   },
   {
-    "id": "album-4",
-    "title": "Wanderer",
-    "artistId": "artist-4",
-    "cover": "https://picsum.photos/seed/album4/400/400",
-    "year": 2023,
-    "genre": "Folk"
+    "id": "album-sex-and-love",
+    "title": "Sex and Love",
+    "artistId": "artist-enrique",
+    "cover": "https://picsum.photos/seed/album-sexandlove/400/400",
+    "year": 2014,
+    "genre": "Latin Pop"
   },
   {
-    "id": "album-5",
-    "title": "Late Nights Vol. 3",
-    "artistId": "artist-5",
-    "cover": "https://picsum.photos/seed/album5/400/400",
-    "year": 2024,
-    "genre": "Lo-fi"
+    "id": "album-rokstarr",
+    "title": "Rokstarr",
+    "artistId": "artist-taio-cruz",
+    "cover": "https://picsum.photos/seed/album-rokstarr/400/400",
+    "year": 2009,
+    "genre": "Pop"
   },
   {
-    "id": "album-6",
-    "title": "Haze",
-    "artistId": "artist-6",
-    "cover": "https://picsum.photos/seed/album6/400/400",
-    "year": 2024,
-    "genre": "Dream Pop"
+    "id": "album-not-4-sale",
+    "title": "Not 4 Sale",
+    "artistId": "artist-kardinal",
+    "cover": "https://picsum.photos/seed/album-not4sale/400/400",
+    "year": 2008,
+    "genre": "Hip Hop"
   },
   {
-    "id": "album-7",
-    "title": "Signal",
-    "artistId": "artist-1",
-    "cover": "https://picsum.photos/seed/album7/400/400",
-    "year": 2023,
-    "genre": "Electronic"
+    "id": "album-talk-that-talk",
+    "title": "Talk That Talk",
+    "artistId": "artist-rihanna",
+    "cover": "https://picsum.photos/seed/album-talkthat/400/400",
+    "year": 2011,
+    "genre": "Pop"
   },
   {
-    "id": "album-8",
-    "title": "Ember",
-    "artistId": "artist-2",
-    "cover": "https://picsum.photos/seed/album8/400/400",
-    "year": 2024,
-    "genre": "Indie Rock"
+    "id": "album-hot-shot",
+    "title": "Hot Shot",
+    "artistId": "artist-shaggy",
+    "cover": "https://picsum.photos/seed/album-hotshot/400/400",
+    "year": 2000,
+    "genre": "Reggae"
+  },
+  {
+    "id": "album-el-ultimo-tour",
+    "title": "El Último Tour del Mundo",
+    "artistId": "artist-bad-bunny",
+    "cover": "https://picsum.photos/seed/album-ultimo/400/400",
+    "year": 2020,
+    "genre": "Reggaeton"
   }
 ]

@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
-import { getArtistById, getAlbumsByArtist, getSongsByArtist } from "@/data/mock";
+import { getArtistById, getAlbumsByArtist, getSongsByArtist, singles } from "@/data/mock";
 import { usePlayerStore } from "@/lib/store";
 import AlbumCard from "@/components/AlbumCard";
+import SongCard from "@/components/SongCard";
 import SongRow from "@/components/SongRow";
 
 export default function ArtistPage({ params }: { params: Promise<{ id: string }> }) {
@@ -25,6 +26,7 @@ export default function ArtistPage({ params }: { params: Promise<{ id: string }>
 
   const artistAlbums = getAlbumsByArtist(artist.id);
   const topSongs = getSongsByArtist(artist.id).slice(0, 5);
+  const artistSingles = singles.filter((s) => s.artists.some((a) => a.id === artist.id));
 
   return (
     <div className="pb-8">
@@ -102,17 +104,33 @@ export default function ArtistPage({ params }: { params: Promise<{ id: string }>
         ))}
       </section>
 
+      {/* Singles */}
+      {artistSingles.length > 0 && (
+        <section className="px-8 mb-10">
+          <h2 className="text-xl font-bold tracking-tight text-foreground mb-5">
+            Singles
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {artistSingles.map((song, i) => (
+              <SongCard key={song.id} song={song} index={i} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Discography */}
-      <section className="px-8 mb-10">
-        <h2 className="text-xl font-bold tracking-tight text-foreground mb-5">
-          Discography
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {artistAlbums.map((album, i) => (
-            <AlbumCard key={album.id} album={album} index={i} />
-          ))}
-        </div>
-      </section>
+      {artistAlbums.length > 0 && (
+        <section className="px-8 mb-10">
+          <h2 className="text-xl font-bold tracking-tight text-foreground mb-5">
+            Discography
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {artistAlbums.map((album, i) => (
+              <AlbumCard key={album.id} album={album} index={i} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play, Clock, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
-import { getAlbumById } from "@/data/mock";
+import { getAlbumById, artistNames } from "@/data/mock";
 import { usePlayerStore } from "@/lib/store";
 import SongRow from "@/components/SongRow";
 
@@ -72,12 +72,17 @@ export default function AlbumPage({ params }: { params: Promise<{ id: string }> 
                 {album.title}
               </h1>
               <div className="flex items-center gap-2 mt-3 text-sm text-muted">
-                <Link
-                  href={`/artist/${album.artist.id}`}
-                  className="text-foreground font-medium hover:underline"
-                >
-                  {album.artist.name}
-                </Link>
+                {album.artists.map((a, i) => (
+                  <span key={a.id}>
+                    {i > 0 && ", "}
+                    <Link
+                      href={`/artist/${a.id}`}
+                      className="text-foreground font-medium hover:underline"
+                    >
+                      {a.name}
+                    </Link>
+                  </span>
+                ))}
                 <span>·</span>
                 <span>{album.year}</span>
                 <span>·</span>

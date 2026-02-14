@@ -18,7 +18,7 @@ export interface Artist {
 export interface Album {
   id: string;
   title: string;
-  artist: Artist;
+  artists: Artist[];
   cover: string;
   year: number;
   genre: string;
@@ -28,12 +28,13 @@ export interface Album {
 export interface Song {
   id: string;
   title: string;
-  artist: Artist;
+  artists: Artist[];
   album: Album | null;
   duration: string;
   cover: string;
   liked: boolean;
   audioSrc: string;
+  genre: string;
 }
 
 export interface Playlist {
@@ -46,6 +47,31 @@ export interface Playlist {
 }
 
 // ---------------------------------------------------------------------------
+// Helper: format artist names from an array
+// ---------------------------------------------------------------------------
+
+export function artistNames(artists: Artist[]): string {
+  return artists.map((a) => a.name).join(", ");
+}
+
+// ---------------------------------------------------------------------------
+// Resolve artistId / artistIds from JSON into Artist[]
+// ---------------------------------------------------------------------------
+
+type RawIds = { artistId?: string; artistIds?: string[] };
+
+function resolveArtists(raw: RawIds, map: Map<string, Artist>): Artist[] {
+  if (raw.artistIds && raw.artistIds.length > 0) {
+    return raw.artistIds.map((id) => map.get(id)!).filter(Boolean);
+  }
+  if (raw.artistId) {
+    const a = map.get(raw.artistId);
+    return a ? [a] : [];
+  }
+  return [];
+}
+
+// ---------------------------------------------------------------------------
 // Build runtime objects from JSON  (songs are the primary entity)
 // ---------------------------------------------------------------------------
 
@@ -54,13 +80,13 @@ export const artists: Artist[] = artistsJson as Artist[];
 const artistMap = new Map<string, Artist>();
 for (const a of artists) artistMap.set(a.id, a);
 
-// 2. Albums (empty song lists for now — filled after songs are built)
+// 2. Albums (empty song lists — filled after songs are built)
 const albumMap = new Map<string, Album>();
 export const albums: Album[] = albumsJson.map((raw) => {
   const album: Album = {
     id: raw.id,
     title: raw.title,
-    artist: artistMap.get(raw.artistId)!,
+    artists: resolveArtists(raw as RawIds, artistMap),
     cover: raw.cover,
     year: raw.year,
     genre: raw.genre,
@@ -72,21 +98,21 @@ export const albums: Album[] = albumsJson.map((raw) => {
 
 // 3. Songs — the primary entity
 export const allSongs: Song[] = songsJson.map((raw) => {
-  const artist = artistMap.get(raw.artistId)!;
+  const songArtists = resolveArtists(raw as RawIds, artistMap);
   const album = raw.albumId ? albumMap.get(raw.albumId) ?? null : null;
 
   const song: Song = {
     id: raw.id,
     title: raw.title,
-    artist,
+    artists: songArtists,
     album,
     duration: raw.duration,
     cover: raw.cover,
     liked: raw.liked ?? false,
     audioSrc: raw.audioSrc,
+    genre: (raw as Record<string, unknown>).genre as string ?? album?.genre ?? "Unknown",
   };
 
-  // If this song belongs to an album, push it into that album's songs list
   if (album) album.songs.push(song);
 
   return song;
@@ -107,6 +133,7 @@ export const playlists: Playlist[] = playlistsJson.map((raw) => ({
 
 // 5. Derived lists
 export const likedSongs: Song[] = allSongs.filter((s) => s.liked);
+export const singles: Song[] = allSongs.filter((s) => s.album === null);
 
 // ---------------------------------------------------------------------------
 // Curated lists (edit these to change the home page)
@@ -133,9 +160,9 @@ export function getPlaylistById(id: string): Playlist | undefined {
 }
 
 export function getAlbumsByArtist(artistId: string): Album[] {
-  return albums.filter((a) => a.artist.id === artistId);
+  return albums.filter((a) => a.artists.some((ar) => ar.id === artistId));
 }
 
 export function getSongsByArtist(artistId: string): Song[] {
-  return allSongs.filter((s) => s.artist.id === artistId);
+  return allSongs.filter((s) => s.artists.some((ar) => ar.id === artistId));
 }
