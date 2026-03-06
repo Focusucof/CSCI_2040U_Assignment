@@ -4,6 +4,7 @@ public class User {
     private String password;
     private Playlist likedSongs;
     private Playlist[] playlists;
+    private boolean isAdmin;
 
     public String getId() {
         return id;
@@ -43,6 +44,14 @@ public class User {
 
     public void setPlaylists(Playlist[] playlists) {
         this.playlists = playlists;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public User(String id, String username, String password) {
