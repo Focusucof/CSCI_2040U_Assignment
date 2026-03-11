@@ -10,6 +10,7 @@ import SongCard from '@/components/SongCard';
 import AlbumCard from '@/components/AlbumCard';
 import PlaylistCard from '@/components/PlaylistCard';
 import ArtistCard from '@/components/ArtistCard';
+import AccountMenu from '@/components/AccountMenu';
 
 interface FeaturedContentProps {
   onPlayTrack: (track: Track) => void;
@@ -18,13 +19,16 @@ interface FeaturedContentProps {
 export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
-      {/* Greeting */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white">Good evening</h1>
-        <p className="text-zinc-400 mt-1">Discover something new today.</p>
+      {/* Top bar with greeting and account */}
+      <div className="flex items-start justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-white">Good evening</h1>
+          <p className="text-zinc-400 mt-1">Discover something new today.</p>
+        </div>
+        <AccountMenu />
       </div>
 
-      {/* Quick Picks - compact grid */}
+
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
         {newSongs.slice(0, 6).map((track) => (
           <button
@@ -49,7 +53,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
         ))}
       </div>
 
-      {/* New Songs */}
+      {/* songs */}
       <section className="mb-10">
         <SectionHeader icon={Music} title="New Songs" />
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
