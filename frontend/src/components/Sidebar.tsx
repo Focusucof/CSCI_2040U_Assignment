@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Home, Search, Library, PlusSquare, Heart, Mic2, Music2 } from 'lucide-react';
+import { Home, Search, Library, PlusSquare, Heart, Music2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
