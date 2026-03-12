@@ -31,7 +31,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="email" className="block text-sm font-medium text-zinc-400 mb-1.5">
               Email
             </label>
@@ -44,7 +44,7 @@ export default function RegisterPage() {
                 className="w-full bg-zinc-900 border border-zinc-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
               />
             </div>
-          </div>
+          </div> */}
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-zinc-400 mb-1.5">
