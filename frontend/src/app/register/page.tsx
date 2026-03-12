@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { Music2, Lock, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ToastProvider';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { addToast } = useToast();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -16,6 +18,7 @@ export default function RegisterPage() {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
+      addToast('Passwords do not match.', 'error');
       return;
     }
     setError('');
@@ -28,12 +31,16 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (res.ok) {
+        addToast('Account created successfully. Please log in.', 'success');
         router.push('/login');
       } else {
-        setError(data.message || 'Registration failed.');
+        const msg = data.message || 'Registration failed.';
+        setError(msg);
+        addToast(msg, 'error');
       }
     } catch {
       setError('Could not connect to server.');
+      addToast('Could not connect to server.', 'error');
     }
   }
 

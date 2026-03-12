@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { Music2, Mail, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ToastProvider';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { addToast } = useToast();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,12 +25,16 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (res.ok) {
+        addToast('Logged in successfully.', 'success');
         router.push('/');
       } else {
-        setError(data.message || 'Login failed.');
+        const msg = data.message || 'Login failed.';
+        setError(msg);
+        addToast(msg, 'error');
       }
     } catch {
       setError('Could not connect to server.');
+      addToast('Could not connect to server.', 'error');
     }
   }
 
@@ -44,7 +50,7 @@ export default function LoginPage() {
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-400 mb-1.5">
+            <label htmlFor="username" className="block text-sm font-medium text-zinc-400 mb-1.5">
               Username
             </label>
             <div className="relative">
