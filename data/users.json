@@ -13,7 +13,7 @@
     "password": "$2b$10$8AUn1l.Cj.oKADNEXH9G0OSIJ59f/7DgiVA6I9to5dJO5e0Wag9Fq",
     "likedSongs": [],
     "playlists": [],
-    "isAdmin": false
+    "isAdmin": true
   },
   {
     "id": "268a2ec8-d612-4c27-b3a9-cd5ee85f1efd",
