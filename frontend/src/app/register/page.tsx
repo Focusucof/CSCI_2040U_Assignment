@@ -1,10 +1,42 @@
 'use client';
 
-import React from 'react';
-import { Music2, Mail, Lock, User } from 'lucide-react';
+import React, { useState } from 'react';
+import { Music2, Lock, User } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    setError('');
+    try {
+      const res = await fetch('http://localhost:3001/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        router.push('/login');
+      } else {
+        setError(data.message || 'Registration failed.');
+      }
+    } catch {
+      setError('Could not connect to server.');
+    }
+  }
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
@@ -15,7 +47,7 @@ export default function RegisterPage() {
           <h1 className="text-2xl font-bold text-white">Create an account</h1>
         </div>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-zinc-400 mb-1.5">
               Username
@@ -26,25 +58,12 @@ export default function RegisterPage() {
                 id="username"
                 type="text"
                 placeholder="Your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
               />
             </div>
           </div>
-
-          {/* <div>
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-400 mb-1.5">
-              Email
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-              <input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
-              />
-            </div>
-          </div> */}
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-zinc-400 mb-1.5">
@@ -56,6 +75,8 @@ export default function RegisterPage() {
                 id="password"
                 type="password"
                 placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
               />
             </div>
@@ -71,10 +92,16 @@ export default function RegisterPage() {
                 id="confirmPassword"
                 type="password"
                 placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full bg-zinc-900 border border-zinc-700 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
               />
             </div>
           </div>
+
+          {error && (
+            <p className="text-sm text-red-400">{error}</p>
+          )}
 
           <button
             type="submit"
