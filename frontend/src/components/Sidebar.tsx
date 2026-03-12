@@ -26,7 +26,7 @@ export default function Sidebar() {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
             <Music2 className="text-white w-5 h-5" />
           </div>
-          <span className="text-xl font-bold tracking-tight">Echo</span>
+          <span className="text-xl font-bold tracking-tight">Streamly</span>
         </div>
 
         <nav className="space-y-1">
