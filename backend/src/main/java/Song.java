@@ -1,3 +1,5 @@
+package main.java;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,15 +8,15 @@ import org.json.*;
 
 public class Song {
     // Title, artists, albums, genres, release date, uid, filepath, clean/explicit, duration
-    private String title;
-    private String[] artists;
-    private int[] album_ids;
-    private Date release_date;
-    private String[] genres;
-    private int uid;
-    private File filepath;
-    private boolean clean;
-    private int duration; // In seconds
+    protected String title;
+    protected String[] artists;
+    protected int[] album_ids;
+    protected Date release_date;
+    protected String[] genres;
+    protected int uid;
+    protected File filepath;
+    protected boolean clean;
+    protected int duration; // In seconds
 
     public Song(){
     }
