@@ -45,7 +45,7 @@ export default function LoginPage() {
           <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center mb-4">
             <Music2 className="text-white w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-bold text-white">Log in to Echo</h1>
+          <h1 className="text-2xl font-bold text-white">Log in to Streamly</h1>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit}>

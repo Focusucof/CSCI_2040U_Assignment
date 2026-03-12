@@ -16,14 +16,6 @@
     "isAdmin": true
   },
   {
-    "id": "268a2ec8-d612-4c27-b3a9-cd5ee85f1efd",
-    "username": "",
-    "password": "$2b$10$ZeNYMy9dU4pV88V57okG6u6JwS4Aek5ZldghFzVpUHpmpvufgQ10S",
-    "likedSongs": [],
-    "playlists": [],
-    "isAdmin": false
-  },
-  {
     "id": "1f05ec18-c8ed-45c9-8957-81c0693caa26",
     "username": "d",
     "password": "$2b$10$Lin0Mm5NfC2XgGX3CXmaDe/JujeUW94PK4XrJT/8EN98Cn7kjY2Ny",
