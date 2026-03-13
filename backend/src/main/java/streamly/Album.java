@@ -1,3 +1,5 @@
+package streamly;
+
 import java.util.Date;
 
 public class Album {
