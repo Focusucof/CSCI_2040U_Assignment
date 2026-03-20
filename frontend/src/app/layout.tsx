@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Echo | Music Discovery',
+  title: 'Streamly | Music Discovery',
   description: 'AI-powered music discovery platform',
 };
 
