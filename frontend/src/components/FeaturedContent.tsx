@@ -182,36 +182,38 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
       </div>
 
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
-        {!loading && displayedTracks.slice(0, 6).map((track) => (
-          <button
-            key={track.id}
-            onClick={() => onPlayTrack(track)}
-            className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="relative w-14 h-14 flex-shrink-0">
-              <Image
-                src={track.coverUrl}
-                alt={track.title}
-                fill
-                className="object-cover"
-                sizes="56px"
-              />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-            </div>
-            <span className="text-sm font-semibold text-white truncate pr-3 group-hover:text-purple-300 transition-colors">{track.title}</span>
-            <div className="ml-auto mr-3 w-9 h-9 play-btn rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 flex-shrink-0">
-              <Play className="w-4 h-4 text-white fill-current ml-0.5" />
-            </div>
-          </button>
-        ))}
-      </div>
+      {/* Quick Picks - Only show when not searching */}
+      {!isSearching && !loading && (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
+          {displayedTracks.slice(0, 6).map((track) => (
+            <button
+              key={track.id}
+              onClick={() => onPlayTrack(track)}
+              className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="relative w-14 h-14 flex-shrink-0">
+                <Image
+                  src={track.coverUrl}
+                  alt={track.title}
+                  fill
+                  className="object-cover"
+                  sizes="56px"
+                />
+              </div>
+              <span className="text-sm font-semibold text-white truncate pr-3 group-hover:text-purple-300 transition-colors">{track.title}</span>
+              <div className="ml-auto mr-3 w-9 h-9 play-btn rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 flex-shrink-0">
+                <Play className="w-4 h-4 text-white fill-current ml-0.5" />
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* songs - Featured (horizontal scroll) or Search Results */}
       <section className="mb-10">
         <SectionHeader 
           icon={Music} 
-          title={isSearching ? 'Search Results' : 'Featured Songs'} 
+          title={isSearching ? `${searchResults.length} Results` : 'Featured'} 
         />
         {loading ? (
           <p className="text-zinc-400">Loading songs...</p>
@@ -220,9 +222,28 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
             {isSearching ? 'No songs found. Try a different search term.' : 'No songs available.'}
           </p>
         ) : isSearching ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className="space-y-2">
             {displayedTracks.map((track) => (
-              <SongCard key={track.id} track={track} onPlay={onPlayTrack} />
+              <button
+                key={track.id}
+                onClick={() => onPlayTrack(track)}
+                className="w-full flex items-center gap-4 bg-[#181818] hover:bg-[#252525] rounded-xl p-3 transition-all duration-300"
+              >
+                <div className="relative w-14 h-14 flex-shrink-0">
+                  <Image
+                    src={track.coverUrl}
+                    alt={track.title}
+                    fill
+                    className="object-cover rounded-lg"
+                    sizes="56px"
+                  />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="text-sm font-semibold text-white truncate">{track.title}</h3>
+                  <p className="text-xs text-zinc-400 truncate">{track.artist} · {track.album} · {track.genre}</p>
+                </div>
+                <p className="text-xs text-zinc-500 px-3">{track.duration}</p>
+              </button>
             ))}
           </div>
         ) : (
