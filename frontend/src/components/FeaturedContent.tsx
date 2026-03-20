@@ -142,7 +142,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
             placeholder="Search songs, artists, albums..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#1E1E1E] text-white placeholder-zinc-400 pl-12 pr-12 py-3 rounded-xl text-sm focus:outline-none input-glow transition-all"
+            className="w-full bg-[#1E1E1E] text-white placeholder-zinc-400 pl-12 pr-12 py-3 rounded-none text-sm focus:outline-none input-glow transition-all"
           />
           {searchQuery && (
             <button
@@ -189,7 +189,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
             <button
               key={track.id}
               onClick={() => onPlayTrack(track)}
-              className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+              className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-none transition-all duration-300 hover:-translate-y-1"
             >
               <div className="relative w-14 h-14 flex-shrink-0">
                 <Image
@@ -227,14 +227,14 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
               <button
                 key={track.id}
                 onClick={() => onPlayTrack(track)}
-                className="w-full flex items-center gap-4 bg-[#181818] hover:bg-[#252525] rounded-xl p-3 transition-all duration-300"
+                className="w-full flex items-center gap-4 bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300"
               >
                 <div className="relative w-14 h-14 flex-shrink-0">
                   <Image
                     src={track.coverUrl}
                     alt={track.title}
                     fill
-                    className="object-cover rounded-lg"
+                    className="object-cover"
                     sizes="56px"
                   />
                 </div>

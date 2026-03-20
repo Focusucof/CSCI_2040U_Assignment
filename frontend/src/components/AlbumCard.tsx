@@ -11,7 +11,7 @@ interface AlbumCardProps {
 
 export default function AlbumCard({ album }: AlbumCardProps) {
   return (
-    <div className="relative bg-[#181818] hover:bg-[#252525] rounded-xl overflow-hidden transition-all duration-300 cursor-pointer hover:-translate-y-1">
+    <div className="relative bg-[#181818] hover:bg-[#252525] rounded-none transition-all duration-300 cursor-pointer hover:-translate-y-1">
       {/* Album Art */}
       <div className="relative aspect-square">
         <Image

@@ -13,11 +13,11 @@ interface SongCardProps {
 export default function SongCard({ track, onPlay }: SongCardProps) {
   return (
     <div
-      className="relative bg-[#181818] hover:bg-[#252525] rounded-xl overflow-hidden transition-all duration-300 cursor-pointer hover:-translate-y-1"
+      className="relative bg-[#181818] hover:bg-[#252525] rounded-none transition-all duration-300 cursor-pointer hover:-translate-y-1"
     >
       {/* Album Art Container */}
       <div 
-        className="relative aspect-square overflow-hidden rounded-t-xl"
+        className="relative aspect-square overflow-hidden"
         onClick={() => onPlay(track)}
       >
         <Image

@@ -34,7 +34,7 @@ export default function Sidebar() {
             <button
               key={item.label}
               className={cn(
-                "flex items-center gap-4 w-full px-4 py-3 rounded-xl transition-all duration-200 text-sm font-medium",
+                "flex items-center gap-4 w-full px-4 py-3 rounded-none transition-all duration-200 text-sm font-medium",
                 item.active 
                   ? "bg-white/10 text-white border border-white/10" 
                   : "text-zinc-400 hover:text-white hover:bg-white/5"
@@ -47,11 +47,11 @@ export default function Sidebar() {
         </nav>
 
         <div className="mt-8 space-y-2">
-          <button className="flex items-center gap-4 w-full px-4 py-3 text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-200 text-sm font-medium">
+          <button className="flex items-center gap-4 w-full px-4 py-3 text-zinc-400 hover:text-white hover:bg-white/5 rounded-none transition-all duration-200 text-sm font-medium">
             <PlusSquare className="w-5 h-5" />
             Create Playlist
           </button>
-          <button className="flex items-center gap-4 w-full px-4 py-3 text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-200 text-sm font-medium">
+          <button className="flex items-center gap-4 w-full px-4 py-3 text-zinc-400 hover:text-white hover:bg-white/5 rounded-none transition-all duration-200 text-sm font-medium">
             <Heart className="w-5 h-5" />
             Liked Songs
           </button>
@@ -65,7 +65,7 @@ export default function Sidebar() {
             {playlists.map((playlist) => (
               <button
                 key={playlist}
-                className="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 truncate"
+                className="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-none transition-all duration-200 truncate"
               >
                 {playlist}
               </button>

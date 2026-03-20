@@ -16,7 +16,7 @@ export default function NowPlaying({ currentTrack }: NowPlayingProps) {
     <div className="h-24 bg-[#0a0a0a] border-t border-white/5 px-6 flex items-center justify-between fixed bottom-0 left-0 right-0 z-50">
       {/* Track Info */}
       <div className="flex items-center gap-4 w-1/3">
-        <div className="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 shadow-lg">
+        <div className="relative w-14 h-14 rounded-none overflow-hidden flex-shrink-0 shadow-lg">
           <Image
             src={currentTrack.coverUrl}
             alt={currentTrack.title}

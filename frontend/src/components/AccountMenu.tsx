@@ -49,7 +49,7 @@ export default function AccountMenu() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-[#1E1E1E] border border-white/10 rounded-xl shadow-xl py-1 z-50">
+        <div className="absolute right-0 mt-2 w-48 bg-[#1E1E1E] border border-white/10 rounded-none shadow-xl py-1 z-50">
           {user ? (
             <>
               <div className="px-4 py-3 border-b border-white/5">

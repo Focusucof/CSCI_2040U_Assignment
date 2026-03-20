@@ -11,7 +11,7 @@ interface ArtistCardProps {
 
 export default function ArtistCard({ artist }: ArtistCardProps) {
   return (
-    <div className="relative bg-[#181818] hover:bg-[#252525] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer text-center p-4 hover:-translate-y-1">
+    <div className="relative bg-[#181818] hover:bg-[#252525] rounded-none overflow-hidden transition-all duration-300 cursor-pointer text-center p-4 hover:-translate-y-1">
       {/* Artist Image with Glowing Ring */}
       <div className="relative w-32 h-32 mx-auto mb-4">
         {/* Glowing Ring */}

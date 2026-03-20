@@ -255,12 +255,12 @@ export default function AdminPage() {
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         {/* Tabs */}
-        <div className="flex gap-1 mb-8 bg-[#181818] rounded-xl p-1 w-fit">
+        <div className="flex gap-1 mb-8 bg-[#181818] rounded-none p-1 w-fit">
           {tabConfig.map(({ key, label, icon: Icon }) => (
             <button
               key={key}
               onClick={() => { setActiveTab(key); setShowForm(false); }}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-none text-sm font-medium transition-all ${
                 activeTab === key
                   ? 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white shadow-lg shadow-purple-500/20'
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
@@ -277,7 +277,7 @@ export default function AdminPage() {
           <h2 className="text-lg font-semibold capitalize text-white">{activeTab}</h2>
           <button
             onClick={openCreateForm}
-            className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-400 hover:to-cyan-400 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-purple-500/20"
+            className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-400 hover:to-cyan-400 text-white text-sm font-medium px-4 py-2.5 rounded-none transition-all shadow-lg shadow-purple-500/20"
           >
             <Plus className="w-4 h-4" />
             Add {activeTab.slice(0, -1)}
@@ -286,7 +286,7 @@ export default function AdminPage() {
 
         {/* Form modal */}
         {showForm && (
-          <div className="mb-8 bg-[#181818] border border-white/5 rounded-xl p-6">
+          <div className="mb-8 bg-[#181818] border border-white/5 rounded-none p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-md font-semibold text-white">
                 {editingId ? 'Edit' : 'Add'} {activeTab.slice(0, -1)}
@@ -313,7 +313,7 @@ export default function AdminPage() {
                             <img
                               src={`http://localhost:8080${formData[field.key]}`}
                               alt="Current"
-                              className="w-24 h-24 object-cover rounded-lg"
+                              className="w-24 h-24 object-cover rounded-none"
                               onError={(e) => {
                                 (e.target as HTMLImageElement).src = formData[field.key] || '';
                               }}
@@ -325,7 +325,7 @@ export default function AdminPage() {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleFileChange(field.key, e.target.files?.[0] || null)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-gradient-to-r file:from-purple-500 file:to-cyan-500 file:text-white file:cursor-pointer"
+                        className="w-full bg-[#252525] border border-white/10 rounded-none px-3 py-2.5 text-sm text-white file:mr-4 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:bg-gradient-to-r file:from-purple-500 file:to-cyan-500 file:text-white file:cursor-pointer"
                       />
                     </div>
                   ) : (
@@ -333,7 +333,7 @@ export default function AdminPage() {
                       type={field.type}
                       value={formData[field.key] || ''}
                       onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-colors"
+                      className="w-full bg-[#252525] border border-white/10 rounded-none px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-colors"
                     />
                   )}
                 </div>
@@ -343,7 +343,7 @@ export default function AdminPage() {
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-400 hover:to-cyan-400 disabled:from-purple-800 disabled:to-cyan-800 text-white text-sm font-medium px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-purple-500/20"
+                  className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-400 hover:to-cyan-400 disabled:from-purple-800 disabled:to-cyan-800 text-white text-sm font-medium px-6 py-2.5 rounded-none transition-all shadow-lg shadow-purple-500/20"
                 >
                   {uploading ? 'Uploading...' : editingId ? 'Save Changes' : 'Create'}
                 </button>
@@ -362,7 +362,7 @@ export default function AdminPage() {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between bg-[#181818] hover:bg-[#252525] border border-white/5 rounded-xl px-4 py-3 transition-all hover:border-purple-500/20"
+                className="flex items-center justify-between bg-[#181818] hover:bg-[#252525] border border-white/5 rounded-none px-4 py-3 transition-all hover:border-purple-500/20"
               >
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-white truncate">{getDisplayName(activeTab, item)}</p>
@@ -371,13 +371,13 @@ export default function AdminPage() {
                 <div className="flex items-center gap-2 flex-shrink-0 ml-4">
                   <button
                     onClick={() => openEditForm(item)}
-                    className="p-2.5 text-zinc-400 hover:text-purple-400 hover:bg-white/5 rounded-lg transition-colors"
+                    className="p-2.5 text-zinc-400 hover:text-purple-400 hover:bg-white/5 rounded-none transition-colors"
                   >
                     <Pencil className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="p-2.5 text-zinc-400 hover:text-red-400 hover:bg-white/5 rounded-lg transition-colors"
+                    className="p-2.5 text-zinc-400 hover:text-red-400 hover:bg-white/5 rounded-none transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
