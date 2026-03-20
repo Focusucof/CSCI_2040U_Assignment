@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Music, Disc3, Mic2, Search, X, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
