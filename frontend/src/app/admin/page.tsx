@@ -1,18 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Music2, Plus, Pencil, Trash2, X, Music, Disc3, ListMusic, Mic2, ArrowLeft } from 'lucide-react';
+import { Music2, Plus, Pencil, Trash2, X, Music, Disc3, Mic2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/components/ToastProvider';
 
 const API = 'http://localhost:8080';
 
-type Tab = 'songs' | 'albums' | 'playlists' | 'artists';
+type Tab = 'songs' | 'albums' | 'artists';
 
 const tabConfig: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: 'songs', label: 'Songs', icon: Music },
   { key: 'albums', label: 'Albums', icon: Disc3 },
-  { key: 'playlists', label: 'Playlists', icon: ListMusic },
   { key: 'artists', label: 'Artists', icon: Mic2 },
 ];
 
@@ -32,12 +31,6 @@ const fieldsByTab: Record<Tab, { key: string; label: string; type: string; isFil
     { key: 'year', label: 'Year', type: 'number' },
     { key: 'trackCount', label: 'Track Count', type: 'number' },
   ],
-  playlists: [
-    { key: 'title', label: 'Title', type: 'text' },
-    { key: 'description', label: 'Description', type: 'text' },
-    { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
-    { key: 'trackCount', label: 'Track Count', type: 'number' },
-  ],
   artists: [
     { key: 'name', label: 'Name', type: 'text' },
     { key: 'imageUrl', label: 'Image', type: 'file', isFile: true },
@@ -52,7 +45,6 @@ function getDisplayName(tab: Tab, item: any): string {
 function getSubtext(tab: Tab, item: any): string {
   if (tab === 'songs') return `${item.artist} - ${item.album}`;
   if (tab === 'albums') return `${item.artist} - ${item.year}`;
-  if (tab === 'playlists') return item.description || '';
   if (tab === 'artists') return item.genre || '';
   return '';
 }

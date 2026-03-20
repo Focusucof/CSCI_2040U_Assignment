@@ -12,12 +12,14 @@ interface SongCardProps {
 
 export default function SongCard({ track, onPlay }: SongCardProps) {
   return (
-    <button
-      onClick={() => onPlay(track)}
-      className="group relative bg-[#181818] hover:bg-[#252525] rounded-xl overflow-hidden transition-all duration-300 text-left w-full hover:-translate-y-1"
+    <div
+      className="group relative bg-[#181818] hover:bg-[#252525] rounded-xl overflow-hidden transition-all duration-300 cursor-pointer hover:-translate-y-1"
     >
       {/* Album Art Container */}
-      <div className="relative aspect-square">
+      <div 
+        className="relative aspect-square cursor-pointer"
+        onClick={() => onPlay(track)}
+      >
         <Image
           src={track.coverUrl}
           alt={track.title}
@@ -35,15 +37,15 @@ export default function SongCard({ track, onPlay }: SongCardProps) {
             <Play className="w-6 h-6 text-white fill-current ml-1" />
           </div>
         </div>
-
-        {/* Like Button */}
-        <button 
-          onClick={(e) => { e.stopPropagation(); }}
-          className="absolute top-3 right-3 w-8 h-8 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-purple-500"
-        >
-          <Heart className="w-4 h-4 text-white" />
-        </button>
       </div>
+
+      {/* Like Button */}
+      <button 
+        onClick={(e) => { e.stopPropagation(); }}
+        className="absolute top-3 right-3 w-8 h-8 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-purple-500 z-10"
+      >
+        <Heart className="w-4 h-4 text-white" />
+      </button>
 
       {/* Info */}
       <div className="p-3">
@@ -57,6 +59,6 @@ export default function SongCard({ track, onPlay }: SongCardProps) {
           </span>
         </div>
       </div>
-    </button>
+    </div>
   );
 }

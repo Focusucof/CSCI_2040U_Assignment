@@ -1,0 +1,12 @@
+[
+  {"id": "1", "title": "A Night at the Opera", "artist": "Queen", "coverUrl": "https://picsum.photos/seed/album1/300/300", "year": 1975, "trackCount": 12},
+  {"id": "2", "title": "Led Zeppelin IV", "artist": "Led Zeppelin", "coverUrl": "https://picsum.photos/seed/album2/300/300", "year": 1971, "trackCount": 8},
+  {"id": "3", "title": "Hotel California", "artist": "Eagles", "coverUrl": "https://picsum.photos/seed/album3/300/300", "year": 1976, "trackCount": 9},
+  {"id": "4", "title": "Appetite for Destruction", "artist": "Guns N' Roses", "coverUrl": "https://picsum.photos/seed/album4/300/300", "year": 1987, "trackCount": 12},
+  {"id": "5", "title": "Nevermind", "artist": "Nirvana", "coverUrl": "https://picsum.photos/seed/album5/300/300", "year": 1991, "trackCount": 12},
+  {"id": "6", "title": "Thriller", "artist": "Michael Jackson", "coverUrl": "https://picsum.photos/seed/album6/300/300", "year": 1982, "trackCount": 9},
+  {"id": "7", "title": "Purple Rain", "artist": "Prince", "coverUrl": "https://picsum.photos/seed/album7/300/300", "year": 1984, "trackCount": 11},
+  {"id": "8", "title": "The Wall", "artist": "Pink Floyd", "coverUrl": "https://picsum.photos/seed/album8/300/300", "year": 1979, "trackCount": 26},
+  {"id": "9", "title": "1989", "artist": "Taylor Swift", "coverUrl": "https://picsum.photos/seed/album9/300/300", "year": 2014, "trackCount": 13},
+  {"id": "10", "title": "21", "artist": "Adele", "coverUrl": "https://picsum.photos/seed/album10/300/300", "year": 2011, "trackCount": 11}
+]
