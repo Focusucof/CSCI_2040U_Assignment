@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Play, Music, Disc3, ListMusic, Mic2, Search, X } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, Music, Disc3, ListMusic, Mic2, Search, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Track } from '@/lib/types';
 import { newSongs, newAlbums, featuredPlaylists, featuredArtists } from '@/lib/mockData';
@@ -20,6 +20,48 @@ function normalizeTrackUrl(track: Track): Track {
     return { ...track, coverUrl: BACKEND_URL + track.coverUrl };
   }
   return track;
+}
+
+interface HorizontalScrollProps {
+  children: React.ReactNode;
+}
+
+function HorizontalScroll({ children }: HorizontalScrollProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 300;
+      scrollRef.current.scrollBy({
+        left: direction === 'right' ? scrollAmount : -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  return (
+    <div className="relative group/section">
+      <div 
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]"
+        style={{ scrollbarWidth: 'none' }}
+      >
+        {children}
+      </div>
+      <button
+        onClick={() => scroll('left')}
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center opacity-0 group-hover/section:opacity-100 transition-all duration-300 z-10 -ml-5"
+      >
+        <ChevronLeft className="w-5 h-5 text-white" />
+      </button>
+      <button
+        onClick={() => scroll('right')}
+        className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center opacity-0 group-hover/section:opacity-100 transition-all duration-300 z-10 -mr-5"
+      >
+        <ChevronRight className="w-5 h-5 text-white" />
+      </button>
+    </div>
+  );
 }
 
 interface FeaturedContentProps {
@@ -165,11 +207,11 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
         ))}
       </div>
 
-      {/* songs */}
+      {/* songs - Featured (horizontal scroll) or Search Results */}
       <section className="mb-10">
         <SectionHeader 
           icon={Music} 
-          title={isSearching ? 'Songs' : 'All Songs'} 
+          title={isSearching ? 'Search Results' : 'Featured Songs'} 
         />
         {loading ? (
           <p className="text-zinc-400">Loading songs...</p>
@@ -177,12 +219,20 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
           <p className="text-zinc-400">
             {isSearching ? 'No songs found. Try a different search term.' : 'No songs available.'}
           </p>
-        ) : (
+        ) : isSearching ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {displayedTracks.map((track) => (
               <SongCard key={track.id} track={track} onPlay={onPlayTrack} />
             ))}
           </div>
+        ) : (
+          <HorizontalScroll>
+            {displayedTracks.slice(0, 10).map((track) => (
+              <div key={track.id} className="flex-shrink-0 w-48">
+                <SongCard track={track} onPlay={onPlayTrack} />
+              </div>
+            ))}
+          </HorizontalScroll>
         )}
       </section>
 
@@ -190,11 +240,13 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
       {!isSearching && (
         <section className="mb-10">
           <SectionHeader icon={Disc3} title="New Albums" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <HorizontalScroll>
             {newAlbums.map((album) => (
-              <AlbumCard key={album.id} album={album} />
+              <div key={album.id} className="flex-shrink-0 w-48">
+                <AlbumCard album={album} />
+              </div>
             ))}
-          </div>
+          </HorizontalScroll>
         </section>
       )}
 
@@ -202,11 +254,13 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
       {!isSearching && (
         <section className="mb-10">
           <SectionHeader icon={ListMusic} title="Featured Playlists" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <HorizontalScroll>
             {featuredPlaylists.map((playlist) => (
-              <PlaylistCard key={playlist.id} playlist={playlist} />
+              <div key={playlist.id} className="flex-shrink-0 w-48">
+                <PlaylistCard playlist={playlist} />
+              </div>
             ))}
-          </div>
+          </HorizontalScroll>
         </section>
       )}
 
@@ -214,11 +268,13 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
       {!isSearching && (
         <section className="mb-10">
           <SectionHeader icon={Mic2} title="Featured Artists" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <HorizontalScroll>
             {featuredArtists.map((artist) => (
-              <ArtistCard key={artist.id} artist={artist} />
+              <div key={artist.id} className="flex-shrink-0 w-48">
+                <ArtistCard artist={artist} />
+              </div>
             ))}
-          </div>
+          </HorizontalScroll>
         </section>
       )}
     </main>
