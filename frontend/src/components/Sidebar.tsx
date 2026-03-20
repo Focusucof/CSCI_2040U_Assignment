@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Link } from 'next-view-transitions';
 import { usePathname } from 'next/navigation';
 import { Home, Search, Library, PlusSquare, Heart, Music2 } from 'lucide-react';

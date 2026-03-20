@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Music, Disc3, Mic2, Search, X, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
@@ -8,6 +8,7 @@ import { Link } from 'next-view-transitions';
 import { Track, Album, Artist } from '@/lib/types';
 import SectionHeader from '@/components/SectionHeader';
 import AccountMenu from '@/components/AccountMenu';
+import { useAudio } from '@/context/AudioContext';
 
 const SONGS_API = 'http://localhost:8080/admin/songs';
 const ALBUMS_API = 'http://localhost:8080/admin/albums';
@@ -35,32 +36,20 @@ function normalizeImageUrl(url: string): string {
   return url;
 }
 
-interface SearchContentProps {
-  onPlayTrack: (track: Track) => void;
-}
-
-export default function SearchContent({ onPlayTrack }: SearchContentProps) {
+export default function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const initialQuery = searchParams.get('q') || '';
-  
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const { onTrackSelect } = useAudio();
+
+  const urlQuery = searchParams.get('q') || '';
+  const [searchQuery, setSearchQuery] = useState(urlQuery);
   const [songs, setSongs] = useState<Track[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
 
+  // Fetch search results with debounce and cancellation
   useEffect(() => {
-    const query = searchParams.get('q') || '';
-    setSearchQuery(query);
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setSongs([]);
-      setAlbums([]);
-      setArtists([]);
-      return;
-    }
+    if (searchQuery.trim() === '') return;
 
     let cancelled = false;
 
@@ -107,18 +96,21 @@ export default function SearchContent({ onPlayTrack }: SearchContentProps) {
     router.push('/search');
   };
 
-  const hasResults = songs.length > 0 || albums.length > 0 || artists.length > 0;
+  // Derive display state: don't show stale results when query is empty
+  const hasQuery = searchQuery.trim() !== '';
+  const displayedSongs = hasQuery ? songs : [];
+  const displayedAlbums = hasQuery ? albums : [];
+  const displayedArtists = hasQuery ? artists : [];
+  const hasResults = displayedSongs.length > 0 || displayedAlbums.length > 0 || displayedArtists.length > 0;
 
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
-      {/* Top bar - Search (centered) and Account (right) */}
+      {/* Top bar */}
       <div className="flex items-center justify-between gap-4 mb-6">
-        {/* Back button */}
         <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
           <ArrowLeft className="w-5 h-5" />
         </Link>
 
-        {/* Search Bar - Centered */}
         <div className="relative flex-1 max-w-xl mx-4">
           <form onSubmit={handleSearch}>
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
@@ -141,14 +133,13 @@ export default function SearchContent({ onPlayTrack }: SearchContentProps) {
           )}
         </div>
 
-        {/* Account - Right */}
         <div className="flex-shrink-0">
           <AccountMenu />
         </div>
       </div>
 
       {/* Results */}
-      {!searchQuery ? (
+      {!hasQuery ? (
         <div className="text-center py-20">
           <Search className="w-16 h-16 text-zinc-600 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-white mb-2">Search for music</h2>
@@ -162,15 +153,15 @@ export default function SearchContent({ onPlayTrack }: SearchContentProps) {
         </div>
       ) : (
         <div className="space-y-10">
-          {/* Songs Section */}
-          {songs.length > 0 && (
+          {/* Songs */}
+          {displayedSongs.length > 0 && (
             <section>
-              <SectionHeader icon={Music} title={`Songs (${songs.length})`} />
+              <SectionHeader icon={Music} title={`Songs (${displayedSongs.length})`} />
               <div className="space-y-2">
-                {songs.map((track) => (
+                {displayedSongs.map((track) => (
                   <button
                     key={track.id}
-                    onClick={() => onPlayTrack(track)}
+                    onClick={() => onTrackSelect(track)}
                     className="w-full flex items-center gap-4 bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300"
                   >
                     <div className="relative w-14 h-14 flex-shrink-0">
@@ -193,16 +184,13 @@ export default function SearchContent({ onPlayTrack }: SearchContentProps) {
             </section>
           )}
 
-          {/* Albums Section */}
-          {albums.length > 0 && (
+          {/* Albums */}
+          {displayedAlbums.length > 0 && (
             <section>
-              <SectionHeader icon={Disc3} title={`Albums (${albums.length})`} />
+              <SectionHeader icon={Disc3} title={`Albums (${displayedAlbums.length})`} />
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                {albums.map((album) => (
-                  <div
-                    key={album.id}
-                    className="flex-shrink-0 w-44"
-                  >
+                {displayedAlbums.map((album) => (
+                  <div key={album.id} className="flex-shrink-0 w-44">
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer">
                       <div className="relative w-36 h-36 mb-3">
                         <Image
@@ -222,16 +210,13 @@ export default function SearchContent({ onPlayTrack }: SearchContentProps) {
             </section>
           )}
 
-          {/* Artists Section */}
-          {artists.length > 0 && (
+          {/* Artists */}
+          {displayedArtists.length > 0 && (
             <section>
-              <SectionHeader icon={Mic2} title={`Artists (${artists.length})`} />
+              <SectionHeader icon={Mic2} title={`Artists (${displayedArtists.length})`} />
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                {artists.map((artist) => (
-                  <div
-                    key={artist.id}
-                    className="flex-shrink-0 w-44"
-                  >
+                {displayedArtists.map((artist) => (
+                  <div key={artist.id} className="flex-shrink-0 w-44">
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer text-center">
                       <div className="relative w-36 h-36 mx-auto mb-3 rounded-full overflow-hidden">
                         <Image

@@ -1,17 +1,24 @@
 'use client';
 
-import React from 'react';
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import SearchContent from '@/components/SearchContent';
-import { useAudio } from '@/context/AudioContext';
+
+function SearchInner() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('q') || '';
+
+  return <SearchContent key={query} />;
+}
 
 export default function SearchPage() {
-  const { onTrackSelect } = useAudio();
-
   return (
     <div className="flex h-screen overflow-hidden bg-black">
       <Sidebar />
-      <SearchContent onPlayTrack={onTrackSelect} />
+      <Suspense>
+        <SearchInner />
+      </Suspense>
     </div>
   );
 }

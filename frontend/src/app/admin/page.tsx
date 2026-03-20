@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Music2, Plus, Pencil, Trash2, X, Music, Disc3, Mic2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/components/ToastProvider';
@@ -39,11 +39,11 @@ const fieldsByTab: Record<Tab, { key: string; label: string; type: string; isFil
   ],
 };
 
-function getDisplayName(tab: Tab, item: any): string {
+function getDisplayName(tab: Tab, item: Record<string, string>): string {
   return item.title || item.name || 'Untitled';
 }
 
-function getSubtext(tab: Tab, item: any): string {
+function getSubtext(tab: Tab, item: Record<string, string>): string {
   if (tab === 'songs') return `${item.artist} - ${item.album}`;
   if (tab === 'albums') return `${item.artist} - ${item.year}`;
   if (tab === 'artists') return item.genre || '';
@@ -54,7 +54,7 @@ export default function AdminPage() {
   const { addToast } = useToast();
   const [authorized, setAuthorized] = useState<boolean | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('songs');
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -62,6 +62,7 @@ export default function AdminPage() {
   const [formFiles, setFormFiles] = useState<Record<string, File>>({});
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     fetch('http://localhost:3001/auth/me', { credentials: 'include' })
@@ -78,25 +79,28 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!authorized) return;
-    fetchItems();
-  }, [activeTab, authorized]);
-
-  async function fetchItems() {
-    setLoading(true);
-    try {
-      const res = await fetch(`${API}/admin/${activeTab}`, { credentials: 'include' });
-      if (res.ok) {
-        setItems(await res.json());
-      } else {
+    let cancelled = false;
+    async function fetchItems() {
+      setLoading(true);
+      try {
+        const res = await fetch(`${API}/admin/${activeTab}`, { credentials: 'include' });
+        if (cancelled) return;
+        if (res.ok) {
+          setItems(await res.json());
+        } else {
+          setItems([]);
+          addToast(`Failed to load ${activeTab}.`, 'error');
+        }
+      } catch {
+        if (cancelled) return;
         setItems([]);
-        addToast(`Failed to load ${activeTab}.`, 'error');
+        addToast(`Could not connect to server.`, 'error');
       }
-    } catch {
-      setItems([]);
-      addToast(`Could not connect to server.`, 'error');
+      if (!cancelled) setLoading(false);
     }
-    setLoading(false);
-  }
+    fetchItems();
+    return () => { cancelled = true; };
+  }, [activeTab, authorized, addToast, refreshKey]);
 
   function openCreateForm() {
     setEditingId(null);
@@ -106,7 +110,7 @@ export default function AdminPage() {
     setError('');
   }
 
-  function openEditForm(item: any) {
+  function openEditForm(item: Record<string, string>) {
     setEditingId(item.id);
     const data: Record<string, string> = {};
     fieldsByTab[activeTab].forEach((f) => {
@@ -120,10 +124,13 @@ export default function AdminPage() {
 
   function handleFileChange(key: string, file: File | null) {
     if (file) {
-      setFormFiles({ ...formFiles, [key]: file });
+      setFormFiles((prev) => ({ ...prev, [key]: file }));
     } else {
-      const { [key]: _, ...rest } = formFiles;
-      setFormFiles(rest);
+      setFormFiles((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
     }
   }
 
@@ -151,7 +158,7 @@ export default function AdminPage() {
     setError('');
     setUploading(true);
 
-    const body: Record<string, any> = { ...formData };
+    const body: Record<string, string | number> = { ...formData };
     fieldsByTab[activeTab].forEach((f) => {
       if (f.type === 'number') body[f.key] = Number(body[f.key]);
     });
@@ -183,7 +190,7 @@ export default function AdminPage() {
       });
       if (res.ok) {
         setShowForm(false);
-        fetchItems();
+        setRefreshKey((k) => k + 1);
         addToast(
           editingId ? `${label} updated successfully.` : `${label} created successfully.`,
           'success'
@@ -209,7 +216,7 @@ export default function AdminPage() {
         credentials: 'include',
       });
       if (res.ok) {
-        fetchItems();
+        setRefreshKey((k) => k + 1);
         addToast(`${label} deleted successfully.`, 'success');
       } else {
         addToast(`Failed to delete ${label}.`, 'error');
@@ -310,6 +317,7 @@ export default function AdminPage() {
                                 <span className="text-xs text-center">Audio file selected</span>
                               </div>
                             ) : (
+                              /* eslint-disable-next-line @next/next/no-img-element */
                               <img
                                 src={URL.createObjectURL(formFiles[field.key])}
                                 alt="Preview"
@@ -321,6 +329,7 @@ export default function AdminPage() {
                               <span className="text-xs text-center">Audio file</span>
                             </div>
                           ) : (
+                            /* eslint-disable-next-line @next/next/no-img-element */
                             <img
                               src={`http://localhost:8080/${formData[field.key]}`}
                               alt="Current"

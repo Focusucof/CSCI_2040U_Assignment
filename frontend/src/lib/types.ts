@@ -33,7 +33,3 @@ export interface Artist {
   genre: string;
 }
 
-export interface Recommendation {
-  reason: string;
-  tracks: Track[];
-}

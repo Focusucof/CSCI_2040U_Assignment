@@ -1,68 +1,25 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Maximize2, Heart } from 'lucide-react';
 import Image from 'next/image';
 import { useAudio } from '@/context/AudioContext';
 
+function formatTime(time: number) {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
 export default function NowPlaying() {
-  const { currentTrack, isPlaying, volume, onPlayPause, setVolume } = useAudio();
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek } = useAudio();
 
-  useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio();
-    }
-    const audio = audioRef.current;
-
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const handleLoadedMetadata = () => setDuration(audio.duration);
-    const handleEnded = () => onPlayPause(false);
-
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, [onPlayPause]);
-
-  useEffect(() => {
-    if (currentTrack?.audioUrl && audioRef.current) {
-      audioRef.current.src = currentTrack.audioUrl;
-      if (isPlaying) {
-        audioRef.current.play().catch(console.error);
-      }
-    }
-  }, [currentTrack?.audioUrl]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(console.error);
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  }, [isPlaying]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (audioRef.current && duration > 0) {
+    if (duration > 0) {
       const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const percentage = x / rect.width;
-      audioRef.current.currentTime = percentage * duration;
+      const percentage = (e.clientX - rect.left) / rect.width;
+      seek(percentage * duration);
     }
   };
 
@@ -73,14 +30,6 @@ export default function NowPlaying() {
       setVolume(Math.max(0, Math.min(1, x / rect.width)));
     }
   };
-
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   if (!currentTrack) return null;
 
@@ -112,17 +61,13 @@ export default function NowPlaying() {
           <button className="text-zinc-400 hover:text-white transition-colors">
             <Shuffle className="w-4 h-4" />
           </button>
-          <button 
+          <button
             className="text-zinc-400 hover:text-white transition-colors"
-            onClick={() => {
-              if (audioRef.current) {
-                audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
-              }
-            }}
+            onClick={() => seek(Math.max(0, currentTime - 10))}
           >
             <SkipBack className="w-5 h-5 fill-current" />
           </button>
-          <button 
+          <button
             className="w-10 h-10 play-btn rounded-full flex items-center justify-center hover:scale-105 transition-transform"
             onClick={() => onPlayPause(!isPlaying)}
           >
@@ -132,13 +77,9 @@ export default function NowPlaying() {
               <Play className="w-5 h-5 text-white fill-current ml-0.5" />
             )}
           </button>
-          <button 
+          <button
             className="text-zinc-400 hover:text-white transition-colors"
-            onClick={() => {
-              if (audioRef.current) {
-                audioRef.current.currentTime = Math.min(duration, audioRef.current.currentTime + 10);
-              }
-            }}
+            onClick={() => seek(Math.min(duration, currentTime + 10))}
           >
             <SkipForward className="w-5 h-5 fill-current" />
           </button>
@@ -148,11 +89,11 @@ export default function NowPlaying() {
         </div>
         <div className="w-full max-w-md flex items-center gap-3">
           <span className="text-[10px] text-zinc-500 font-mono">{formatTime(currentTime)}</span>
-          <div 
+          <div
             className="h-1.5 flex-1 bg-white/10 rounded-full overflow-hidden group cursor-pointer"
             onClick={handleSeek}
           >
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-purple-500 to-cyan-500 group-hover:from-purple-400 group-hover:to-cyan-400 transition-all"
               style={{ width: `${progress}%` }}
             />
@@ -167,7 +108,7 @@ export default function NowPlaying() {
           <Volume2 className="w-4 h-4" />
         </button>
         <div className="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden">
-          <div 
+          <div
             className="h-full bg-gradient-to-r from-purple-500 to-cyan-500 cursor-pointer"
             style={{ width: `${volume * 100}%` }}
             onClick={handleVolumeChange}
