@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -111,5 +110,35 @@ public class SongService {
             writeSongs(songs);
         }
         return removed;
+    }
+
+    public List<Song> searchSongs(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return readSongs();
+        }
+        
+        String lowerQuery = query.toLowerCase().trim();
+        List<Song> allSongs = readSongs();
+        List<Song> results = new ArrayList<>();
+        
+        for (Song song : allSongs) {
+            if (matchesSearch(song, lowerQuery)) {
+                results.add(song);
+            }
+        }
+        
+        return results;
+    }
+
+    private boolean matchesSearch(Song song, String query) {
+        return containsIgnoreCase(song.getTitle(), query) ||
+               containsIgnoreCase(song.getArtist(), query) ||
+               containsIgnoreCase(song.getAlbum(), query) ||
+               containsIgnoreCase(song.getGenre(), query);
+    }
+
+    private boolean containsIgnoreCase(String field, String query) {
+        if (field == null) return false;
+        return field.toLowerCase().contains(query);
     }
 }

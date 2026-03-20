@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ViewTransitions } from 'next-view-transitions';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
 
@@ -9,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Echo | Music Discovery',
+  title: 'Streamly | Music Discovery',
   description: 'AI-powered music discovery platform',
 };
 
@@ -20,8 +21,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} dark`}>
-      <body suppressHydrationWarning className="bg-zinc-950 text-zinc-100 font-sans antialiased">
-        <ToastProvider>{children}</ToastProvider>
+      <body suppressHydrationWarning className="bg-vibrant text-zinc-100 font-sans antialiased">
+        <ToastProvider>
+          <ViewTransitions>
+            {children}
+          </ViewTransitions>
+        </ToastProvider>
       </body>
     </html>
   );

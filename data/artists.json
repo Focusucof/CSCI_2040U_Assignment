@@ -1,0 +1,17 @@
+[
+  {"id": "1", "name": "Queen", "imageUrl": "https://picsum.photos/seed/artist1/300/300", "genre": "Rock"},
+  {"id": "2", "name": "Led Zeppelin", "imageUrl": "https://picsum.photos/seed/artist2/300/300", "genre": "Rock"},
+  {"id": "3", "name": "Eagles", "imageUrl": "https://picsum.photos/seed/artist3/300/300", "genre": "Rock"},
+  {"id": "4", "name": "Guns N' Roses", "imageUrl": "https://picsum.photos/seed/artist4/300/300", "genre": "Rock"},
+  {"id": "5", "name": "Nirvana", "imageUrl": "https://picsum.photos/seed/artist5/300/300", "genre": "Grunge"},
+  {"id": "6", "name": "Michael Jackson", "imageUrl": "https://picsum.photos/seed/artist6/300/300", "genre": "Pop"},
+  {"id": "7", "name": "Prince", "imageUrl": "https://picsum.photos/seed/artist7/300/300", "genre": "Pop"},
+  {"id": "8", "name": "Pink Floyd", "imageUrl": "https://picsum.photos/seed/artist8/300/300", "genre": "Progressive Rock"},
+  {"id": "9", "name": "Taylor Swift", "imageUrl": "https://picsum.photos/seed/artist9/300/300", "genre": "Pop"},
+  {"id": "10", "name": "Adele", "imageUrl": "https://picsum.photos/seed/artist10/300/300", "genre": "Pop Soul"},
+  {"id": "11", "name": "Ed Sheeran", "imageUrl": "https://picsum.photos/seed/artist11/300/300", "genre": "Pop"},
+  {"id": "12", "name": "Bruno Mars", "imageUrl": "https://picsum.photos/seed/artist12/300/300", "genre": "Pop"},
+  {"id": "13", "name": "The Weeknd", "imageUrl": "https://picsum.photos/seed/artist13/300/300", "genre": "R&B"},
+  {"id": "14", "name": "Drake", "imageUrl": "https://picsum.photos/seed/artist14/300/300", "genre": "Hip Hop"},
+  {"id": "15", "name": "Rihanna", "imageUrl": "https://picsum.photos/seed/artist15/300/300", "genre": "R&B"}
+]

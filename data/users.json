@@ -22,5 +22,13 @@
     "likedSongs": [],
     "playlists": [],
     "isAdmin": false
+  },
+  {
+    "id": "83d50162-597c-4be9-99cd-24430c195b99",
+    "username": "admin",
+    "password": "$2b$10$BfY/OvaEDixcYagwh9wXuuXRwd/ecCzVQEmK6PFO4E4wP3dSGLYya",
+    "likedSongs": [],
+    "playlists": [],
+    "isAdmin": false
   }
 ]
