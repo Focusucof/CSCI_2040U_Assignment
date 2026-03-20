@@ -43,31 +43,31 @@ export default function AccountMenu() {
     <div ref={menuRef} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="w-9 h-9 rounded-full bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center transition-colors"
+        className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center transition-all hover:shadow-lg hover:shadow-purple-500/20"
       >
-        <UserCircle className="w-6 h-6 text-zinc-300" />
+        <UserCircle className="w-6 h-6 text-white" />
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-44 bg-zinc-800 border border-zinc-700 rounded-lg shadow-xl py-1 z-50">
+        <div className="absolute right-0 mt-2 w-48 bg-[#1E1E1E] border border-white/10 rounded-xl shadow-xl py-1 z-50">
           {user ? (
             <>
-              <div className="px-4 py-2 border-b border-zinc-700">
+              <div className="px-4 py-3 border-b border-white/5">
                 <p className="text-sm font-medium text-white truncate">{user.username}</p>
               </div>
               {user.isAdmin && (
                 <Link
                   href="/admin"
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-zinc-700 transition-colors"
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
                 >
-                  <Shield className="w-4 h-4" />
+                  <Shield className="w-4 h-4 text-purple-400" />
                   Admin Panel
                 </Link>
               )}
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-zinc-700 transition-colors"
+                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
                 Log Out
@@ -77,7 +77,7 @@ export default function AccountMenu() {
             <Link
               href="/login"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-zinc-700 transition-colors"
+              className="flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
             >
               <LogIn className="w-4 h-4" />
               Log In

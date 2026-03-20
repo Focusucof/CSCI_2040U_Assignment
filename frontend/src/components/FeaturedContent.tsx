@@ -87,49 +87,56 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
 
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
-      {/* Top bar with greeting, search, and account */}
-      <div className="flex items-start justify-between mb-8 gap-4">
-        <div className="flex-1 max-w-md">
-          {loading ? (
-            <div>
-              <h1 className="text-3xl font-bold text-white">Loading...</h1>
-            </div>
-          ) : isSearching ? (
-            <div>
-              <h1 className="text-3xl font-bold text-white">Search Results</h1>
-              <p className="text-zinc-400 mt-1">
-                {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
-              </p>
-            </div>
-          ) : (
-            <div>
-              <h1 className="text-3xl font-bold text-white">Good evening</h1>
-              <p className="text-zinc-400 mt-1">Discover something new today.</p>
-            </div>
-          )}
-        </div>
-        
-        {/* Search Bar */}
-        <div className="relative w-full max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+      {/* Top bar - Search (centered) and Account (right) */}
+      <div className="flex items-center justify-between gap-4 mb-6">
+        {/* Empty div for left spacing */}
+        <div className="w-10" />
+
+        {/* Search Bar - Centered */}
+        <div className="relative flex-1 max-w-xl mx-4">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
           <input
             type="text"
             placeholder="Search songs, artists, albums..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-zinc-800 text-white placeholder-zinc-400 pl-10 pr-10 py-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full bg-[#1E1E1E] text-white placeholder-zinc-400 pl-12 pr-12 py-3 rounded-xl text-sm focus:outline-none input-glow transition-all"
           />
           {searchQuery && (
             <button
               onClick={clearSearch}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
 
-        <AccountMenu />
+        {/* Account - Right */}
+        <div className="flex-shrink-0">
+          <AccountMenu />
+        </div>
+      </div>
+
+      {/* Greeting */}
+      <div className="mb-8">
+        {loading ? (
+          <div>
+            <h1 className="text-3xl font-bold text-white">Loading...</h1>
+          </div>
+        ) : isSearching ? (
+          <div>
+            <h1 className="text-3xl font-bold text-white">Search Results</h1>
+            <p className="text-zinc-400 mt-1">
+              {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
+            </p>
+          </div>
+        ) : (
+          <div>
+            <h1 className="text-3xl font-bold text-white">Good evening</h1>
+            <p className="text-zinc-400 mt-1">Discover something new today.</p>
+          </div>
+        )}
       </div>
 
 
@@ -138,19 +145,20 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
           <button
             key={track.id}
             onClick={() => onPlayTrack(track)}
-            className="group flex items-center gap-3 bg-zinc-800/50 hover:bg-zinc-700/60 rounded-md overflow-hidden transition-colors"
+            className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="relative w-12 h-12 flex-shrink-0">
+            <div className="relative w-14 h-14 flex-shrink-0">
               <Image
                 src={track.coverUrl}
                 alt={track.title}
                 fill
                 className="object-cover"
-                sizes="48px"
+                sizes="56px"
               />
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
             </div>
-            <span className="text-sm font-semibold text-white truncate pr-3">{track.title}</span>
-            <div className="ml-auto mr-3 w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg flex-shrink-0">
+            <span className="text-sm font-semibold text-white truncate pr-3 group-hover:text-purple-300 transition-colors">{track.title}</span>
+            <div className="ml-auto mr-3 w-9 h-9 play-btn rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 flex-shrink-0">
               <Play className="w-4 h-4 text-white fill-current ml-0.5" />
             </div>
           </button>

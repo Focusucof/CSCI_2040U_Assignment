@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} dark`}>
-      <body suppressHydrationWarning className="bg-zinc-950 text-zinc-100 font-sans antialiased">
+      <body suppressHydrationWarning className="bg-vibrant text-zinc-100 font-sans antialiased">
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

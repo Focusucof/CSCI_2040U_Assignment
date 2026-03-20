@@ -13,10 +13,10 @@ export default function NowPlaying({ currentTrack }: NowPlayingProps) {
   if (!currentTrack) return null;
 
   return (
-    <div className="h-24 bg-zinc-900/90 backdrop-blur-md border-t border-zinc-800 px-4 flex items-center justify-between fixed bottom-0 left-0 right-0 z-50">
+    <div className="h-24 bg-[#0a0a0a] border-t border-white/5 px-6 flex items-center justify-between fixed bottom-0 left-0 right-0 z-50">
       {/* Track Info */}
       <div className="flex items-center gap-4 w-1/3">
-        <div className="relative w-14 h-14 rounded-md overflow-hidden flex-shrink-0">
+        <div className="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 shadow-lg">
           <Image
             src={currentTrack.coverUrl}
             alt={currentTrack.title}
@@ -29,7 +29,7 @@ export default function NowPlaying({ currentTrack }: NowPlayingProps) {
           <h4 className="text-sm font-medium text-white truncate">{currentTrack.title}</h4>
           <p className="text-xs text-zinc-400 truncate">{currentTrack.artist}</p>
         </div>
-        <button className="text-zinc-400 hover:text-white transition-colors ml-2">
+        <button className="text-zinc-400 hover:text-rose-500 transition-colors ml-2">
           <Heart className="w-4 h-4" />
         </button>
       </div>
@@ -43,8 +43,8 @@ export default function NowPlaying({ currentTrack }: NowPlayingProps) {
           <button className="text-zinc-400 hover:text-white transition-colors">
             <SkipBack className="w-5 h-5 fill-current" />
           </button>
-          <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
-            <Play className="w-5 h-5 text-black fill-current ml-0.5" />
+          <button className="w-10 h-10 play-btn rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+            <Play className="w-5 h-5 text-white fill-current ml-0.5" />
           </button>
           <button className="text-zinc-400 hover:text-white transition-colors">
             <SkipForward className="w-5 h-5 fill-current" />
@@ -53,10 +53,10 @@ export default function NowPlaying({ currentTrack }: NowPlayingProps) {
             <Repeat className="w-4 h-4" />
           </button>
         </div>
-        <div className="w-full max-w-md flex items-center gap-2">
+        <div className="w-full max-w-md flex items-center gap-3">
           <span className="text-[10px] text-zinc-500 font-mono">0:45</span>
-          <div className="h-1 flex-1 bg-zinc-800 rounded-full overflow-hidden group cursor-pointer">
-            <div className="h-full w-1/3 bg-white group-hover:bg-indigo-500 transition-colors" />
+          <div className="h-1.5 flex-1 bg-white/10 rounded-full overflow-hidden group cursor-pointer">
+            <div className="h-full w-1/3 bg-gradient-to-r from-purple-500 to-cyan-500 group-hover:from-purple-400 group-hover:to-cyan-400 transition-all" />
           </div>
           <span className="text-[10px] text-zinc-500 font-mono">{currentTrack.duration}</span>
         </div>
@@ -67,8 +67,8 @@ export default function NowPlaying({ currentTrack }: NowPlayingProps) {
         <button className="text-zinc-400 hover:text-white transition-colors">
           <Volume2 className="w-4 h-4" />
         </button>
-        <div className="w-24 h-1 bg-zinc-800 rounded-full overflow-hidden">
-          <div className="h-full w-2/3 bg-zinc-400" />
+        <div className="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden">
+          <div className="h-full w-2/3 bg-gradient-to-r from-purple-500 to-cyan-500" />
         </div>
         <button className="text-zinc-400 hover:text-white transition-colors">
           <Maximize2 className="w-4 h-4" />
