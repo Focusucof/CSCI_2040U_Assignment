@@ -5,13 +5,14 @@ import org.junit.jupiter.api.Test;
 public class SongTest {
     @Test
     public void test() {
-        Song song = new Song("1", "Headlines", "Drake", "Take Care", "http://0.0.0.0", "5:00", "Hip Hop");
+        Song song = new Song("1", "Headlines", "Drake", "Take Care", "http://0.0.0.0", "http://0.0.0.0", "5:00", "Hip Hop");
 
         String expectedID = "1";
         String expectedTitle = "Headlines";
         String expectedArtist = "Drake";
         String expectedAlbum = "Take Care";
         String expectedCoverURL = "http://0.0.0.0";
+        String expectedAudioURL = "http://0.0.0.0";
         String expectedDuration = "5:00";
         String expectedGenre = "Hip Hop";
 
@@ -20,6 +21,7 @@ public class SongTest {
         String actualArtist = song.getArtist();
         String actualAlbum = song.getAlbum();
         String actualCoverURL = song.getCoverUrl();
+        String actualAudioURL = song.getAudioURL();
         String actualDuration = song.getDuration();
         String actualGenre = song.getGenre();
 
@@ -30,6 +32,7 @@ public class SongTest {
         Assertions.assertEquals(expectedCoverURL, actualCoverURL);
         Assertions.assertEquals(expectedDuration, actualDuration);
         Assertions.assertEquals(expectedGenre, actualGenre);
+        Assertions.assertEquals(expectedAudioURL, actualAudioURL);
 
 
 

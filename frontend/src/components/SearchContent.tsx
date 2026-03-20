@@ -15,15 +15,22 @@ const ARTISTS_API = 'http://localhost:8080/admin/artists';
 const BACKEND_URL = 'http://localhost:8080';
 
 function normalizeTrackUrl(track: Track): Track {
+  let normalized = track;
   if (track.coverUrl && !track.coverUrl.startsWith('http')) {
-    return { ...track, coverUrl: BACKEND_URL + track.coverUrl };
+    const prefix = track.coverUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
   }
-  return track;
+  if (track.audioUrl && !track.audioUrl.startsWith('http')) {
+    const prefix = track.audioUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
+  }
+  return normalized;
 }
 
 function normalizeImageUrl(url: string): string {
   if (url && !url.startsWith('http')) {
-    return BACKEND_URL + url;
+    const prefix = url.startsWith('/') ? '' : '/';
+    return BACKEND_URL + prefix + url;
   }
   return url;
 }

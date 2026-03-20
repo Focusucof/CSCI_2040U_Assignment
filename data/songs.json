@@ -1168,5 +1168,16 @@
     "genre": "Rock",
     "id": "3da35885-a880-4c29-b077-47d003512228",
     "title": "Spring Time"
+  },
+  {"id": "ccda77ef-4756-4cea-bd67-2058bd98a86a"},
+  {
+    "coverUrl": "/uploads/c1594de6-aa4a-4fb7-80d0-da5726cac0ad.jpg",
+    "duration": "5:00",
+    "audioUrl": "/uploads/e80766a3-f5b3-4e92-a710-d240a2402ba8.mp3",
+    "artist": "Dave",
+    "album": "Raindance",
+    "genre": "Afrobeat",
+    "id": "ce70e8cb-8adb-4a59-a45a-4b49fc9dba4a",
+    "title": "Raindance"
   }
 ]

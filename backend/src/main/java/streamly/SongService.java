@@ -48,6 +48,7 @@ public class SongService {
         song.setArtist(obj.optString("artist", null));
         song.setAlbum(obj.optString("album", null));
         song.setCoverUrl(obj.optString("coverUrl", null));
+        song.setAudioURL(obj.optString("audioUrl", obj.optString("audioURL", null)));
         song.setDuration(obj.optString("duration", null));
         song.setGenre(obj.optString("genre", null));
         return song;
@@ -60,6 +61,7 @@ public class SongService {
         obj.put("artist", song.getArtist());
         obj.put("album", song.getAlbum());
         obj.put("coverUrl", song.getCoverUrl());
+        obj.put("audioUrl", song.getAudioURL());
         obj.put("duration", song.getDuration());
         obj.put("genre", song.getGenre());
         return obj;

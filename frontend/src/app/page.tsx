@@ -16,16 +16,18 @@ export default function Home() {
     genre: 'Placeholder',
     coverUrl: 'https://picsum.photos/seed/default/300/300',
   });
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = (track: Track) => {
     setCurrentTrack(track);
+    setIsPlaying(true);
   };
 
   return (
     <div className="flex h-screen overflow-hidden bg-black">
       <Sidebar />
       <FeaturedContent onPlayTrack={handlePlay} />
-      <NowPlaying currentTrack={currentTrack} />
+      <NowPlaying currentTrack={currentTrack} isPlaying={isPlaying} onPlayPause={setIsPlaying} />
     </div>
   );
 }

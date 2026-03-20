@@ -17,15 +17,18 @@ export default function SearchPage() {
     coverUrl: 'https://picsum.photos/seed/default/300/300',
   });
 
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const handlePlay = (track: Track) => {
     setCurrentTrack(track);
+    setIsPlaying(true);
   };
 
   return (
     <div className="flex h-screen overflow-hidden bg-black">
       <Sidebar />
       <SearchContent onPlayTrack={handlePlay} />
-      <NowPlaying currentTrack={currentTrack} />
+      <NowPlaying currentTrack={currentTrack} isPlaying={isPlaying} onPlayPause={setIsPlaying} />
     </div>
   );
 }

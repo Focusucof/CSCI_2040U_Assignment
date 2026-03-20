@@ -21,6 +21,7 @@ const fieldsByTab: Record<Tab, { key: string; label: string; type: string; isFil
     { key: 'artist', label: 'Artist', type: 'text' },
     { key: 'album', label: 'Album', type: 'text' },
     { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
+    { key : 'audioUrl', label: 'Audio File', type: 'file', isFile: true },
     { key: 'duration', label: 'Duration', type: 'text' },
     { key: 'genre', label: 'Genre', type: 'text' },
   ],
@@ -304,14 +305,24 @@ export default function AdminPage() {
                       {(formData[field.key] || formFiles[field.key]) && (
                         <div className="mb-3">
                           {formFiles[field.key] ? (
-                            <img
-                              src={URL.createObjectURL(formFiles[field.key])}
-                              alt="Preview"
-                              className="w-24 h-24 object-cover rounded-lg"
-                            />
+                            field.key === 'audioUrl' ? (
+                              <div className="w-24 h-24 bg-[#252525] rounded-lg flex items-center justify-center text-zinc-400">
+                                <span className="text-xs text-center">Audio file selected</span>
+                              </div>
+                            ) : (
+                              <img
+                                src={URL.createObjectURL(formFiles[field.key])}
+                                alt="Preview"
+                                className="w-24 h-24 object-cover rounded-lg"
+                              />
+                            )
+                          ) : field.key === 'audioUrl' ? (
+                            <div className="w-24 h-24 bg-[#252525] rounded-lg flex items-center justify-center text-zinc-400">
+                              <span className="text-xs text-center">Audio file</span>
+                            </div>
                           ) : (
                             <img
-                              src={`http://localhost:8080${formData[field.key]}`}
+                              src={`http://localhost:8080/${formData[field.key]}`}
                               alt="Current"
                               className="w-24 h-24 object-cover rounded-none"
                               onError={(e) => {
@@ -323,7 +334,7 @@ export default function AdminPage() {
                       )}
                       <input
                         type="file"
-                        accept="image/*"
+                        accept={field.key === 'audioUrl' ? 'audio/*' : 'image/*'}
                         onChange={(e) => handleFileChange(field.key, e.target.files?.[0] || null)}
                         className="w-full bg-[#252525] border border-white/10 rounded-none px-3 py-2.5 text-sm text-white file:mr-4 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:bg-gradient-to-r file:from-purple-500 file:to-cyan-500 file:text-white file:cursor-pointer"
                       />

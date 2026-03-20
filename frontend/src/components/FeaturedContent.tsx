@@ -17,10 +17,18 @@ const API_BASE = 'http://localhost:8080/admin/songs';
 const BACKEND_URL = 'http://localhost:8080';
 
 function normalizeTrackUrl(track: Track): Track {
-  if (track.coverUrl && !track.coverUrl.startsWith('http')) {
-    return { ...track, coverUrl: BACKEND_URL + track.coverUrl };
+  let normalized = track;
+  if (track.coverUrl && track.coverUrl.trim() !== '' && !track.coverUrl.startsWith('http')) {
+    const prefix = track.coverUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
+  } else if (!track.coverUrl || track.coverUrl.trim() === '') {
+    normalized = { ...normalized, coverUrl: '/placeholder-album.png' };
   }
-  return track;
+  if (track.audioUrl && !track.audioUrl.startsWith('http')) {
+    const prefix = track.audioUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
+  }
+  return normalized;
 }
 
 interface HorizontalScrollProps {
@@ -104,9 +112,9 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
     const query = searchQuery.toLowerCase();
     const suggestions = allSongs.filter(
       track =>
-        track.title.toLowerCase().includes(query) ||
-        track.artist.toLowerCase().includes(query) ||
-        track.album.toLowerCase().includes(query)
+        track.title?.toLowerCase().includes(query) ||
+        track.artist?.toLowerCase().includes(query) ||
+        track.album?.toLowerCase().includes(query)
     ).slice(0, 5);
 
     setSearchSuggestions(suggestions);
