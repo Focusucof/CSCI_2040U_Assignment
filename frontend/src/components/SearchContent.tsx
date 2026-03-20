@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Play, Music, Disc3, ListMusic, Mic2, Search, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { Track } from '@/lib/types';
 import { newAlbums, featuredPlaylists, featuredArtists } from '@/lib/mockData';
 import SectionHeader from '@/components/SectionHeader';

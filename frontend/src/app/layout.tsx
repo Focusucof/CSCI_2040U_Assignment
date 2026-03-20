@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ViewTransitions } from 'next-view-transitions';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
 
@@ -21,7 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} dark`}>
       <body suppressHydrationWarning className="bg-vibrant text-zinc-100 font-sans antialiased">
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <ViewTransitions>
+            {children}
+          </ViewTransitions>
+        </ToastProvider>
       </body>
     </html>
   );

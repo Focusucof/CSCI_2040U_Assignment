@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { UserCircle, LogIn, LogOut, Shield } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ToastProvider';
 
