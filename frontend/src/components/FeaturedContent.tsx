@@ -13,6 +13,14 @@ import ArtistCard from '@/components/ArtistCard';
 import AccountMenu from '@/components/AccountMenu';
 
 const API_BASE = 'http://localhost:8080/admin/songs';
+const BACKEND_URL = 'http://localhost:8080';
+
+function normalizeTrackUrl(track: Track): Track {
+  if (track.coverUrl && !track.coverUrl.startsWith('http')) {
+    return { ...track, coverUrl: BACKEND_URL + track.coverUrl };
+  }
+  return track;
+}
 
 interface FeaturedContentProps {
   onPlayTrack: (track: Track) => void;
@@ -31,7 +39,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
         const response = await fetch(API_BASE);
         if (response.ok) {
           const data = await response.json();
-          setAllSongs(data);
+          setAllSongs(data.map(normalizeTrackUrl));
         }
       } catch (error) {
         console.error('Failed to fetch songs:', error);
@@ -55,7 +63,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
         const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(searchQuery)}`);
         if (response.ok) {
           const data = await response.json();
-          setSearchResults(data);
+          setSearchResults(data.map(normalizeTrackUrl));
         } else {
           setSearchResults([]);
         }

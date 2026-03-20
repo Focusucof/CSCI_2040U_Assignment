@@ -16,31 +16,31 @@ const tabConfig: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: 'artists', label: 'Artists', icon: Mic2 },
 ];
 
-const fieldsByTab: Record<Tab, { key: string; label: string; type: string }[]> = {
+const fieldsByTab: Record<Tab, { key: string; label: string; type: string; isFile?: boolean }[]> = {
   songs: [
     { key: 'title', label: 'Title', type: 'text' },
     { key: 'artist', label: 'Artist', type: 'text' },
     { key: 'album', label: 'Album', type: 'text' },
-    { key: 'coverUrl', label: 'Cover URL', type: 'text' },
+    { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
     { key: 'duration', label: 'Duration', type: 'text' },
     { key: 'genre', label: 'Genre', type: 'text' },
   ],
   albums: [
     { key: 'title', label: 'Title', type: 'text' },
     { key: 'artist', label: 'Artist', type: 'text' },
-    { key: 'coverUrl', label: 'Cover URL', type: 'text' },
+    { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
     { key: 'year', label: 'Year', type: 'number' },
     { key: 'trackCount', label: 'Track Count', type: 'number' },
   ],
   playlists: [
     { key: 'title', label: 'Title', type: 'text' },
     { key: 'description', label: 'Description', type: 'text' },
-    { key: 'coverUrl', label: 'Cover URL', type: 'text' },
+    { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
     { key: 'trackCount', label: 'Track Count', type: 'number' },
   ],
   artists: [
     { key: 'name', label: 'Name', type: 'text' },
-    { key: 'imageUrl', label: 'Image URL', type: 'text' },
+    { key: 'imageUrl', label: 'Image', type: 'file', isFile: true },
     { key: 'genre', label: 'Genre', type: 'text' },
   ],
 };
@@ -66,6 +66,8 @@ export default function AdminPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
+  const [formFiles, setFormFiles] = useState<Record<string, File>>({});
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
 
   // Auth check
@@ -108,6 +110,7 @@ export default function AdminPage() {
   function openCreateForm() {
     setEditingId(null);
     setFormData({});
+    setFormFiles({});
     setShowForm(true);
     setError('');
   }
@@ -119,18 +122,62 @@ export default function AdminPage() {
       data[f.key] = String(item[f.key] ?? '');
     });
     setFormData(data);
+    setFormFiles({});
     setShowForm(true);
     setError('');
+  }
+
+  function handleFileChange(key: string, file: File | null) {
+    if (file) {
+      setFormFiles({ ...formFiles, [key]: file });
+    } else {
+      const { [key]: _, ...rest } = formFiles;
+      setFormFiles(rest);
+    }
+  }
+
+  async function uploadFile(file: File): Promise<string> {
+    const formDataUpload = new FormData();
+    formDataUpload.append('file', file);
+    
+    const res = await fetch(`${API}/admin/upload`, {
+      method: 'POST',
+      credentials: 'include',
+      body: formDataUpload,
+    });
+    
+    const text = await res.text();
+    if (!res.ok) {
+      console.error('Upload failed:', text);
+      throw new Error(text || 'Failed to upload file');
+    }
+    
+    return text;
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    setUploading(true);
 
     const body: Record<string, any> = { ...formData };
     fieldsByTab[activeTab].forEach((f) => {
       if (f.type === 'number') body[f.key] = Number(body[f.key]);
     });
+
+    const fileFields = fieldsByTab[activeTab].filter(f => f.isFile);
+    for (const field of fileFields) {
+      if (formFiles[field.key]) {
+        try {
+          const uploadedUrl = await uploadFile(formFiles[field.key]);
+          body[field.key] = uploadedUrl;
+        } catch {
+          setError('Failed to upload file. Please try again.');
+          setUploading(false);
+          return;
+        }
+      }
+    }
 
     const label = activeTab.slice(0, -1);
 
@@ -160,6 +207,7 @@ export default function AdminPage() {
       setError('Could not connect to server.');
       addToast('Could not connect to server.', 'error');
     }
+    setUploading(false);
   }
 
   async function handleDelete(id: string) {
@@ -262,21 +310,53 @@ export default function AdminPage() {
               {fieldsByTab[activeTab].map((field) => (
                 <div key={field.key}>
                   <label className="block text-sm text-zinc-400 mb-1">{field.label}</label>
-                  <input
-                    type={field.type}
-                    value={formData[field.key] || ''}
-                    onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
-                  />
+                  {field.isFile ? (
+                    <div>
+                      {(formData[field.key] || formFiles[field.key]) && (
+                        <div className="mb-2">
+                          {formFiles[field.key] ? (
+                            <img
+                              src={URL.createObjectURL(formFiles[field.key])}
+                              alt="Preview"
+                              className="w-24 h-24 object-cover rounded-lg"
+                            />
+                          ) : (
+                            <img
+                              src={`http://localhost:8080${formData[field.key]}`}
+                              alt="Current"
+                              className="w-24 h-24 object-cover rounded-lg"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = formData[field.key] || '';
+                              }}
+                            />
+                          )}
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(field.key, e.target.files?.[0] || null)}
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-white file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-indigo-600 file:text-white file:cursor-pointer"
+                      />
+                    </div>
+                  ) : (
+                    <input
+                      type={field.type}
+                      value={formData[field.key] || ''}
+                      onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                    />
+                  )}
                 </div>
               ))}
               <div className="sm:col-span-2">
                 {error && <p className="text-sm text-red-400 mb-2">{error}</p>}
                 <button
                   type="submit"
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-6 py-2 rounded-lg transition-colors"
+                  disabled={uploading}
+                  className="bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-800 text-white text-sm font-medium px-6 py-2 rounded-lg transition-colors"
                 >
-                  {editingId ? 'Save Changes' : 'Create'}
+                  {uploading ? 'Uploading...' : editingId ? 'Save Changes' : 'Create'}
                 </button>
               </div>
             </form>
