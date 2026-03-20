@@ -143,3 +143,19 @@
 .bg-gradient-accent {
   background: linear-gradient(135deg, #8B5CF6, #06B6D4);
 }
+
+/* Fade animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}

@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Music, Disc3, ListMusic, Mic2, Search, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Play, Music, Disc3, ListMusic, Mic2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Track } from '@/lib/types';
-import { newSongs, newAlbums, featuredPlaylists, featuredArtists } from '@/lib/mockData';
+import { newAlbums, featuredPlaylists, featuredArtists } from '@/lib/mockData';
 import SectionHeader from '@/components/SectionHeader';
 import SongCard from '@/components/SongCard';
 import AlbumCard from '@/components/AlbumCard';
@@ -69,11 +70,12 @@ interface FeaturedContentProps {
 }
 
 export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<Track[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const router = useRouter();
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchSuggestions, setSearchSuggestions] = useState<Track[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -93,39 +95,43 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
   }, []);
 
   useEffect(() => {
-    const searchSongs = async () => {
-      if (searchQuery.trim() === '') {
-        setSearchResults([]);
-        setIsSearching(false);
-        return;
-      }
+    if (searchQuery.trim() === '') {
+      setSearchSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
 
-      setIsSearching(true);
-      try {
-        const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(searchQuery)}`);
-        if (response.ok) {
-          const data = await response.json();
-          setSearchResults(data.map(normalizeTrackUrl));
-        } else {
-          setSearchResults([]);
-        }
-      } catch (error) {
-        console.error('Search error:', error);
-        setSearchResults([]);
-      }
-    };
+    const query = searchQuery.toLowerCase();
+    const suggestions = allSongs.filter(
+      track =>
+        track.title.toLowerCase().includes(query) ||
+        track.artist.toLowerCase().includes(query) ||
+        track.album.toLowerCase().includes(query)
+    ).slice(0, 5);
 
-    const debounce = setTimeout(searchSongs, 300);
-    return () => clearTimeout(debounce);
-  }, [searchQuery]);
+    setSearchSuggestions(suggestions);
+    setShowSuggestions(true);
+  }, [searchQuery, allSongs]);
 
-  const clearSearch = () => {
-    setSearchQuery('');
-    setSearchResults([]);
-    setIsSearching(false);
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
   };
 
-  const displayedTracks = isSearching ? searchResults : allSongs;
+  const handleSuggestionClick = (track: Track) => {
+    setShowSuggestions(false);
+    setSearchQuery('');
+    onPlayTrack(track);
+  };
+
+  const handleSuggestionKeyDown = (e: React.KeyboardEvent, track: Track) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSuggestionClick(track);
+    }
+  };
 
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
@@ -136,21 +142,54 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
 
         {/* Search Bar - Centered */}
         <div className="relative flex-1 max-w-xl mx-4">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-          <input
-            type="text"
-            placeholder="Search songs, artists, albums..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#1E1E1E] text-white placeholder-zinc-400 pl-12 pr-12 py-3 rounded-none text-sm focus:outline-none input-glow transition-all"
-          />
-          {searchQuery && (
-            <button
-              onClick={clearSearch}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
+          <form onSubmit={handleSearchSubmit}>
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => searchSuggestions.length > 0 && setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+              placeholder="Search songs, artists, albums..."
+              className="w-full bg-[#1E1E1E] text-white placeholder-zinc-400 pl-12 pr-12 py-3 rounded-none text-sm focus:outline-none input-glow transition-all"
+            />
+          </form>
+          
+          {/* Search Suggestions Dropdown */}
+          {showSuggestions && searchSuggestions.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-[#252525] border border-zinc-700 z-50 fade-in">
+              {searchSuggestions.map((track) => (
+                <button
+                  key={track.id}
+                  onClick={() => handleSuggestionClick(track)}
+                  onKeyDown={(e) => handleSuggestionKeyDown(e, track)}
+                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#303030] transition-all duration-200 text-left"
+                >
+                  <div className="relative w-10 h-10 flex-shrink-0">
+                    <Image
+                      src={track.coverUrl}
+                      alt={track.title}
+                      fill
+                      className="object-cover"
+                      sizes="40px"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white truncate">{track.title}</p>
+                    <p className="text-xs text-zinc-400 truncate">{track.artist} · {track.album}</p>
+                  </div>
+                </button>
+              ))}
+              <button
+                onClick={() => {
+                  router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                  setShowSuggestions(false);
+                }}
+                className="w-full px-4 py-2 text-sm text-purple-400 hover:bg-[#303030] transition-colors border-t border-zinc-700"
+              >
+                View all results for "{searchQuery}"
+              </button>
+            </div>
           )}
         </div>
 
@@ -166,13 +205,6 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
           <div>
             <h1 className="text-3xl font-bold text-white">Loading...</h1>
           </div>
-        ) : isSearching ? (
-          <div>
-            <h1 className="text-3xl font-bold text-white">Search Results</h1>
-            <p className="text-zinc-400 mt-1">
-              {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
-            </p>
-          </div>
         ) : (
           <div>
             <h1 className="text-3xl font-bold text-white">Good evening</h1>
@@ -182,10 +214,10 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
       </div>
 
 
-      {/* Quick Picks - Only show when not searching */}
-      {!isSearching && !loading && (
+      {/* Quick Picks */}
+      {!loading && (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
-          {displayedTracks.slice(0, 6).map((track) => (
+          {allSongs.slice(0, 6).map((track) => (
             <button
               key={track.id}
               onClick={() => onPlayTrack(track)}
@@ -209,46 +241,16 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
         </div>
       )}
 
-      {/* songs - Featured (horizontal scroll) or Search Results */}
+      {/* songs - Featured */}
       <section className="mb-10">
-        <SectionHeader 
-          icon={Music} 
-          title={isSearching ? `${searchResults.length} Results` : 'Featured'} 
-        />
+        <SectionHeader icon={Music} title="Featured" />
         {loading ? (
           <p className="text-zinc-400">Loading songs...</p>
-        ) : displayedTracks.length === 0 ? (
-          <p className="text-zinc-400">
-            {isSearching ? 'No songs found. Try a different search term.' : 'No songs available.'}
-          </p>
-        ) : isSearching ? (
-          <div className="space-y-2">
-            {displayedTracks.map((track) => (
-              <button
-                key={track.id}
-                onClick={() => onPlayTrack(track)}
-                className="w-full flex items-center gap-4 bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300"
-              >
-                <div className="relative w-14 h-14 flex-shrink-0">
-                  <Image
-                    src={track.coverUrl}
-                    alt={track.title}
-                    fill
-                    className="object-cover"
-                    sizes="56px"
-                  />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="text-sm font-semibold text-white truncate">{track.title}</h3>
-                  <p className="text-xs text-zinc-400 truncate">{track.artist} · {track.album} · {track.genre}</p>
-                </div>
-                <p className="text-xs text-zinc-500 px-3">{track.duration}</p>
-              </button>
-            ))}
-          </div>
+        ) : allSongs.length === 0 ? (
+          <p className="text-zinc-400">No songs available.</p>
         ) : (
           <HorizontalScroll>
-            {displayedTracks.slice(0, 10).map((track) => (
+            {allSongs.slice(0, 10).map((track) => (
               <div key={track.id} className="flex-shrink-0 w-48">
                 <SongCard track={track} onPlay={onPlayTrack} />
               </div>
@@ -258,46 +260,40 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
       </section>
 
       {/* New Albums */}
-      {!isSearching && (
-        <section className="mb-10">
-          <SectionHeader icon={Disc3} title="New Albums" />
-          <HorizontalScroll>
-            {newAlbums.map((album) => (
-              <div key={album.id} className="flex-shrink-0 w-48">
-                <AlbumCard album={album} />
-              </div>
-            ))}
-          </HorizontalScroll>
-        </section>
-      )}
+      <section className="mb-10">
+        <SectionHeader icon={Disc3} title="New Albums" />
+        <HorizontalScroll>
+          {newAlbums.map((album) => (
+            <div key={album.id} className="flex-shrink-0 w-48">
+              <AlbumCard album={album} />
+            </div>
+          ))}
+        </HorizontalScroll>
+      </section>
 
       {/* Featured Playlists */}
-      {!isSearching && (
-        <section className="mb-10">
-          <SectionHeader icon={ListMusic} title="Featured Playlists" />
-          <HorizontalScroll>
-            {featuredPlaylists.map((playlist) => (
-              <div key={playlist.id} className="flex-shrink-0 w-48">
-                <PlaylistCard playlist={playlist} />
-              </div>
-            ))}
-          </HorizontalScroll>
-        </section>
-      )}
+      <section className="mb-10">
+        <SectionHeader icon={ListMusic} title="Featured Playlists" />
+        <HorizontalScroll>
+          {featuredPlaylists.map((playlist) => (
+            <div key={playlist.id} className="flex-shrink-0 w-48">
+              <PlaylistCard playlist={playlist} />
+            </div>
+          ))}
+        </HorizontalScroll>
+      </section>
 
       {/* Featured Artists */}
-      {!isSearching && (
-        <section className="mb-10">
-          <SectionHeader icon={Mic2} title="Featured Artists" />
-          <HorizontalScroll>
-            {featuredArtists.map((artist) => (
-              <div key={artist.id} className="flex-shrink-0 w-48">
-                <ArtistCard artist={artist} />
-              </div>
-            ))}
-          </HorizontalScroll>
-        </section>
-      )}
+      <section className="mb-10">
+        <SectionHeader icon={Mic2} title="Featured Artists" />
+        <HorizontalScroll>
+          {featuredArtists.map((artist) => (
+            <div key={artist.id} className="flex-shrink-0 w-48">
+              <ArtistCard artist={artist} />
+            </div>
+          ))}
+        </HorizontalScroll>
+      </section>
     </main>
   );
 }
