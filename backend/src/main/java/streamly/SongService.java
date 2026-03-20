@@ -15,14 +15,19 @@ import java.util.UUID;
 @Service
 public class SongService {
 
-    private static final String DATA_FILE = "../data/songs.json";
+    private final String dataFile;
 
     public SongService() {
-        File dir = new File("data");
-        if (!dir.exists()) {
-            dir.mkdirs();
+        this("../data/songs.json");
+    }
+
+    public SongService(String dataFile) {
+        this.dataFile = dataFile;
+        File file = new File(dataFile);
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
         }
-        File file = new File(DATA_FILE);
         if (!file.exists()) {
             try {
                 Files.writeString(file.toPath(), "[]");
@@ -30,6 +35,10 @@ public class SongService {
                 throw new RuntimeException("Failed to initialize songs.json", e);
             }
         }
+    }
+
+    protected String getDataFile() {
+        return dataFile;
     }
 
     private Song jsonToSong(JSONObject obj) {
@@ -58,7 +67,7 @@ public class SongService {
 
     public List<Song> readSongs() {
         try {
-            String content = Files.readString(Path.of(DATA_FILE));
+            String content = Files.readString(Path.of(dataFile));
             JSONArray arr = new JSONArray(content);
             List<Song> songs = new ArrayList<>();
             for (int i = 0; i < arr.length(); i++) {
@@ -76,7 +85,7 @@ public class SongService {
             for (Song song : songs) {
                 arr.put(songToJson(song));
             }
-            Files.writeString(Path.of(DATA_FILE), arr.toString(2));
+            Files.writeString(Path.of(dataFile), arr.toString(2));
         } catch (IOException e) {
             throw new RuntimeException("Failed to write songs.json", e);
         }

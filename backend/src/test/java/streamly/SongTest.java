@@ -1,7 +1,6 @@
-package streamly.testing;
+package streamly;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import streamly.Song;
 
 public class SongTest {
     @Test
