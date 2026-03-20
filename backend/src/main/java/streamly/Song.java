@@ -58,7 +58,7 @@ public class Song {
     public void setCoverUrl(String coverUrl) {this.coverUrl = coverUrl;}
     public void setTitle(String title) {this.title = title;}
     public void setDuration(int duration) {this.duration = duration;}
-    public void setDuration(String duration) {this.duration = Integer.parseInt(duration);}
+    public void setDuration(String duration) {this.duration = Integer.parseInt(duration.split(":")[0]) * 60 + Integer.parseInt(duration.split(":")[1]);}
     public void setAlbumIDs(String[] album_ids) {this.album_ids = album_ids;}
     public void setAlbum(String album_id) {this.album_ids = new String[]{album_id};}
     public void setArtists(String[] artists) {this.artists = artists;}

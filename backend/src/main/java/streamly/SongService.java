@@ -119,21 +119,21 @@ public class SongService {
         List<Song> allSongs = readSongs();
         HashMap<Song, Float> results = new LinkedHashMap<>();
 
-        allSongs.sort((o1, o2) -> (int) (1000 * matchesSearch(o1, lowerQuery) - matchesSearch(o2, lowerQuery)));
-        
+        allSongs.sort((o1, o2) -> (int) (10000 * (matchesSearch(o1, lowerQuery) - matchesSearch(o2, lowerQuery))));
+        allSongs = allSongs.subList(0, 25);
+
         return allSongs;
     }
 
     private float matchesSearch(Song song, String query) {
         HashMap<String, Object> filter_map = new HashMap<>();
         filter_map.put("title", query);
-        filter_map.put("artists", query);
-        filter_map.put("genres", query);
+        filter_map.put("artists", new String[]{query});
+        filter_map.put("genres", new String[]{query});
         filter_map.put("albums", query);
 
         SongFilter filter = new SongFilter(filter_map, new HashMap<>());
 
-        // 1 if it passes any filter
         return filter.scoreAny(song);
     }
 

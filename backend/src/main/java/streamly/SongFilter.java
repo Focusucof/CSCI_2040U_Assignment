@@ -65,7 +65,7 @@ class SongFilter {
 
         LevenshteinDistance ld = LevenshteinDistance.getDefaultInstance();
         if (this.categories.contains("title")) {
-            score -= sigmoid(ld.apply(this.title, song.title.substring(0, this.title.length())))  * weights.getOrDefault("title", 1);
+            score -= sigmoid(ld.apply(this.title, song.title.substring(0, Math.min(this.title.length(), song.title.length()))))  * weights.getOrDefault("title", 1);
         }
 
         if (this.categories.contains("artists")) {
@@ -73,7 +73,7 @@ class SongFilter {
                 int closest = Integer.MAX_VALUE;
 
                 for(String song_artist : song.artists) {
-                    closest = Math.min(ld.apply(filter_artist, song_artist), closest);
+                    closest = Math.min(ld.apply(filter_artist, song_artist.substring(0, Math.min(filter_artist.length(), song_artist.length()))), closest);
                 }
 
                 score -= sigmoid(closest) * weights.getOrDefault("artists", 1);
@@ -101,7 +101,7 @@ class SongFilter {
                 int closest = Integer.MAX_VALUE;
 
                 for(String song_genre : song.genres) {
-                    closest = Math.min(ld.apply(filter_genre, song_genre), closest);
+                    closest = Math.min(ld.apply(filter_genre, song_genre.substring(0, Math.min(filter_genre.length(), song_genre.length()))), closest);
                 }
 
                 score -= sigmoid(closest) * weights.getOrDefault("genres", 1);
@@ -136,7 +136,7 @@ class SongFilter {
 
         LevenshteinDistance ld = LevenshteinDistance.getDefaultInstance();
         if (this.categories.contains("title")) {
-            score *= sigmoid(ld.apply(this.title, song.title.substring(0, this.title.length()))) * weights.getOrDefault("title", 1);
+            score *= sigmoid(ld.apply(this.title.toLowerCase(), song.title.toLowerCase().substring(0, Math.min(this.title.length(), song.title.length())))) * weights.getOrDefault("title", 1);
         }
 
         if (this.categories.contains("artists")) {
@@ -144,8 +144,11 @@ class SongFilter {
                 int closest = Integer.MAX_VALUE;
 
                 for(String song_artist : song.artists) {
-                    closest = Math.min(ld.apply(filter_artist, song_artist), closest);
+                    song_artist = song_artist.toLowerCase();
+                    int minLength = Math.min(filter_artist.length(), song_artist.length());
+                    closest = Math.min(ld.apply(filter_artist, song_artist.substring(0, minLength)), closest);
                 }
+
 
                 score *= sigmoid(closest) * weights.getOrDefault("artists", 1);
             }
@@ -172,7 +175,7 @@ class SongFilter {
                 int closest = Integer.MAX_VALUE;
 
                 for(String song_genre : song.genres) {
-                    closest = Math.min(ld.apply(filter_genre, song_genre), closest);
+                    closest = Math.min(ld.apply(filter_genre, song_genre.substring(0, Math.min(filter_genre.length(), song_genre.length()))), closest);
                 }
 
                 score *= sigmoid(closest) * weights.getOrDefault("genres", 1);
