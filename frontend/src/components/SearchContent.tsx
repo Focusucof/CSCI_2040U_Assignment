@@ -104,7 +104,8 @@ export default function SearchContent({ onPlayTrack }: SearchContentProps) {
       }
     };
 
-    fetchResults();
+    const debounce = setTimeout(fetchResults, 100);
+    return () => clearTimeout(debounce);
   }, [searchQuery]);
 
   const handleSearch = (e: React.FormEvent) => {
