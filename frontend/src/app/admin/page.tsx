@@ -7,6 +7,13 @@ import { useToast } from '@/components/ToastProvider';
 
 const API = 'http://localhost:8080';
 
+function getImageUrl(url: string | undefined): string {
+  if (!url) return '';
+  if (url.startsWith('http')) return url;
+  const path = url.startsWith('/') ? url : '/' + url;
+  return API + path;
+}
+
 type Tab = 'songs' | 'albums' | 'artists';
 
 const tabConfig: { key: Tab; label: string; icon: React.ElementType }[] = [
@@ -20,10 +27,12 @@ const fieldsByTab: Record<Tab, { key: string; label: string; type: string; isFil
     { key: 'title', label: 'Title', type: 'text' },
     { key: 'artists', label: 'Artists (comma separated)', type: 'text' },
     { key: 'album', label: 'Album', type: 'text' },
-    { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
-    { key : 'audioUrl', label: 'Audio File', type: 'file', isFile: true },
     { key: 'duration', label: 'Duration', type: 'text' },
     { key: 'genres', label: 'Genres (comma separated)', type: 'text' },
+    { key: 'releaseDate', label: 'Release Date (YYYY-MM-DD)', type: 'text' },
+    { key: 'explicit', label: 'Explicit', type: 'boolean' },
+    { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
+    { key : 'audioUrl', label: 'Audio File', type: 'file', isFile: true },
   ],
   albums: [
     { key: 'title', label: 'Title', type: 'text' },
@@ -166,9 +175,10 @@ export default function AdminPage() {
     setError('');
     setUploading(true);
 
-    const body: Record<string, string | number | string[]> = { ...formData };
+    const body: Record<string, string | number | string[] | boolean> = { ...formData };
     fieldsByTab[activeTab].forEach((f) => {
       if (f.type === 'number') body[f.key] = Number(body[f.key]);
+      if (f.type === 'boolean') body[f.key] = body[f.key] === 'true';
     });
 
     if (activeTab === 'songs') {
@@ -326,48 +336,53 @@ export default function AdminPage() {
                   <label className="block text-sm text-zinc-400 mb-2">{field.label}</label>
                   {field.isFile ? (
                     <div>
-                      {(formData[field.key] || formFiles[field.key]) && (
-                        <div className="mb-3">
-                          {formFiles[field.key] ? (
-                            field.key === 'audioUrl' ? (
-                              <div className="w-24 h-24 bg-[#252525] rounded-lg flex items-center justify-center text-zinc-400">
-                                <span className="text-xs text-center">Audio file selected</span>
-                              </div>
-                            ) : (
-                              /* eslint-disable-next-line @next/next/no-img-element */
-                              <img
-                                src={URL.createObjectURL(formFiles[field.key])}
-                                alt="Preview"
-                                className="w-24 h-24 object-cover rounded-lg"
-                              />
-                            )
-                          ) : field.key === 'audioUrl' ? (
-                            <div className="w-24 h-24 bg-[#252525] rounded-lg flex items-center justify-center text-zinc-400">
-                              <span className="text-xs text-center">Audio file</span>
-                            </div>
-                          ) : (
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                            <img
-                              src={`http://localhost:8080/${formData[field.key]}`}
-                              alt="Current"
-                              className="w-24 h-24 object-cover rounded-none"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).src = formData[field.key] || '';
-                              }}
-                            />
-                          )}
-                        </div>
-                      )}
                       <input
                         type="file"
                         accept={field.key === 'audioUrl' ? 'audio/*' : 'image/*'}
                         onChange={(e) => handleFileChange(field.key, e.target.files?.[0] || null)}
                         className="w-full bg-[#252525] border border-white/10 rounded-none px-3 py-2.5 text-sm text-white file:mr-4 file:py-1.5 file:px-3 file:rounded-none file:border-0 file:bg-gradient-to-r file:from-purple-500 file:to-cyan-500 file:text-white file:cursor-pointer"
                       />
+                      {formFiles[field.key] ? (
+                        <div className="mt-3">
+                          {field.key === 'audioUrl' ? (
+                            <div className="w-24 h-24 bg-[#252525] rounded-lg flex items-center justify-center text-zinc-400">
+                              <span className="text-xs text-center">Audio file selected</span>
+                            </div>
+                          ) : (
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                            <img
+                              src={URL.createObjectURL(formFiles[field.key])}
+                              alt="Preview"
+                              className="w-24 h-24 object-cover rounded-lg"
+                            />
+                          )}
+                        </div>
+                      ) : formData[field.key] && field.key !== 'audioUrl' ? (
+                        <div className="mt-3">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={getImageUrl(formData[field.key])}
+                            alt="Current cover"
+                            className="w-24 h-24 object-cover rounded-lg"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      ) : null}
                     </div>
+                  ) : field.type === 'boolean' ? (
+                    <select
+                      value={formData[field.key] === true || formData[field.key] === 'true' ? 'true' : 'false'}
+                      onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                      className="w-full bg-[#252525] border border-white/10 rounded-none px-3 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-colors"
+                    >
+                      <option value="false">No</option>
+                      <option value="true">Yes</option>
+                    </select>
                   ) : (
                     <input
-                      type={field.type}
+                      type={field.type === 'boolean' ? 'text' : field.type}
                       value={formData[field.key] || ''}
                       onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
                       className="w-full bg-[#252525] border border-white/10 rounded-none px-3 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-colors"
@@ -401,6 +416,45 @@ export default function AdminPage() {
                 key={item.id}
                 className="flex items-center justify-between bg-[#181818] hover:bg-[#252525] border border-white/5 rounded-none px-4 py-3 transition-all hover:border-purple-500/20"
               >
+                {activeTab === 'songs' && item.coverUrl && (
+                  <div className="flex-shrink-0 mr-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={getImageUrl(item.coverUrl as string)}
+                      alt="Cover"
+                      className="w-12 h-12 object-cover rounded"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+                {activeTab === 'albums' && item.coverUrl && (
+                  <div className="flex-shrink-0 mr-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={getImageUrl(item.coverUrl as string)}
+                      alt="Cover"
+                      className="w-12 h-12 object-cover rounded"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+                {activeTab === 'artists' && item.imageUrl && (
+                  <div className="flex-shrink-0 mr-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={getImageUrl(item.imageUrl as string)}
+                      alt="Image"
+                      className="w-12 h-12 object-cover rounded-full"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-white truncate">{getDisplayName(activeTab, item)}</p>
                   <p className="text-xs text-zinc-400 truncate">{getSubtext(activeTab, item)}</p>

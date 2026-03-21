@@ -7,6 +7,8 @@ export interface Track {
   audioUrl?: string;
   duration: string;
   genres: string[];
+  releaseDate?: string;
+  explicit?: boolean;
 }
 
 export interface Album {

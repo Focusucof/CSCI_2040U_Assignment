@@ -77,6 +77,9 @@ public class SongService {
             }
         }
         
+        song.setReleaseDate(obj.optString("releaseDate", null));
+        song.setExplicit(obj.optBoolean("explicit", false));
+        
         return song;
     }
 
@@ -90,6 +93,8 @@ public class SongService {
         obj.put("audioUrl", song.getAudioURL());
         obj.put("duration", song.getDuration());
         obj.put("genres", song.getGenres());
+        obj.put("releaseDate", song.getReleaseDate());
+        obj.put("explicit", song.isExplicit());
         return obj;
     }
 

@@ -13,10 +13,12 @@ public class Song {
     private String audioURL;
     private String duration;
     private List<String> genres;
+    private String releaseDate;
+    private boolean explicit;
 
     public Song() {}
 
-    public Song(String id, String title, List<String> artists, String album, String coverUrl, String audioURL, String duration, List<String> genres) {
+    public Song(String id, String title, List<String> artists, String album, String coverUrl, String audioURL, String duration, List<String> genres, String releaseDate, boolean explicit) {
         this.id = id;
         this.title = title;
         this.artists = artists;
@@ -25,6 +27,8 @@ public class Song {
         this.audioURL = audioURL;
         this.duration = duration;
         this.genres = genres;
+        this.releaseDate = releaseDate;
+        this.explicit = explicit;
     }
 
     public String getId() { return id; }
@@ -51,4 +55,10 @@ public class Song {
 
     public List<String> getGenres() { return genres; }
     public void setGenres(List<String> genres) { this.genres = genres; }
+
+    public String getReleaseDate() { return releaseDate; }
+    public void setReleaseDate(String releaseDate) { this.releaseDate = releaseDate; }
+
+    public boolean isExplicit() { return explicit; }
+    public void setExplicit(boolean explicit) { this.explicit = explicit; }
 }

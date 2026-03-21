@@ -9,6 +9,7 @@ class SongFilter {
     private final String[] genres;
     private final Integer min_duration;
     private final Integer max_duration;
+    private final Boolean explicit;
     private final List<String> categories = new ArrayList();
     private HashMap<String, Integer> weights;
 
@@ -18,6 +19,7 @@ class SongFilter {
         this.genres = (String[])filters.getOrDefault("genres", (Object)null);
         this.min_duration = (Integer)filters.getOrDefault("min_duration", (Object)null);
         this.max_duration = (Integer)filters.getOrDefault("max_duration", (Object)null);
+        this.explicit = (Boolean)filters.getOrDefault("explicit", (Object)null);
 
         this.weights = weights;
 
@@ -35,6 +37,10 @@ class SongFilter {
 
         if (this.min_duration != null || this.max_duration != null) {
             this.categories.add("duration");
+        }
+        
+        if (this.explicit != null) {
+            this.categories.add("explicit");
         }
     }
 
@@ -120,6 +126,10 @@ class SongFilter {
                 score -= sigmoid(Math.max(after_max, before_min)) * weights.getOrDefault("duration", 1);
             }
         }
+        
+        if (this.categories.contains("explicit")) {
+            score -= (this.explicit == song.isExplicit() ? 0 : 1) * weights.getOrDefault("explicit", 1);
+        }
 
         return score;
     }
@@ -178,6 +188,10 @@ class SongFilter {
             if (before_min >= 0 || after_max >= 0) {
                 score *= sigmoid(Math.max(after_max, before_min)) * weights.getOrDefault("duration", 1);
             }
+        }
+        
+        if (this.categories.contains("explicit")) {
+            score *= (this.explicit == song.isExplicit() ? 0 : 1) * weights.getOrDefault("explicit", 1);
         }
 
         return score;
