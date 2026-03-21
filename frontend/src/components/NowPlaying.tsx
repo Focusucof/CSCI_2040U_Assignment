@@ -48,7 +48,7 @@ export default function NowPlaying() {
         </div>
         <div className="min-w-0">
           <h4 className="text-sm font-medium text-white truncate">{currentTrack.title}</h4>
-          <p className="text-xs text-zinc-400 truncate">{currentTrack.artist}</p>
+          <p className="text-xs text-zinc-400 truncate">{currentTrack.artists?.join(', ')}</p>
         </div>
         <button className="text-zinc-400 hover:text-rose-500 transition-colors ml-2">
           <Heart className="w-4 h-4" />

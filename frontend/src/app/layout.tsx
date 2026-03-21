@@ -4,7 +4,7 @@ import { ViewTransitions } from 'next-view-transitions';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
 import AudioProvider from '@/context/AudioContext';
-import NowPlaying from '@/components/NowPlaying';
+import ClientLayout from '@/components/ClientLayout';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,8 +27,7 @@ export default function RootLayout({
         <ToastProvider>
           <ViewTransitions>
             <AudioProvider>
-              {children}
-              <NowPlaying />
+              <ClientLayout>{children}</ClientLayout>
             </AudioProvider>
           </ViewTransitions>
         </ToastProvider>

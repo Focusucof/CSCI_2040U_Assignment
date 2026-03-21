@@ -8,9 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class SongService {
@@ -45,12 +43,40 @@ public class SongService {
         Song song = new Song();
         song.setId(obj.optString("id", null));
         song.setTitle(obj.optString("title", null));
-        song.setArtist(obj.optString("artist", null));
+        
+        if (obj.has("artists")) {
+            JSONArray artistsArr = obj.getJSONArray("artists");
+            List<String> artists = new ArrayList<>();
+            for (int i = 0; i < artistsArr.length(); i++) {
+                artists.add(artistsArr.getString(i));
+            }
+            song.setArtists(artists);
+        } else if (obj.has("artist")) {
+            String artist = obj.optString("artist", null);
+            if (artist != null && !artist.isEmpty()) {
+                song.setArtists(List.of(artist));
+            }
+        }
+        
         song.setAlbum(obj.optString("album", null));
         song.setCoverUrl(obj.optString("coverUrl", null));
         song.setAudioURL(obj.optString("audioUrl", obj.optString("audioURL", null)));
         song.setDuration(obj.optString("duration", null));
-        song.setGenre(obj.optString("genre", null));
+        
+        if (obj.has("genres")) {
+            JSONArray genresArr = obj.getJSONArray("genres");
+            List<String> genres = new ArrayList<>();
+            for (int i = 0; i < genresArr.length(); i++) {
+                genres.add(genresArr.getString(i));
+            }
+            song.setGenres(genres);
+        } else if (obj.has("genre")) {
+            String genre = obj.optString("genre", null);
+            if (genre != null && !genre.isEmpty()) {
+                song.setGenres(List.of(genre));
+            }
+        }
+        
         return song;
     }
 
@@ -58,12 +84,12 @@ public class SongService {
         JSONObject obj = new JSONObject();
         obj.put("id", song.getId());
         obj.put("title", song.getTitle());
-        obj.put("artist", song.getArtist());
+        obj.put("artists", song.getArtists());
         obj.put("album", song.getAlbum());
         obj.put("coverUrl", song.getCoverUrl());
         obj.put("audioUrl", song.getAudioURL());
         obj.put("duration", song.getDuration());
-        obj.put("genre", song.getGenre());
+        obj.put("genres", song.getGenres());
         return obj;
     }
 
@@ -130,22 +156,57 @@ public class SongService {
         
         String lowerQuery = query.toLowerCase().trim();
         List<Song> allSongs = readSongs();
-        List<Song> results = new ArrayList<>();
-        
-        for (Song song : allSongs) {
-            if (matchesSearch(song, lowerQuery)) {
-                results.add(song);
-            }
-        }
-        
-        return results;
+//        List<Song> results = new ArrayList<>();
+//
+//        for (Song song : allSongs) {
+//            if (matchesSearch(song, lowerQuery)) {
+//                results.add(song);
+//            }
+//        }
+//
+//        return results;
+        HashMap<Song, Float> results = new LinkedHashMap<>();
+
+        allSongs.sort((o1, o2) -> (int) (10000 * (matchesSearch(o1, lowerQuery) - matchesSearch(o2, lowerQuery))));
+        allSongs = allSongs.subList(0, 25);
+
+        return allSongs;
     }
 
-    private boolean matchesSearch(Song song, String query) {
-        return containsIgnoreCase(song.getTitle(), query) ||
-               containsIgnoreCase(song.getArtist(), query) ||
-               containsIgnoreCase(song.getAlbum(), query) ||
-               containsIgnoreCase(song.getGenre(), query);
+//    private boolean matchesSearch(Song song, String query) {
+//        if (containsIgnoreCase(song.getTitle(), query) ||
+//            containsIgnoreCase(song.getAlbum(), query)) {
+//            return true;
+//        }
+//
+//        if (song.getArtists() != null) {
+//            for (String artist : song.getArtists()) {
+//                if (containsIgnoreCase(artist, query)) {
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        if (song.getGenres() != null) {
+//            for (String genre : song.getGenres()) {
+//                if (containsIgnoreCase(genre, query)) {
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
+    private float matchesSearch(Song song, String query) {
+        HashMap<String, Object> filter_map = new HashMap<>();
+        filter_map.put("title", query);
+        filter_map.put("artists", new String[]{query});
+        filter_map.put("genres", new String[]{query});
+        filter_map.put("albums", query);
+
+        SongFilter filter = new SongFilter(filter_map, new HashMap<>());
+
+        return filter.scoreAny(song);
     }
 
     private boolean containsIgnoreCase(String field, String query) {

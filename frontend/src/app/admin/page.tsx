@@ -18,12 +18,12 @@ const tabConfig: { key: Tab; label: string; icon: React.ElementType }[] = [
 const fieldsByTab: Record<Tab, { key: string; label: string; type: string; isFile?: boolean }[]> = {
   songs: [
     { key: 'title', label: 'Title', type: 'text' },
-    { key: 'artist', label: 'Artist', type: 'text' },
+    { key: 'artists', label: 'Artists (comma separated)', type: 'text' },
     { key: 'album', label: 'Album', type: 'text' },
     { key: 'coverUrl', label: 'Cover Image', type: 'file', isFile: true },
     { key : 'audioUrl', label: 'Audio File', type: 'file', isFile: true },
     { key: 'duration', label: 'Duration', type: 'text' },
-    { key: 'genre', label: 'Genre', type: 'text' },
+    { key: 'genres', label: 'Genres (comma separated)', type: 'text' },
   ],
   albums: [
     { key: 'title', label: 'Title', type: 'text' },
@@ -43,8 +43,11 @@ function getDisplayName(tab: Tab, item: Record<string, string>): string {
   return item.title || item.name || 'Untitled';
 }
 
-function getSubtext(tab: Tab, item: Record<string, string>): string {
-  if (tab === 'songs') return `${item.artist} - ${item.album}`;
+function getSubtext(tab: Tab, item: Record<string, string | string[]>): string {
+  if (tab === 'songs') {
+    const artists = Array.isArray(item.artists) ? item.artists.join(', ') : item.artist;
+    return `${artists} - ${item.album}`;
+  }
   if (tab === 'albums') return `${item.artist} - ${item.year}`;
   if (tab === 'artists') return item.genre || '';
   return '';
@@ -110,11 +113,16 @@ export default function AdminPage() {
     setError('');
   }
 
-  function openEditForm(item: Record<string, string>) {
+  function openEditForm(item: Record<string, string | string[]>) {
     setEditingId(item.id);
     const data: Record<string, string> = {};
     fieldsByTab[activeTab].forEach((f) => {
-      data[f.key] = String(item[f.key] ?? '');
+      const value = item[f.key];
+      if (Array.isArray(value)) {
+        data[f.key] = value.join(', ');
+      } else {
+        data[f.key] = String(value ?? '');
+      }
     });
     setFormData(data);
     setFormFiles({});
@@ -158,10 +166,19 @@ export default function AdminPage() {
     setError('');
     setUploading(true);
 
-    const body: Record<string, string | number> = { ...formData };
+    const body: Record<string, string | number | string[]> = { ...formData };
     fieldsByTab[activeTab].forEach((f) => {
       if (f.type === 'number') body[f.key] = Number(body[f.key]);
     });
+
+    if (activeTab === 'songs') {
+      if (body.artists && typeof body.artists === 'string') {
+        body.artists = (body.artists as string).split(',').map(s => s.trim()).filter(s => s);
+      }
+      if (body.genres && typeof body.genres === 'string') {
+        body.genres = (body.genres as string).split(',').map(s => s.trim()).filter(s => s);
+      }
+    }
 
     const fileFields = fieldsByTab[activeTab].filter(f => f.isFile);
     for (const field of fileFields) {

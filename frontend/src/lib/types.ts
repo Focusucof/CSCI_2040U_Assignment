@@ -1,12 +1,12 @@
 export interface Track {
   id: string;
   title: string;
-  artist: string;
+  artists: string[];
   album: string;
   coverUrl: string;
   audioUrl?: string;
   duration: string;
-  genre: string;
+  genres: string[];
 }
 
 export interface Album {

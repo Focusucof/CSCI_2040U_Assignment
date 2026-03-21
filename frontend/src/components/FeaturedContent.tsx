@@ -29,6 +29,12 @@ function normalizeTrackUrl(track: Track): Track {
     const prefix = track.audioUrl.startsWith('/') ? '' : '/';
     normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
   }
+  if (track.artists === undefined && (track as any).artist) {
+    normalized = { ...normalized, artists: [(track as any).artist] };
+  }
+  if (track.genres === undefined && (track as any).genre) {
+    normalized = { ...normalized, genres: [(track as any).genre] };
+  }
   return normalized;
 }
 
@@ -103,8 +109,9 @@ export default function FeaturedContent() {
     return allSongs.filter(
       track =>
         track.title?.toLowerCase().includes(query) ||
-        track.artist?.toLowerCase().includes(query) ||
-        track.album?.toLowerCase().includes(query)
+        track.artists?.some(a => a.toLowerCase().includes(query)) ||
+        track.album?.toLowerCase().includes(query) ||
+        track.genres?.some(g => g.toLowerCase().includes(query))
     ).slice(0, 5);
   }, [searchQuery, allSongs]);
 
@@ -162,7 +169,7 @@ export default function FeaturedContent() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white truncate">{track.title}</p>
-                    <p className="text-xs text-zinc-400 truncate">{track.artist} · {track.album}</p>
+                    <p className="text-xs text-zinc-400 truncate">{track.artists?.join(', ')} · {track.album}</p>
                   </div>
                 </button>
               ))}

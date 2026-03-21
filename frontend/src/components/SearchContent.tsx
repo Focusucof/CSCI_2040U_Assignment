@@ -25,6 +25,12 @@ function normalizeTrackUrl(track: Track): Track {
     const prefix = track.audioUrl.startsWith('/') ? '' : '/';
     normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
   }
+  if (track.artists === undefined && (track as any).artist) {
+    normalized = { ...normalized, artists: [(track as any).artist] };
+  }
+  if (track.genres === undefined && (track as any).genre) {
+    normalized = { ...normalized, genres: [(track as any).genre] };
+  }
   return normalized;
 }
 
@@ -175,7 +181,7 @@ export default function SearchContent() {
                     </div>
                     <div className="flex-1 text-left min-w-0">
                       <h3 className="text-sm font-semibold text-white truncate">{track.title}</h3>
-                      <p className="text-xs text-zinc-400 truncate">{track.artist} · {track.album} · {track.genre}</p>
+                      <p className="text-xs text-zinc-400 truncate">{track.artists?.join(', ')} · {track.album} · {track.genres?.join(', ')}</p>
                     </div>
                     <p className="text-xs text-zinc-500 px-3">{track.duration}</p>
                   </button>
