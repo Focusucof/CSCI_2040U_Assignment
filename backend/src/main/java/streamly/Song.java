@@ -16,7 +16,8 @@ public class Song {
     private String releaseDate;
     private boolean explicit;
 
-    public Song() {}
+    public Song(){
+    }
 
     public Song(String id, String title, List<String> artists, String album, String coverUrl, String audioURL, String duration, List<String> genres, String releaseDate, boolean explicit) {
         this.id = id;
