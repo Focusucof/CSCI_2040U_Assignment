@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Play, Music, Disc3, ListMusic, Mic2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
@@ -12,29 +12,39 @@ import AlbumCard from '@/components/AlbumCard';
 import PlaylistCard from '@/components/PlaylistCard';
 import ArtistCard from '@/components/ArtistCard';
 import AccountMenu from '@/components/AccountMenu';
+import { useAudio } from '@/context/AudioContext';
 
 const API_BASE = 'http://localhost:8080/admin/songs';
 const BACKEND_URL = 'http://localhost:8080';
 
 function normalizeTrackUrl(track: Track): Track {
-  if (track.coverUrl && !track.coverUrl.startsWith('http')) {
-    return { ...track, coverUrl: BACKEND_URL + track.coverUrl };
+  let normalized = track;
+  if (track.coverUrl && track.coverUrl.trim() !== '' && !track.coverUrl.startsWith('http')) {
+    const prefix = track.coverUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
+  } else if (!track.coverUrl || track.coverUrl.trim() === '') {
+    normalized = { ...normalized, coverUrl: '/placeholder-album.png' };
   }
-  return track;
+  if (track.audioUrl && !track.audioUrl.startsWith('http')) {
+    const prefix = track.audioUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
+  }
+  if (track.artists === undefined && (track as any).artist) {
+    normalized = { ...normalized, artists: [(track as any).artist] };
+  }
+  if (track.genres === undefined && (track as any).genre) {
+    normalized = { ...normalized, genres: [(track as any).genre] };
+  }
+  return normalized;
 }
 
-interface HorizontalScrollProps {
-  children: React.ReactNode;
-}
-
-function HorizontalScroll({ children }: HorizontalScrollProps) {
+function HorizontalScroll({ children }: { children: React.ReactNode }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = 300;
       scrollRef.current.scrollBy({
-        left: direction === 'right' ? scrollAmount : -scrollAmount,
+        left: direction === 'right' ? 300 : -300,
         behavior: 'smooth'
       });
     }
@@ -42,7 +52,7 @@ function HorizontalScroll({ children }: HorizontalScrollProps) {
 
   return (
     <div className="relative group/section">
-      <div 
+      <div
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]"
         style={{ scrollbarWidth: 'none' }}
@@ -65,52 +75,44 @@ function HorizontalScroll({ children }: HorizontalScrollProps) {
   );
 }
 
-interface FeaturedContentProps {
-  onPlayTrack: (track: Track) => void;
-}
-
-export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
+export default function FeaturedContent() {
   const router = useRouter();
+  const { onTrackSelect } = useAudio();
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchSuggestions, setSearchSuggestions] = useState<Track[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
 
   useEffect(() => {
-    const fetchSongs = async () => {
+    let cancelled = false;
+    async function fetchSongs() {
       try {
         const response = await fetch(API_BASE);
-        if (response.ok) {
+        if (response.ok && !cancelled) {
           const data = await response.json();
           setAllSongs(data.map(normalizeTrackUrl));
         }
       } catch (error) {
         console.error('Failed to fetch songs:', error);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
-    };
+    }
     fetchSongs();
+    return () => { cancelled = true; };
   }, []);
 
-  useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setSearchSuggestions([]);
-      setShowSuggestions(false);
-      return;
-    }
-
+  // Derived state: no useEffect needed for filtering
+  const searchSuggestions = useMemo(() => {
+    if (searchQuery.trim() === '') return [];
     const query = searchQuery.toLowerCase();
-    const suggestions = allSongs.filter(
+    return allSongs.filter(
       track =>
-        track.title.toLowerCase().includes(query) ||
-        track.artist.toLowerCase().includes(query) ||
-        track.album.toLowerCase().includes(query)
+        track.title?.toLowerCase().includes(query) ||
+        track.artists?.some(a => a.toLowerCase().includes(query)) ||
+        track.album?.toLowerCase().includes(query) ||
+        track.genres?.some(g => g.toLowerCase().includes(query))
     ).slice(0, 5);
-
-    setSearchSuggestions(suggestions);
-    setShowSuggestions(true);
   }, [searchQuery, allSongs]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -121,26 +123,18 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
   };
 
   const handleSuggestionClick = (track: Track) => {
-    setShowSuggestions(false);
+    setSearchFocused(false);
     setSearchQuery('');
-    onPlayTrack(track);
-  };
-
-  const handleSuggestionKeyDown = (e: React.KeyboardEvent, track: Track) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSuggestionClick(track);
-    }
+    onTrackSelect(track);
   };
 
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
       {/* Top bar - Search (centered) and Account (right) */}
       <div className="flex items-center justify-between gap-4 mb-6">
-        {/* Empty div for left spacing */}
         <div className="w-10" />
 
-        {/* Search Bar - Centered */}
+        {/* Search Bar */}
         <div className="relative flex-1 max-w-xl mx-4">
           <form onSubmit={handleSearchSubmit}>
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
@@ -148,21 +142,20 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => searchSuggestions.length > 0 && setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
               placeholder="Search songs, artists, albums..."
               className="w-full bg-[#1E1E1E] text-white placeholder-zinc-400 pl-12 pr-12 py-3 rounded-none text-sm focus:outline-none input-glow transition-all"
             />
           </form>
-          
-          {/* Search Suggestions Dropdown */}
-          {showSuggestions && searchSuggestions.length > 0 && (
+
+          {searchFocused && searchSuggestions.length > 0 && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-[#252525] border border-zinc-700 z-50 fade-in">
               {searchSuggestions.map((track) => (
                 <button
                   key={track.id}
                   onClick={() => handleSuggestionClick(track)}
-                  onKeyDown={(e) => handleSuggestionKeyDown(e, track)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSuggestionClick(track)}
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#303030] transition-all duration-200 text-left"
                 >
                   <div className="relative w-10 h-10 flex-shrink-0">
@@ -176,24 +169,23 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white truncate">{track.title}</p>
-                    <p className="text-xs text-zinc-400 truncate">{track.artist} · {track.album}</p>
+                    <p className="text-xs text-zinc-400 truncate">{track.artists?.join(', ')} · {track.album}</p>
                   </div>
                 </button>
               ))}
               <button
                 onClick={() => {
                   router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-                  setShowSuggestions(false);
+                  setSearchFocused(false);
                 }}
                 className="w-full px-4 py-2 text-sm text-purple-400 hover:bg-[#303030] transition-colors border-t border-zinc-700"
               >
-                View all results for "{searchQuery}"
+                View all results for &quot;{searchQuery}&quot;
               </button>
             </div>
           )}
         </div>
 
-        {/* Account - Right */}
         <div className="flex-shrink-0">
           <AccountMenu />
         </div>
@@ -202,9 +194,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
       {/* Greeting */}
       <div className="mb-8">
         {loading ? (
-          <div>
-            <h1 className="text-3xl font-bold text-white">Loading...</h1>
-          </div>
+          <h1 className="text-3xl font-bold text-white">Loading...</h1>
         ) : (
           <div>
             <h1 className="text-3xl font-bold text-white">Good evening</h1>
@@ -213,14 +203,13 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
         )}
       </div>
 
-
       {/* Quick Picks */}
       {!loading && (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
           {allSongs.slice(0, 6).map((track) => (
             <button
               key={track.id}
-              onClick={() => onPlayTrack(track)}
+              onClick={() => onTrackSelect(track)}
               className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-none transition-all duration-300 hover:-translate-y-1"
             >
               <div className="relative w-14 h-14 flex-shrink-0">
@@ -241,7 +230,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
         </div>
       )}
 
-      {/* songs - Featured */}
+      {/* Featured Songs */}
       <section className="mb-10">
         <SectionHeader icon={Music} title="Featured" />
         {loading ? (
@@ -252,7 +241,7 @@ export default function FeaturedContent({ onPlayTrack }: FeaturedContentProps) {
           <HorizontalScroll>
             {allSongs.slice(0, 10).map((track) => (
               <div key={track.id} className="flex-shrink-0 w-48">
-                <SongCard track={track} onPlay={onPlayTrack} />
+                <SongCard track={track} onPlay={onTrackSelect} />
               </div>
             ))}
           </HorizontalScroll>

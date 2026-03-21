@@ -1,11 +1,14 @@
 export interface Track {
   id: string;
   title: string;
-  artist: string;
+  artists: string[];
   album: string;
   coverUrl: string;
+  audioUrl?: string;
   duration: string;
-  genre: string;
+  genres: string[];
+  releaseDate?: string;
+  explicit?: boolean;
 }
 
 export interface Album {
@@ -32,7 +35,3 @@ export interface Artist {
   genre: string;
 }
 
-export interface Recommendation {
-  reason: string;
-  tracks: Track[];
-}

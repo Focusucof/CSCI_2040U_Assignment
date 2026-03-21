@@ -41,9 +41,9 @@ public class FileUploadController {
 
         String contentType = file.getContentType();
         logger.info("Content type: " + contentType);
-        if (contentType == null || !contentType.startsWith("image/")) {
+        if (contentType == null || (!contentType.startsWith("image/") && !contentType.startsWith("audio/"))) {
             logger.warn("Invalid content type: " + contentType);
-            return ResponseEntity.badRequest().body("Only image files are allowed");
+            return ResponseEntity.badRequest().body("Only image and audio files are allowed");
         }
 
         String originalFilename = file.getOriginalFilename();
