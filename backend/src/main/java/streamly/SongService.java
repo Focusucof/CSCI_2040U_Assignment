@@ -8,9 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class SongService {
@@ -128,22 +126,24 @@ public class SongService {
         
         String lowerQuery = query.toLowerCase().trim();
         List<Song> allSongs = readSongs();
-        List<Song> results = new ArrayList<>();
-        
-        for (Song song : allSongs) {
-            if (matchesSearch(song, lowerQuery)) {
-                results.add(song);
-            }
-        }
-        
-        return results;
+        HashMap<Song, Float> results = new LinkedHashMap<>();
+
+        allSongs.sort((o1, o2) -> (int) (10000 * (matchesSearch(o1, lowerQuery) - matchesSearch(o2, lowerQuery))));
+        allSongs = allSongs.subList(0, 25);
+
+        return allSongs;
     }
 
-    private boolean matchesSearch(Song song, String query) {
-        return containsIgnoreCase(song.getTitle(), query) ||
-               containsIgnoreCase(song.getArtist(), query) ||
-               containsIgnoreCase(song.getAlbum(), query) ||
-               containsIgnoreCase(song.getGenre(), query);
+    private float matchesSearch(Song song, String query) {
+        HashMap<String, Object> filter_map = new HashMap<>();
+        filter_map.put("title", query);
+        filter_map.put("artists", new String[]{query});
+        filter_map.put("genres", new String[]{query});
+        filter_map.put("albums", query);
+
+        SongFilter filter = new SongFilter(filter_map, new HashMap<>());
+
+        return filter.scoreAny(song);
     }
 
     private boolean containsIgnoreCase(String field, String query) {
