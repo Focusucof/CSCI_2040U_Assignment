@@ -208,7 +208,7 @@ public class SongService {
         filter_map.put("title", query);
         filter_map.put("artists", new String[]{query});
         filter_map.put("genres", new String[]{query});
-        filter_map.put("albums", query);
+        filter_map.put("album", query);
 
         SongFilter filter = new SongFilter(filter_map, new HashMap<>());
 
