@@ -1,17 +1,86 @@
 [
-  {"id": "1", "name": "Queen", "imageUrl": "https://picsum.photos/seed/artist1/300/300", "genre": "Rock"},
-  {"id": "2", "name": "Led Zeppelin", "imageUrl": "https://picsum.photos/seed/artist2/300/300", "genre": "Rock"},
-  {"id": "3", "name": "Eagles", "imageUrl": "https://picsum.photos/seed/artist3/300/300", "genre": "Rock"},
-  {"id": "4", "name": "Guns N' Roses", "imageUrl": "https://picsum.photos/seed/artist4/300/300", "genre": "Rock"},
-  {"id": "5", "name": "Nirvana", "imageUrl": "https://picsum.photos/seed/artist5/300/300", "genre": "Grunge"},
-  {"id": "6", "name": "Michael Jackson", "imageUrl": "https://picsum.photos/seed/artist6/300/300", "genre": "Pop"},
-  {"id": "7", "name": "Prince", "imageUrl": "https://picsum.photos/seed/artist7/300/300", "genre": "Pop"},
-  {"id": "8", "name": "Pink Floyd", "imageUrl": "https://picsum.photos/seed/artist8/300/300", "genre": "Progressive Rock"},
-  {"id": "9", "name": "Taylor Swift", "imageUrl": "https://picsum.photos/seed/artist9/300/300", "genre": "Pop"},
-  {"id": "10", "name": "Adele", "imageUrl": "https://picsum.photos/seed/artist10/300/300", "genre": "Pop Soul"},
-  {"id": "11", "name": "Ed Sheeran", "imageUrl": "https://picsum.photos/seed/artist11/300/300", "genre": "Pop"},
-  {"id": "12", "name": "Bruno Mars", "imageUrl": "https://picsum.photos/seed/artist12/300/300", "genre": "Pop"},
-  {"id": "13", "name": "The Weeknd", "imageUrl": "https://picsum.photos/seed/artist13/300/300", "genre": "R&B"},
-  {"id": "14", "name": "Drake", "imageUrl": "https://picsum.photos/seed/artist14/300/300", "genre": "Hip Hop"},
-  {"id": "15", "name": "Rihanna", "imageUrl": "https://picsum.photos/seed/artist15/300/300", "genre": "R&B"}
+  {
+    "id": "artist-dave",
+    "name": "Dave",
+    "imageUrl": "/uploads/6e93d68a-2a03-4bb9-8c2c-9097e5bc7071.jpg",
+    "genre": "Afrobeat"
+  },
+  {
+    "id": "artist-tems",
+    "name": "Tems",
+    "imageUrl": "/uploads/6e93d68a-2a03-4bb9-8c2c-9097e5bc7071.jpg",
+    "genre": "Afrobeat"
+  },
+  {
+    "id": "artist-drake",
+    "name": "Drake",
+    "imageUrl": "/uploads/f8bd3913-3ae6-4a3a-b4c9-5c33c6fe5c1d.jpg",
+    "genre": "Hip Hop"
+  },
+  {
+    "id": "artist-wizkid",
+    "name": "Wizkid",
+    "imageUrl": "/uploads/fb26ddd7-4632-4832-a78f-b3a1abc9735a.jpg",
+    "genre": "Hip Hop"
+  },
+  {
+    "id": "artist-kyla",
+    "name": "Kyla",
+    "imageUrl": "/uploads/fb26ddd7-4632-4832-a78f-b3a1abc9735a.jpg",
+    "genre": "Hip Hop"
+  },
+  {
+    "id": "artist-nelly",
+    "name": "Nelly",
+    "imageUrl": "/uploads/10d9e098-3ca7-46e9-aa6f-55662b3f05e8.png",
+    "genre": "Hip Hop"
+  },
+  {
+    "id": "artist-kendrick-lamar",
+    "name": "Kendrick Lamar",
+    "imageUrl": "/uploads/4915700a-d8ad-4854-9106-813f9d381902.png",
+    "genre": "Hip Hop"
+  },
+  {
+    "id": "artist-ed-sheeran",
+    "name": "Ed Sheeran",
+    "imageUrl": "/uploads/745dde9a-6275-44b8-901e-ac8496ff0e63.png",
+    "genre": "Pop"
+  },
+  {
+    "id": "artist-the-weeknd",
+    "name": "The Weeknd",
+    "imageUrl": "/uploads/38271e0e-fd50-45f5-84b4-b3ff3902919e.png",
+    "genre": "R&B"
+  },
+  {
+    "id": "artist-daft-punk",
+    "name": "Daft Punk",
+    "imageUrl": "/uploads/38271e0e-fd50-45f5-84b4-b3ff3902919e.png",
+    "genre": "R&B"
+  },
+  {
+    "id": "artist-shakira",
+    "name": "Shakira",
+    "imageUrl": "/uploads/49f44d45-75d2-4ebe-b644-70f6d4ba1b30.png",
+    "genre": "Pop"
+  },
+  {
+    "id": "artist-wyclef-jean",
+    "name": "Wyclef Jean",
+    "imageUrl": "/uploads/49f44d45-75d2-4ebe-b644-70f6d4ba1b30.png",
+    "genre": "Pop"
+  },
+  {
+    "id": "artist-charly-black",
+    "name": "Charly Black",
+    "imageUrl": "/uploads/f1cf05a4-f616-4f23-b81c-fe397d405ec6.jpg",
+    "genre": "Dancehall"
+  },
+  {
+    "id": "artist-ne-yo",
+    "name": "Ne-Yo",
+    "imageUrl": "/uploads/20041ad0-47e3-4068-a7c6-6331cb718076.jpg",
+    "genre": "R&B"
+  }
 ]
