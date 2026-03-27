@@ -58,7 +58,7 @@ function getSubtext(tab: Tab, item: Record<string, string | string[]>): string {
     return `${artists} - ${item.album}`;
   }
   if (tab === 'albums') return `${item.artist} - ${item.year}`;
-  if (tab === 'artists') return item.genre || '';
+  if (tab === 'artists') return Array.isArray(item.genre) ? item.genre.join(', ') : item.genre || '';
   return '';
 }
 
@@ -123,7 +123,7 @@ export default function AdminPage() {
   }
 
   function openEditForm(item: Record<string, string | string[]>) {
-    setEditingId(item.id);
+    setEditingId(Array.isArray(item.id) ? item.id[0] : item.id);
     const data: Record<string, string> = {};
     fieldsByTab[activeTab].forEach((f) => {
       const value = item[f.key];
@@ -373,7 +373,7 @@ export default function AdminPage() {
                     </div>
                   ) : field.type === 'boolean' ? (
                     <select
-                      value={formData[field.key] === true || formData[field.key] === 'true' ? 'true' : 'false'}
+                      value={formData[field.key] === 'true' ? 'true' : 'false'}
                       onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
                       className="w-full bg-[#252525] border border-white/10 rounded-none px-3 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-colors"
                     >
