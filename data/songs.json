@@ -1,1190 +1,155 @@
 [
   {
-    "coverUrl": "/uploads/ad766cd4-f271-42fa-87a2-93b602ae97f2.webp",
-    "duration": "5:55",
-    "artists": ["Queen"],
-    "album": "A Night at the Opera",
-    "genres": ["Rock"],
-    "id": "1",
-    "title": "Bohemian Rhapsody"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/ledzeppelin1/300/300",
-    "duration": "8:02",
-    "artists": ["Led Zeppelin"],
-    "album": "Led Zeppelin IV",
-    "genres": ["Rock"],
-    "id": "2",
-    "title": "Stairway to Heaven"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/eagles1/300/300",
-    "duration": "6:30",
-    "artists": ["Eagles"],
-    "album": "Hotel California",
-    "genres": ["Rock"],
-    "id": "3",
-    "title": "Hotel California"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/gnr1/300/300",
-    "duration": "5:56",
-    "artists": ["Guns N' Roses"],
-    "album": "Appetite for Destruction",
-    "genres": ["Rock"],
-    "id": "4",
-    "title": "Sweet Child O' Mine"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/nirvana1/300/300",
-    "duration": "5:01",
-    "artists": ["Nirvana"],
-    "album": "Nevermind",
-    "genres": ["Grunge"],
-    "id": "5",
-    "title": "Smells Like Teen Spirit"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/lennon1/300/300",
-    "duration": "3:09",
-    "artists": ["John Lennon"],
-    "album": "Imagine",
-    "genres": ["Pop Rock"],
-    "id": "6",
-    "title": "Imagine"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/jackson1/300/300",
-    "duration": "4:54",
-    "artists": ["Michael Jackson"],
-    "album": "Thriller",
-    "genres": ["Pop"],
-    "id": "7",
-    "title": "Billie Jean"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/dylan1/300/300",
-    "duration": "6:08",
-    "artists": ["Bob Dylan"],
-    "album": "Highway 61 Revisited",
-    "genres": ["Folk Rock"],
-    "id": "8",
-    "title": "Like a Rolling Stone"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/prince1/300/300",
-    "duration": "8:41",
-    "artists": ["Prince"],
-    "album": "Purple Rain",
-    "genres": ["Pop Rock"],
-    "id": "9",
-    "title": "Purple Rain"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/pinkfloyd1/300/300",
-    "duration": "6:53",
-    "artists": ["Pink Floyd"],
-    "album": "The Wall",
-    "genres": ["Progressive Rock"],
-    "id": "10",
-    "title": "Comfortably Numb"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/beatles1/300/300",
-    "duration": "7:11",
-    "artists": ["The Beatles"],
-    "album": "Hey Jude",
-    "genres": ["Rock"],
-    "id": "11",
-    "title": "Hey Jude"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/oasis1/300/300",
-    "duration": "4:18",
-    "artists": ["Oasis"],
-    "album": "(What's the Story) Morning Glory?",
-    "genres": ["Britpop"],
-    "id": "12",
-    "title": "Wonderwall"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/gnr2/300/300",
-    "duration": "8:57",
-    "artists": ["Guns N' Roses"],
-    "album": "Use Your Illusion I",
-    "genres": ["Rock"],
-    "id": "13",
-    "title": "November Rain"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/queen2/300/300",
-    "duration": "4:08",
-    "artists": ["Queen & David Bowie"],
-    "album": "Hot Space",
-    "genres": ["Rock"],
-    "id": "14",
-    "title": "Under Pressure"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/radiohead1/300/300",
-    "duration": "3:57",
-    "artists": ["Radiohead"],
-    "album": "Pablo Honey",
-    "genres": ["Alternative Rock"],
-    "id": "15",
-    "title": "Creep"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/metallica1/300/300",
-    "duration": "6:28",
-    "artists": ["Metallica"],
-    "album": "Metallica",
-    "genres": ["Heavy Metal"],
-    "id": "16",
-    "title": "Nothing Else Matters"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/clapton1/300/300",
-    "duration": "3:43",
-    "artists": ["Eric Clapton"],
-    "album": "Slowhand",
-    "genres": ["Rock"],
-    "id": "17",
-    "title": "Wonderful Tonight"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/eminem1/300/300",
-    "duration": "5:26",
-    "artists": ["Eminem"],
-    "album": "8 Mile Soundtrack",
-    "genres": ["Hip Hop"],
-    "id": "18",
-    "title": "Lose Yourself"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/brunomars1/300/300",
-    "duration": "4:30",
-    "artists": ["Bruno Mars"],
-    "album": "Uptown Special",
-    "genres": ["Funk Pop"],
-    "id": "19",
-    "title": "Uptown Funk"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran1/300/300",
-    "duration": "3:53",
-    "artists": ["Ed Sheeran"],
-    "album": "÷",
-    "genres": ["Pop"],
-    "id": "20",
-    "title": "Shape of You"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/weeknd1/300/300",
-    "duration": "3:20",
-    "artists": ["The Weeknd"],
-    "album": "After Hours",
-    "genres": ["Synthwave"],
-    "id": "21",
-    "title": "Blinding Lights"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/tonesandi/300/300",
-    "duration": "3:29",
-    "artists": ["Tones and I"],
-    "album": "The Kids Are Coming",
-    "genres": ["Pop"],
-    "id": "22",
-    "title": "Dance Monkey"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/billie1/300/300",
-    "duration": "3:14",
-    "artists": ["Billie Eilish"],
-    "album": "When We All Fall Asleep",
-    "genres": ["Pop"],
-    "id": "23",
-    "title": "Bad Guy"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/adele1/300/300",
-    "duration": "3:48",
-    "artists": ["Adele"],
-    "album": "21",
-    "genres": ["Pop Soul"],
-    "id": "24",
-    "title": "Rolling in the Deep"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/adele2/300/300",
-    "duration": "4:45",
-    "artists": ["Adele"],
-    "album": "21",
-    "genres": ["Pop Soul"],
-    "id": "25",
-    "title": "Someone Like You"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran2/300/300",
-    "duration": "4:23",
-    "artists": ["Ed Sheeran"],
-    "album": "÷",
-    "genres": ["Pop"],
-    "id": "26",
-    "title": "Perfect"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran3/300/300",
-    "duration": "4:10",
-    "artists": ["Ed Sheeran"],
-    "album": "x",
-    "genres": ["Pop"],
-    "id": "27",
-    "title": "Thinking Out Loud"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/ladygaga1/300/300",
-    "duration": "3:35",
-    "artists": ["Lady Gaga & Bradley Cooper"],
-    "album": "A Star Is Born",
-    "genres": ["Pop"],
-    "id": "28",
-    "title": "Shallow"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/camila1/300/300",
-    "duration": "3:37",
-    "artists": ["Camila Cabello"],
-    "album": "Camila",
-    "genres": ["Pop"],
-    "id": "29",
-    "title": "Havana"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/lilnasx/300/300",
-    "duration": "2:37",
-    "artists": ["Lil Nas X"],
-    "album": "7",
-    "genres": ["Country Rap"],
-    "id": "30",
-    "title": "Old Town Road"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/postmalone1/300/300",
-    "duration": "3:38",
-    "artists": ["Post Malone"],
-    "album": "Beerbongs & Bentleys",
-    "genres": ["Hip Hop"],
-    "id": "31",
-    "title": "Rockstar"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/postmalone2/300/300",
-    "duration": "2:38",
-    "artists": ["Post Malone & Swae Lee"],
-    "album": "Spider-Man Soundtrack",
-    "genres": ["Pop"],
-    "id": "32",
-    "title": "Sunflower"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/postmalone3/300/300",
-    "duration": "3:51",
-    "artists": ["Post Malone"],
-    "album": "beerbongs & bentleys",
-    "genres": ["Hip Hop"],
-    "id": "33",
-    "title": "Better Now"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/drake1/300/300",
-    "duration": "5:02",
-    "artists": ["Drake"],
-    "album": "Scorpion",
-    "genres": ["Hip Hop"],
-    "id": "34",
-    "title": "God's Plan"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/drake2/300/300",
-    "duration": "3:37",
-    "artists": ["Drake"],
-    "album": "Scorpion",
-    "genres": ["Hip Hop"],
-    "id": "35",
-    "title": "In My Feelings"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/drake3/300/300",
-    "duration": "4:27",
-    "artists": ["Drake"],
-    "album": "Views",
-    "genres": ["Hip Hop"],
-    "id": "36",
-    "title": "Hotline Bling"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/drake4/300/300",
-    "duration": "2:53",
-    "artists": ["Drake ft. Wizkid"],
-    "album": "Views",
-    "genres": ["Hip Hop"],
-    "id": "37",
-    "title": "One Dance"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/taylorswift1/300/300",
-    "duration": "3:51",
-    "artists": ["Taylor Swift"],
-    "album": "1989",
-    "genres": ["Pop"],
-    "id": "38",
-    "title": "Blank Space"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/taylorswift2/300/300",
-    "duration": "3:52",
-    "artists": ["Taylor Swift"],
-    "album": "1989",
-    "genres": ["Pop"],
-    "id": "39",
-    "title": "Blank Space"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/taylorswift3/300/300",
-    "duration": "3:39",
-    "artists": ["Taylor Swift"],
-    "album": "1989",
-    "genres": ["Pop"],
-    "id": "40",
-    "title": "Shake It Off"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/luisfonsi1/300/300",
-    "duration": "4:42",
-    "artists": ["Luis Fonsi ft. Daddy Yankee"],
-    "album": "Vida",
-    "genres": ["Reggaeton"],
-    "id": "41",
-    "title": "Despacito"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/jbalvin1/300/300",
-    "duration": "3:06",
-    "artists": ["J Balvin"],
-    "album": "Energía",
-    "genres": ["Reggaeton"],
-    "id": "42",
-    "title": "Mi Gente"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/enrique1/300/300",
-    "duration": "4:03",
-    "artists": ["Enrique Iglesias"],
-    "album": "Sex and Love",
-    "genres": ["Reggaeton"],
-    "id": "43",
-    "title": "Bailando"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/donomar1/300/300",
-    "duration": "3:56",
-    "artists": ["Don Omar & Lucenzo"],
-    "album": "Don Omar Presents",
-    "genres": ["Reggaeton"],
-    "id": "44",
-    "title": "Danza Kuduro"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/travisscott1/300/300",
-    "duration": "5:12",
-    "artists": ["Travis Scott"],
-    "album": "Astroworld",
-    "genres": ["Hip Hop"],
-    "id": "45",
-    "title": "Sicko Mode"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/travisscott2/300/300",
-    "duration": "3:40",
-    "artists": ["Travis Scott"],
-    "album": "Birds in the Trap Sing McKnight",
-    "genres": ["Hip Hop"],
-    "id": "46",
-    "title": "Goosebumps"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/travisscott3/300/300",
-    "duration": "4:54",
-    "artists": ["Travis Scott"],
-    "album": "Rodeo",
-    "genres": ["Hip Hop"],
-    "id": "47",
-    "title": "Antidote"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/kendrick1/300/300",
-    "duration": "2:57",
-    "artists": ["Kendrick Lamar"],
-    "album": "DAMN.",
-    "genres": ["Hip Hop"],
-    "id": "48",
-    "title": "HUMBLE."
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/kendrick2/300/300",
-    "duration": "3:05",
-    "artists": ["Kendrick Lamar"],
-    "album": "DAMN.",
-    "genres": ["Hip Hop"],
-    "id": "49",
-    "title": "DNA."
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/kendrick3/300/300",
-    "duration": "3:39",
-    "artists": ["Kendrick Lamar"],
-    "album": "To Pimp a Butterfly",
-    "genres": ["Hip Hop"],
-    "id": "50",
-    "title": "Alright"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/killers1/300/300",
-    "duration": "3:42",
-    "artists": ["The Killers"],
-    "album": "Hot Fuss",
-    "genres": ["Alternative Rock"],
-    "id": "51",
-    "title": "Mr. Brightside"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/killers2/300/300",
-    "duration": "3:40",
-    "artists": ["The Killers"],
-    "album": "Sam's Town",
-    "genres": ["Alternative Rock"],
-    "id": "52",
-    "title": "When You Were Young"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/gotye1/300/300",
-    "duration": "4:04",
-    "artists": ["Gotye"],
-    "album": "Making Mirrors",
-    "genres": ["Indie Pop"],
-    "id": "53",
-    "title": "Somebody That I Used to Know"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/hozier1/300/300",
-    "duration": "4:00",
-    "artists": ["Hozier"],
-    "album": "Hozier",
-    "genres": ["Indie Rock"],
-    "id": "54",
-    "title": "Take Me to Church"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/twentyone1/300/300",
-    "duration": "3:21",
-    "artists": ["Twenty One Pilots"],
-    "album": "Blurryface",
-    "genres": ["Alternative"],
-    "id": "55",
-    "title": "Stressed Out"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/twentyone2/300/300",
-    "duration": "3:15",
-    "artists": ["Twenty One Pilots"],
-    "album": "Suicide Squad Soundtrack",
-    "genres": ["Alternative"],
-    "id": "56",
-    "title": "Heathens"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/imagine1/300/300",
-    "duration": "3:58",
-    "artists": ["Imagine Dragons"],
-    "album": "Night Visions",
-    "genres": ["Alternative Rock"],
-    "id": "57",
-    "title": "Radioactive"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/imagine2/300/300",
-    "duration": "3:24",
-    "artists": ["Imagine Dragons"],
-    "album": "Evolve",
-    "genres": ["Alternative Rock"],
-    "id": "58",
-    "title": "Believer"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/imagine3/300/300",
-    "duration": "2:57",
-    "artists": ["Imagine Dragons"],
-    "album": "Night Visions",
-    "genres": ["Alternative Rock"],
-    "id": "59",
-    "title": "Demons"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/onerepublic1/300/300",
-    "duration": "4:17",
-    "artists": ["OneRepublic"],
-    "album": "Native",
-    "genres": ["Pop Rock"],
-    "id": "60",
-    "title": "Counting Stars"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/onerepublic2/300/300",
-    "duration": "3:28",
-    "artists": ["OneRepublic"],
-    "album": "Dreaming Out Loud",
-    "genres": ["Pop Rock"],
-    "id": "61",
-    "title": "Apologize"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/rihanna1/300/300",
-    "duration": "4:00",
-    "artists": ["Rihanna ft. Mikky Ekko"],
-    "album": "Unapologetic",
-    "genres": ["R&B"],
-    "id": "62",
-    "title": "Stay"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/rihanna2/300/300",
-    "duration": "4:36",
-    "artists": ["Rihanna"],
-    "album": "Good Girl Gone Bad",
-    "genres": ["R&B"],
-    "id": "63",
-    "title": "Umbrella"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/rihanna3/300/300",
-    "duration": "3:45",
-    "artists": ["Rihanna"],
-    "album": "Unapologetic",
-    "genres": ["R&B"],
-    "id": "64",
-    "title": "Diamonds"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/rihanna4/300/300",
-    "duration": "3:35",
-    "artists": ["Rihanna ft. Calvin Harris"],
-    "album": "Talk That Talk",
-    "genres": ["Dance"],
-    "id": "65",
-    "title": "We Found Love"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/brunomars2/300/300",
-    "duration": "3:40",
-    "artists": ["Bruno Mars"],
-    "album": "Doo-Wops & Hooligans",
-    "genres": ["Pop"],
-    "id": "66",
-    "title": "Just the Way You Are"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/brunomars3/300/300",
-    "duration": "3:53",
-    "artists": ["Bruno Mars"],
-    "album": "Unorthodox Jukebox",
-    "genres": ["Pop"],
-    "id": "67",
-    "title": "Locked Out of Heaven"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/brunomars4/300/300",
-    "duration": "3:42",
-    "artists": ["Bruno Mars"],
-    "album": "Doo-Wops & Hooligans",
-    "genres": ["Pop"],
-    "id": "68",
-    "title": "Grenade"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/brunomars5/300/300",
-    "duration": "2:58",
-    "artists": ["Bruno Mars"],
-    "album": "Unorthodox Jukebox",
-    "genres": ["Funk"],
-    "id": "69",
-    "title": "Treasure"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/dualipa1/300/300",
-    "duration": "3:03",
-    "artists": ["Dua Lipa"],
-    "album": "Future Nostalgia",
-    "genres": ["Pop"],
-    "id": "70",
-    "title": "Don't Start Now"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/dualipa2/300/300",
-    "duration": "3:23",
-    "artists": ["Dua Lipa"],
-    "album": "Future Nostalgia",
-    "genres": ["Pop"],
-    "id": "71",
-    "title": "Levitating"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/dualipa3/300/300",
-    "duration": "3:29",
-    "artists": ["Dua Lipa"],
-    "album": "Future Nostalgia",
-    "genres": ["Pop"],
-    "id": "72",
-    "title": "New Rules"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/dualipa4/300/300",
-    "duration": "3:14",
-    "artists": ["Dua Lipa"],
-    "album": "Future Nostalgia",
-    "genres": ["Pop"],
-    "id": "73",
-    "title": "Physical"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/lewiscapaldi1/300/300",
-    "duration": "3:02",
-    "artists": ["Lewis Capaldi"],
-    "album": "Divinely Uninspired",
-    "genres": ["Pop"],
-    "id": "74",
-    "title": "Someone You Loved"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/lewiscapaldi2/300/300",
-    "duration": "3:35",
-    "artists": ["Lewis Capaldi"],
-    "album": "Divinely Uninspired",
-    "genres": ["Pop"],
-    "id": "75",
-    "title": "Before You Go"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/harrystyles1/300/300",
-    "duration": "2:54",
-    "artists": ["Harry Styles"],
-    "album": "Fine Line",
-    "genres": ["Pop Rock"],
-    "id": "76",
-    "title": "Watermelon Sugar"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/harrystyles2/300/300",
-    "duration": "3:27",
-    "artists": ["Harry Styles"],
-    "album": "Fine Line",
-    "genres": ["Pop Rock"],
-    "id": "77",
-    "title": "Adore You"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/harrystyles3/300/300",
-    "duration": "5:40",
-    "artists": ["Harry Styles"],
-    "album": "Harry Styles",
-    "genres": ["Pop Rock"],
-    "id": "78",
-    "title": "Sign of the Times"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/harrystyles4/300/300",
-    "duration": "2:54",
-    "artists": ["Harry Styles"],
-    "album": "Fine Line",
-    "genres": ["Pop"],
-    "id": "79",
-    "title": "Watermelon Sugar"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/weeknd2/300/300",
-    "duration": "3:50",
-    "artists": ["The Weeknd ft. Daft Punk"],
-    "album": "Starboy",
-    "genres": ["R&B"],
-    "id": "80",
-    "title": "Starboy"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/weeknd3/300/300",
-    "duration": "4:02",
-    "artists": ["The Weeknd"],
-    "album": "Beauty Behind the Madness",
-    "genres": ["R&B"],
-    "id": "81",
-    "title": "The Hills"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/weeknd4/300/300",
-    "duration": "3:35",
-    "artists": ["The Weeknd"],
-    "album": "Beauty Behind the Madness",
-    "genres": ["R&B"],
-    "id": "82",
-    "title": "Can't Feel My Face"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/weeknd5/300/300",
-    "duration": "4:37",
-    "artists": ["The Weeknd"],
-    "album": "Fifty Shades of Grey",
-    "genres": ["R&B"],
-    "id": "83",
-    "title": "Earned It"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/justinbieber1/300/300",
-    "duration": "3:18",
-    "artists": ["Justin Bieber"],
-    "album": "Justice",
-    "genres": ["Pop R&B"],
-    "id": "84",
-    "title": "Peaches"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/justinbieber2/300/300",
-    "duration": "3:20",
-    "artists": ["Justin Bieber"],
-    "album": "Purpose",
-    "genres": ["Pop"],
-    "id": "85",
-    "title": "Sorry"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/justinbieber3/300/300",
-    "duration": "3:35",
-    "artists": ["Justin Bieber"],
-    "album": "Purpose",
-    "genres": ["Pop"],
-    "id": "86",
-    "title": "Love Yourself"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/justinbieber4/300/300",
-    "duration": "3:26",
-    "artists": ["Justin Bieber"],
-    "album": "Purpose",
-    "genres": ["Pop"],
-    "id": "87",
-    "title": "What Do You Mean?"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/justinbieber5/300/300",
-    "duration": "3:35",
-    "artists": ["Justin Bieber"],
-    "album": "My World 2.0",
-    "genres": ["Pop"],
-    "id": "88",
-    "title": "Baby"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/shawnmendes1/300/300",
-    "duration": "3:11",
-    "artists": ["Shawn Mendes & Camila Cabello"],
-    "album": "Señorita",
-    "genres": ["Pop"],
-    "id": "89",
-    "title": "Señorita"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/shawnmendes2/300/300",
-    "duration": "3:45",
-    "artists": ["Shawn Mendes"],
-    "album": "Handwritten",
-    "genres": ["Pop"],
-    "id": "90",
-    "title": "Stitches"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/shawnmendes3/300/300",
-    "duration": "3:08",
-    "artists": ["Shawn Mendes"],
-    "album": "Illuminate",
-    "genres": ["Pop"],
-    "id": "91",
-    "title": "Treat You Better"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran4/300/300",
-    "duration": "4:04",
-    "artists": ["Ed Sheeran"],
-    "album": "x",
-    "genres": ["Pop"],
-    "id": "92",
-    "title": "Photograph"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran5/300/300",
-    "duration": "4:18",
-    "artists": ["Ed Sheeran"],
-    "album": "+",
-    "genres": ["Pop"],
-    "id": "93",
-    "title": "The A Team"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran6/300/300",
-    "duration": "3:56",
-    "artists": ["Ed Sheeran"],
-    "album": "+",
-    "genres": ["Pop"],
-    "id": "94",
-    "title": "Lego House"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran7/300/300",
-    "duration": "4:21",
-    "artists": ["Ed Sheeran"],
-    "album": "÷",
-    "genres": ["Pop Rock"],
-    "id": "95",
-    "title": "Castle on the Hill"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/edsheeran8/300/300",
-    "duration": "2:50",
-    "artists": ["Ed Sheeran"],
-    "album": "÷",
-    "genres": ["Pop Folk"],
-    "id": "96",
-    "title": "Galway Girl"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/marshmello1/300/300",
-    "duration": "3:34",
-    "artists": ["Marshmello ft. Bastille"],
-    "album": "Joytime II",
-    "genres": ["Electronic"],
-    "id": "97",
-    "title": " Happier"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/marshmello2/300/300",
-    "duration": "3:20",
-    "artists": ["Marshmello"],
-    "album": "Joytime",
-    "genres": ["Electronic"],
-    "id": "98",
-    "title": "Alone"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/alanwalker1/300/300",
-    "duration": "3:32",
-    "artists": ["Alan Walker"],
-    "album": "Different World",
-    "genres": ["Electronic"],
-    "id": "99",
-    "title": "Faded"
-  },
-  {
-    "coverUrl": "https://picsum.photos/seed/alanwalker2/300/300",
-    "duration": "3:59",
-    "artists": ["Alan Walker ft. Au/Ra"],
-    "album": "Different World",
-    "genres": ["Electronic"],
-    "id": "100",
-    "title": "Darkside"
-  },
-  {
-    "coverUrl": "/uploads/7c8c02ac-c7b2-460d-ba5d-193e69e32a1a.jpg",
-    "duration": "9999",
-    "artists": ["test"],
-    "album": "test",
-    "genres": ["test"],
-    "id": "a3abfc32-d3d4-4da5-8827-aabf4eb9fead",
-    "title": "test"
-  },
-  {
-    "coverUrl": "cover.jpg",
-    "duration": "3:00",
-    "artists": ["ARTIST"],
-    "album": "Album",
-    "genres": ["Pop"],
-    "id": "50dfa20e-524e-434c-90ac-d27df69df2af",
-    "title": "HELLO World"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Album1",
-    "genres": ["Rock"],
-    "id": "bcef355d-83dc-406d-994e-774630d869fb",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "new-cover.jpg",
-    "duration": "4:00",
-    "artists": ["New Artist"],
-    "album": "New Album",
-    "genres": ["Rock"],
-    "id": "d3ffd9b6-7a69-499c-8826-ba158c108cbe",
-    "title": "Updated"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["The Beatles"],
-    "album": "Album1",
-    "genres": ["Rock"],
-    "id": "a15f88a6-a899-4103-98eb-a5fb43ea9600",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover2.jpg",
+    "coverUrl": "/uploads/6e93d68a-2a03-4bb9-8c2c-9097e5bc7071.jpg",
     "duration": "5:00",
-    "artists": ["Pink Floyd"],
-    "album": "Album2",
-    "genres": ["Prog"],
-    "id": "f0a2aed8-5cc1-4842-8d5f-09ce0676ab48",
-    "title": "Song2"
-  },
-  {
-    "coverUrl": "cover.jpg",
-    "duration": "3:00",
-    "artists": ["Artist"],
-    "album": "Album",
-    "genres": ["Pop"],
-    "id": "01ec4e4f-e17d-41ee-b461-50aa86822797",
-    "title": "Read Test"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Album1",
-    "genres": ["Rock"],
-    "id": "6804dfd7-3e7b-48b5-bb45-d2dc60453066",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover.jpg",
-    "duration": "3:30",
-    "artists": ["Test Artist"],
-    "album": "Test Album",
-    "genres": ["Rock"],
-    "id": "3053e871-fefc-4c7c-8a70-a5dc99bb65eb",
-    "title": "Test Song"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Dark Side of the Moon",
-    "genres": ["Rock"],
-    "id": "b3c19a09-ff29-40bb-8e24-f94f4367fb28",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover2.jpg",
-    "duration": "4:00",
-    "artists": ["Artist2"],
-    "album": "The Wall",
-    "genres": ["Rock"],
-    "id": "90885e3c-667f-48ed-8db7-9619a434a5ef",
-    "title": "Song2"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Album1",
-    "genres": ["Jazz"],
-    "id": "10f87d3f-3bfc-466c-80a2-d74a7f045de2",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover2.jpg",
-    "duration": "4:00",
-    "artists": ["Artist2"],
-    "album": "Album2",
-    "genres": ["Rock"],
-    "id": "24804913-81ca-41d2-a595-59b68c95eb6b",
-    "title": "Song2"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Album1",
-    "genres": ["Pop"],
-    "id": "9472012e-6901-482b-bca9-51cf597e5eba",
-    "title": "Summer Vibes"
-  },
-  {
-    "coverUrl": "cover2.jpg",
-    "duration": "4:00",
-    "artists": ["Artist2"],
-    "album": "Album2",
-    "genres": ["Jazz"],
-    "id": "c65c3592-9c7a-4674-bc88-5f342c17035f",
-    "title": "Winter Blues"
-  },
-  {
-    "coverUrl": "cover3.jpg",
-    "duration": "3:30",
-    "artists": ["Artist3"],
-    "album": "Album3",
-    "genres": ["Rock"],
-    "id": "70ed998f-e5ed-40da-8ca5-49addcbacc35",
-    "title": "Spring Time"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Album1",
-    "genres": ["Rock"],
-    "id": "bc7b3c7a-5055-4d51-b5c4-2426c6f88e53",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover.jpg",
-    "duration": "3:00",
-    "artists": ["Artist"],
-    "album": "Album",
-    "genres": ["Pop"],
-    "id": "d448f077-ba20-43c5-9504-d0e9cddc2db6",
-    "title": "Supercalifragilisticexpialidocious"
-  },
-  {
-    "coverUrl": "new-cover.jpg",
-    "duration": "4:00",
-    "artists": ["New Artist"],
-    "album": "New Album",
-    "genres": ["Rock"],
-    "id": "dd48a3c1-4652-4540-83a7-d353a1676e07",
-    "title": "Updated"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["The Beatles"],
-    "album": "Album1",
-    "genres": ["Rock"],
-    "id": "40ea3376-3cdf-44b8-a0d0-3ef135a6ab32",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover2.jpg",
-    "duration": "5:00",
-    "artists": ["Pink Floyd"],
-    "album": "Album2",
-    "genres": ["Prog"],
-    "id": "eedc4cbc-cd0b-4294-9f32-fc1ec7e67e12",
-    "title": "Song2"
-  },
-  {
-    "coverUrl": "cover.jpg",
-    "duration": "3:00",
-    "artists": ["Artist"],
-    "album": "Album",
-    "genres": ["Pop"],
-    "id": "003486af-b861-44fb-b1d6-ae809d382500",
-    "title": "Read Test"
-  },
-  {
-    "coverUrl": "cover.jpg",
-    "duration": "3:30",
-    "artists": ["Test Artist"],
-    "album": "Test Album",
-    "genres": ["Rock"],
-    "id": "40c090a2-0b44-4d6d-837a-8d5021c8697a",
-    "title": "Test Song"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Dark Side of the Moon",
-    "genres": ["Rock"],
-    "id": "99e20d1b-31a4-43d8-848d-e931020bb276",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover2.jpg",
-    "duration": "4:00",
-    "artists": ["Artist2"],
-    "album": "The Wall",
-    "genres": ["Rock"],
-    "id": "21f66b91-fa99-4aac-b6de-82cc4270a706",
-    "title": "Song2"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Album1",
-    "genres": ["Jazz"],
-    "id": "5ef482b2-b3ba-4b34-adb7-67daf7a17ec7",
-    "title": "Song1"
-  },
-  {
-    "coverUrl": "cover2.jpg",
-    "duration": "4:00",
-    "artists": ["Artist2"],
-    "album": "Album2",
-    "genres": ["Rock"],
-    "id": "91ef7866-0aef-4060-ba2f-66754c140206",
-    "title": "Song2"
-  },
-  {
-    "coverUrl": "cover1.jpg",
-    "duration": "3:00",
-    "artists": ["Artist1"],
-    "album": "Album1",
-    "genres": ["Pop"],
-    "id": "611e128a-eea5-469f-b665-c2d99a461748",
-    "title": "Summer Vibes"
-  },
-  {
-    "coverUrl": "cover2.jpg",
-    "duration": "4:00",
-    "artists": ["Artist2"],
-    "album": "Album2",
-    "genres": ["Jazz"],
-    "id": "ab674c27-03e2-48d0-b1af-143642b1a609",
-    "title": "Winter Blues"
-  },
-  {
-    "coverUrl": "cover3.jpg",
-    "duration": "3:30",
-    "artists": ["Artist3"],
-    "album": "Album3",
-    "genres": ["Rock"],
-    "id": "3da35885-a880-4c29-b077-47d003512228",
-    "title": "Spring Time"
-  },
-  {
-    "artists": [],
-    "genres": [],
-    "id": "ccda77ef-4756-4cea-bd67-2058bd98a86a"
-  },
-  {
-    "coverUrl": "/uploads/c6c163f9-b1da-4f45-8a2f-09d2ecc276f9.jpeg",
-    "duration": "5:00",
+    "explicit": false,
     "audioUrl": "/uploads/8467c7f5-4329-4385-ac4a-aa1d2f2143b9.mp3",
     "artists": [
       "Dave",
       "Tems"
     ],
+    "releaseDate": "",
     "album": "Raindance",
     "genres": ["Afrobeat"],
     "id": "ce70e8cb-8adb-4a59-a45a-4b49fc9dba4a",
     "title": "Raindance"
+  },
+  {
+    "coverUrl": "/uploads/f8bd3913-3ae6-4a3a-b4c9-5c33c6fe5c1d.jpg",
+    "duration": "4:37",
+    "explicit": true,
+    "audioUrl": "/uploads/1265b37b-69b9-4e68-aa8c-b4812b096250.mp3",
+    "artists": ["Drake"],
+    "releaseDate": "2011-11-13",
+    "album": "Take Care",
+    "genres": ["Hip Hop"],
+    "id": "c4ca9045-b8f1-448d-a81a-ea7e315cf3d6",
+    "title": "Take"
+  },
+  {
+    "coverUrl": "/uploads/fb26ddd7-4632-4832-a78f-b3a1abc9735a.jpg",
+    "duration": "2:53",
+    "explicit": false,
+    "audioUrl": "/uploads/88f60d0f-496a-488d-826f-c25a6f57a771.mp3",
+    "artists": [
+      "Drake",
+      "Wizkid",
+      "Kyla"
+    ],
+    "releaseDate": "",
+    "album": "Views",
+    "genres": ["Hip Hop"],
+    "id": "83a7ed01-2328-428e-99bc-9e45c2d77f9f",
+    "title": "One Dance"
+  },
+  {
+    "coverUrl": "/uploads/10d9e098-3ca7-46e9-aa6f-55662b3f05e8.png",
+    "duration": "3:51",
+    "explicit": false,
+    "audioUrl": "/uploads/ed61ee41-146c-44b8-944c-20db87aae2c0.mp3",
+    "artists": ["Nelly"],
+    "releaseDate": "2002",
+    "album": "Hot In Herre",
+    "genres": ["Hip Hop"],
+    "id": "d2138541-4a5b-483a-9901-f1ef1a74a411",
+    "title": "Hot In Here"
+  },
+  {
+    "coverUrl": "/uploads/4915700a-d8ad-4854-9106-813f9d381902.png",
+    "duration": "3:06",
+    "explicit": true,
+    "audioUrl": "/uploads/efa2c94a-7d5c-4974-ace8-e93c40f69039.mp3",
+    "artists": ["Kendrick Lamar"],
+    "releaseDate": "2017",
+    "album": "Damn",
+    "genres": [
+      "Hip Hop",
+      "Rap"
+    ],
+    "id": "6a3edef8-efe4-487c-913c-cb487b743617",
+    "title": "DNA"
+  },
+  {
+    "coverUrl": "/uploads/745dde9a-6275-44b8-901e-ac8496ff0e63.png",
+    "duration": "3:53",
+    "explicit": false,
+    "audioUrl": "/uploads/7d1991ff-43d3-425b-b9f4-dbf625107790.mp3",
+    "artists": ["Ed Sheeran"],
+    "releaseDate": "2017-01-06",
+    "album": "÷",
+    "genres": ["Pop"],
+    "id": "new-id-shape-of-you",
+    "title": "Shape of You"
+  },
+  {
+    "coverUrl": "/uploads/38271e0e-fd50-45f5-84b4-b3ff3902919e.png",
+    "duration": "3:50",
+    "explicit": true,
+    "audioUrl": "/uploads/0cbb6f6a-a8ce-4c58-9d2b-7016ed54bb43.mp3",
+    "artists": [
+      "The Weeknd",
+      "Daft Punk"
+    ],
+    "releaseDate": "2016-09-21",
+    "album": "Starboy",
+    "genres": ["R&B"],
+    "id": "new-id-starboy",
+    "title": "Starboy"
+  },
+  {
+    "coverUrl": "/uploads/e7c37fe3-5281-4558-a21f-ac2c195d8599.png",
+    "duration": "3:20",
+    "explicit": false,
+    "audioUrl": "/uploads/3606847c-0e26-46d4-bac9-2d76bb974a90.mp3",
+    "artists": ["The Weeknd"],
+    "releaseDate": "2019-11-29",
+    "album": "After Hours",
+    "genres": [
+      "R&B",
+      "Synthwave"
+    ],
+    "id": "new-id-blinding-lights",
+    "title": "Blinding Lights"
+  },
+  {
+    "coverUrl": "/uploads/49f44d45-75d2-4ebe-b644-70f6d4ba1b30.png",
+    "explicit": false,
+    "audioUrl": "/uploads/e14af309-b8f1-4845-a519-01f07ed77e2b.mp3",
+    "artists": [
+      "Shakira",
+      "Wyclef Jean"
+    ],
+    "releaseDate": "2006-02-06",
+    "album": "Oral Fixation Vol 2.",
+    "genres": [
+      "Pop",
+      "Latin"
+    ],
+    "id": "ee6a2332-73ba-4ba6-a1d9-8d0b8c8d42de",
+    "title": "Hips Don't Lie"
+  },
+  {
+    "coverUrl": "/uploads/f1cf05a4-f616-4f23-b81c-fe397d405ec6.jpg",
+    "duration": "3:34",
+    "explicit": false,
+    "audioUrl": "/uploads/d530a5ee-8a1f-4f21-a82e-fc33cded5b0a.flac",
+    "artists": ["Charly Black"],
+    "releaseDate": "2016",
+    "album": "Jambean Riddim",
+    "genres": ["Dancehall"],
+    "id": "683033d1-7547-44ef-8052-9255e5122847",
+    "title": "Gyal You A Party Animal"
+  },
+  {
+    "coverUrl": "/uploads/20041ad0-47e3-4068-a7c6-6331cb718076.jpg",
+    "duration": "3:49",
+    "explicit": false,
+    "audioUrl": "/uploads/394ec327-9641-4e88-9aae-58472739f872.mp3",
+    "artists": ["Ne-Yo"],
+    "releaseDate": "2008",
+    "album": "Miss Independent",
+    "genres": ["R&B"],
+    "id": "ff1fe64e-30dd-4e91-995a-51b421f26c87",
+    "title": "Miss Independent"
   }
 ]
