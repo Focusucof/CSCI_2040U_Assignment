@@ -17,7 +17,7 @@ export default function AlbumCard({ album }: AlbumCardProps) {
           src={album.coverUrl}
           alt={album.title}
           fill
-          className="object-cover hover:scale-105 transition-transform duration-500"
+          className="object-cover transition-transform duration-500"
           sizes="200px"
         />
         
