@@ -7,10 +7,10 @@ import loginRoutes from "./routes/login";
 import meRoutes from "./routes/me";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
     credentials: true,
 }));
 app.use(express.json());

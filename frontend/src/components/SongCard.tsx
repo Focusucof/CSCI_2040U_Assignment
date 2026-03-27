@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Play, Heart } from 'lucide-react';
 import Image from 'next/image';
 import { Track } from '@/lib/types';
@@ -47,14 +46,16 @@ export default function SongCard({ track, onPlay }: SongCardProps) {
       {/* Info */}
       <div className="p-3">
         <h3 className="text-sm font-bold text-white truncate hover:text-purple-300 transition-colors">{track.title}</h3>
-        <p className="text-xs text-zinc-400 truncate mt-1 hover:text-zinc-300 transition-colors">{track.artist}</p>
+        <p className="text-xs text-zinc-400 truncate mt-1 hover:text-zinc-300 transition-colors">{track.artists?.join(', ')}</p>
         
-        {/* Genre Tag */}
-        <div className="mt-2">
-          <span className="inline-block px-2 py-0.5 bg-white/5 rounded-full text-[10px] text-zinc-500 hover:text-purple-300 hover:bg-purple-500/20 transition-colors">
-            {track.genre}
-          </span>
-        </div>
+        {/* Genre Tags */}
+        {track.genres && track.genres.length > 0 && (
+          <div className="mt-2">
+            <span className="inline-block px-2 py-0.5 bg-white/5 rounded-full text-[10px] text-zinc-500 hover:text-purple-300 hover:bg-purple-500/20 transition-colors">
+              {track.genres[0]}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

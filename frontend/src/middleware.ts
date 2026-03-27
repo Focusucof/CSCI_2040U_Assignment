@@ -8,7 +8,8 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    const res = await fetch('http://localhost:3001/auth/me', {
+    const authUrl = process.env.AUTH_INTERNAL_URL || 'http://localhost:3001';
+    const res = await fetch(`${authUrl}/auth/me`, {
       headers: { Cookie: `token=${token}` },
     });
 
