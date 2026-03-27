@@ -29,11 +29,12 @@ function normalizeTrackUrl(track: Track): Track {
     const prefix = track.audioUrl.startsWith('/') ? '' : '/';
     normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
   }
-  if (track.artists === undefined && (track as any).artist) {
-    normalized = { ...normalized, artists: [(track as any).artist] };
+  const raw = track as Track & Record<string, unknown>;
+  if (track.artists === undefined && raw.artist) {
+    normalized = { ...normalized, artists: [String(raw.artist)] };
   }
-  if (track.genres === undefined && (track as any).genre) {
-    normalized = { ...normalized, genres: [(track as any).genre] };
+  if (track.genres === undefined && raw.genre) {
+    normalized = { ...normalized, genres: [String(raw.genre)] };
   }
   return normalized;
 }
