@@ -78,14 +78,22 @@ class SongFilter {
         return song.getGenres().toArray(new String[0]);
     }
 
+    private float scoreString(String search, String target, float weight){
+        LevenshteinDistance ld = LevenshteinDistance.getDefaultInstance();
+        int length = Math.min(search.length(), target.length());
+        String target_lower = target.toLowerCase().substring(length);
+        String search_lower = this.title.toLowerCase();
+        int score = ld.apply(search_lower, target_lower);
+        return sigmoid(score * weight);
+    }
+
     public float scoreAny(Song song) {
         float score = 1;
 
-        LevenshteinDistance ld = LevenshteinDistance.getDefaultInstance();
         if (this.categories.contains("title")) {
             String songTitle = song.getTitle();
             if (songTitle != null) {
-                score *= sigmoid(ld.apply(this.title.toLowerCase(), songTitle.toLowerCase().substring(0, Math.min(this.title.length(), songTitle.length())))) * weights.getOrDefault("title", 1);
+                score *= scoreString(this.title, songTitle, weights.getOrDefault("title", 1));
             }
         }
 
@@ -93,7 +101,7 @@ class SongFilter {
             System.out.println(song.getAlbum());
             String songAlbum = song.getAlbum();
             if (songAlbum != null) {
-                score *= sigmoid(ld.apply(this.album.toLowerCase(), songAlbum.toLowerCase().substring(0, Math.min(this.album.length(), songAlbum.length())))) * weights.getOrDefault("album", 1);
+                score *= scoreString(this.album, songAlbum, weights.getOrDefault("album", 1));
             }
         }
 
@@ -101,28 +109,28 @@ class SongFilter {
         if (this.categories.contains("artists")) {
             String[] songArtists = safeGetArtists(song);
             for(String filter_artist : this.artists) {
-                int closest = Integer.MAX_VALUE;
+                float closest = Float.MAX_VALUE;
 
                 for(String song_artist : songArtists) {
-                    String lowerArtist = song_artist.toLowerCase();
-                    int minLength = Math.min(filter_artist.length(), lowerArtist.length());
-                    closest = Math.min(ld.apply(filter_artist, lowerArtist.substring(0, minLength)), closest);
+                    float artist_score = scoreString(filter_artist, song_artist, weights.getOrDefault("artists", 1));
+                    closest = Math.min(artist_score, closest);
                 }
 
-                score *= sigmoid(closest) * weights.getOrDefault("artists", 1);
+                score *= closest;
             }
         }
 
         if (this.categories.contains("genres")) {
             String[] songGenres = safeGetGenres(song);
             for(String filter_genre : this.genres) {
-                int closest = Integer.MAX_VALUE;
+                float closest = Float.MAX_VALUE;
 
                 for(String song_genre : songGenres) {
-                    closest = Math.min(ld.apply(filter_genre, song_genre.substring(0, Math.min(filter_genre.length(), song_genre.length()))), closest);
+                    float genre_score = scoreString(filter_genre, song_genre, weights.getOrDefault("genres", 1));
+                    closest = Math.min(genre_score, closest);
                 }
 
-                score *= sigmoid(closest) * weights.getOrDefault("genres", 1);
+                score *= closest;
             }
         }
 
