@@ -159,7 +159,7 @@ public class SongService {
         if (query == null || query.trim().isEmpty()) {
             return readSongs();
         }
-        
+
         String lowerQuery = query.toLowerCase().trim();
         List<Song> allSongs = readSongs();
 //        List<Song> results = new ArrayList<>();
@@ -174,7 +174,7 @@ public class SongService {
         HashMap<Song, Float> results = new LinkedHashMap<>();
 
         allSongs.sort((o1, o2) -> (int) (10000 * (matchesSearch(o1, lowerQuery) - matchesSearch(o2, lowerQuery))));
-        allSongs = allSongs.subList(0, 25);
+        allSongs = allSongs.subList(0, Math.min(25, allSongs.size()));
 
         return allSongs;
     }
@@ -208,7 +208,7 @@ public class SongService {
         filter_map.put("title", query);
         filter_map.put("artists", new String[]{query});
         filter_map.put("genres", new String[]{query});
-        filter_map.put("albums", query);
+        filter_map.put("album", query);
 
         SongFilter filter = new SongFilter(filter_map, new HashMap<>());
 
