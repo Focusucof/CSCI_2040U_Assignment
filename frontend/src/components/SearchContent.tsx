@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Music, Disc3, Mic2, Search, X, ArrowLeft } from 'lucide-react';
+import { Music, Disc3, Mic2, Search, X, ArrowLeft, Filter } from 'lucide-react';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
 import { Track, Album, Artist } from '@/lib/types';
@@ -53,6 +53,37 @@ export default function SearchContent() {
   const [songs, setSongs] = useState<Track[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
+
+  const [genreFilter, setGenreFilter] = useState<string>('');
+  const [explicitFilter, setExplicitFilter] = useState<string>('');
+  const [durationFilter, setDurationFilter] = useState<string>('');
+
+  const availableGenres = useMemo(() => {
+    const genres = new Set<string>();
+    songs.forEach(track => track.genres?.forEach(g => genres.add(g)));
+    return Array.from(genres).sort();
+  }, [songs]);
+
+  const parseDuration = (duration: string): number => {
+    const parts = duration.split(':');
+    if (parts.length === 2) {
+      return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+    return 0;
+  };
+
+  const filterSong = (track: Track): boolean => {
+    if (genreFilter && !track.genres?.includes(genreFilter)) return false;
+    if (explicitFilter === 'explicit' && !track.explicit) return false;
+    if (explicitFilter === 'clean' && track.explicit) return false;
+    if (durationFilter) {
+      const duration = parseDuration(track.duration);
+      if (durationFilter === 'short' && duration >= 180) return false;
+      if (durationFilter === 'medium' && (duration < 180 || duration > 300)) return false;
+      if (durationFilter === 'long' && duration <= 300) return false;
+    }
+    return true;
+  };
 
   // Fetch search results with debounce and cancellation
   useEffect(() => {
@@ -105,10 +136,11 @@ export default function SearchContent() {
 
   // Derive display state: don't show stale results when query is empty
   const hasQuery = searchQuery.trim() !== '';
-  const displayedSongs = hasQuery ? songs : [];
+  const displayedSongs = hasQuery ? songs.filter(filterSong) : [];
   const displayedAlbums = hasQuery ? albums : [];
   const displayedArtists = hasQuery ? artists : [];
   const hasResults = displayedSongs.length > 0 || displayedAlbums.length > 0 || displayedArtists.length > 0;
+  const hasActiveFilters = genreFilter || explicitFilter || durationFilter;
 
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
@@ -144,6 +176,57 @@ export default function SearchContent() {
           <AccountMenu />
         </div>
       </div>
+
+      {/* Filters */}
+      {(
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <div className="flex items-center gap-2 text-zinc-400 text-sm">
+            <Filter className="w-4 h-4" />
+            <span>Filters:</span>
+          </div>
+
+          <select
+            value={genreFilter}
+            onChange={(e) => setGenreFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">All Genres</option>
+            {availableGenres.map(genre => (
+              <option key={genre} value={genre}>{genre}</option>
+            ))}
+          </select>
+
+          <select
+            value={explicitFilter}
+            onChange={(e) => setExplicitFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">All Content</option>
+            <option value="explicit">Explicit</option>
+            <option value="clean">Clean</option>
+          </select>
+
+          <select
+            value={durationFilter}
+            onChange={(e) => setDurationFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">Any Duration</option>
+            <option value="short">Short (&lt; 3 min)</option>
+            <option value="medium">Medium (3-5 min)</option>
+            <option value="long">Long (&gt; 5 min)</option>
+          </select>
+
+          {hasActiveFilters && (
+            <button
+              onClick={() => { setGenreFilter(''); setExplicitFilter(''); setDurationFilter(''); }}
+              className="text-zinc-400 hover:text-white text-sm underline transition-colors"
+            >
+              Clear filters
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Results */}
       {!hasQuery ? (
