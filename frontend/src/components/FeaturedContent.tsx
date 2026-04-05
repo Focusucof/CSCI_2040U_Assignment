@@ -12,6 +12,7 @@ import AlbumCard from '@/components/AlbumCard';
 import PlaylistCard from '@/components/PlaylistCard';
 import ArtistCard from '@/components/ArtistCard';
 import AccountMenu from '@/components/AccountMenu';
+import SongContextMenu from '@/components/SongContextMenu';
 import { useAudio } from '@/context/AudioContext';
 
 const API_BASE = 'http://localhost:8080/admin/songs';
@@ -109,6 +110,7 @@ export default function FeaturedContent() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -197,6 +199,10 @@ export default function FeaturedContent() {
                 <button
                   key={track.id}
                   onClick={() => handleSuggestionClick(track)}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setContextMenu({ x: e.clientX, y: e.clientY, track });
+                  }}
                   onKeyDown={(e) => e.key === 'Enter' && handleSuggestionClick(track)}
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#303030] transition-all duration-200 text-left"
                 >
@@ -252,6 +258,10 @@ export default function FeaturedContent() {
             <button
               key={track.id}
               onClick={() => onTrackSelect(track)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                setContextMenu({ x: e.clientX, y: e.clientY, track });
+              }}
               className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-none transition-all duration-300 hover:-translate-y-1"
             >
               <div className="relative w-14 h-14 flex-shrink-0">
@@ -283,7 +293,7 @@ export default function FeaturedContent() {
           <HorizontalScroll>
             {allSongs.slice(0, 10).map((track) => (
               <div key={track.id} className="flex-shrink-0 w-48">
-                <SongCard track={track} onPlay={onTrackSelect} />
+                <SongCard track={track} onPlay={onTrackSelect} onContextMenu={(e, t) => setContextMenu({ x: e.clientX, y: e.clientY, track: t })} />
               </div>
             ))}
           </HorizontalScroll>
@@ -337,6 +347,15 @@ export default function FeaturedContent() {
           </HorizontalScroll>
         )}
       </section>
+
+      {contextMenu && (
+        <SongContextMenu
+          track={contextMenu.track}
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
     </main>
   );
 }

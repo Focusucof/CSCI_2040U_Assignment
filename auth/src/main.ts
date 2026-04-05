@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import registerRoutes from "./routes/register";
 import loginRoutes from "./routes/login";
 import meRoutes from "./routes/me";
+import likesRoutes from "./routes/likes";
+import playlistsRoutes from "./routes/playlists";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,6 +21,8 @@ app.use(cookieParser());
 app.use(registerRoutes);
 app.use(loginRoutes);
 app.use(meRoutes);
+app.use(likesRoutes);
+app.use(playlistsRoutes);
 
 app.get("/ping", (req, res) => {
     res.send("Pong!");

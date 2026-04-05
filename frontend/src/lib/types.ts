@@ -35,3 +35,10 @@ export interface Artist {
   genre: string;
 }
 
+export interface UserPlaylist {
+  id: string;
+  name: string;
+  songIds: string[];
+  createdAt: string;
+}
+

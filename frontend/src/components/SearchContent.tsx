@@ -9,6 +9,7 @@ import { Track, Album, Artist } from '@/lib/types';
 import SectionHeader from '@/components/SectionHeader';
 import AccountMenu from '@/components/AccountMenu';
 import { useAudio } from '@/context/AudioContext';
+import SongContextMenu from '@/components/SongContextMenu';
 
 const SONGS_API = 'http://localhost:8080/admin/songs';
 const ALBUMS_API = 'http://localhost:8080/admin/albums';
@@ -57,6 +58,8 @@ export default function SearchContent() {
   const [genreFilter, setGenreFilter] = useState<string>('');
   const [explicitFilter, setExplicitFilter] = useState<string>('');
   const [durationFilter, setDurationFilter] = useState<string>('');
+
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
 
   const availableGenres = useMemo(() => {
     const genres = new Set<string>();
@@ -252,6 +255,10 @@ export default function SearchContent() {
                   <button
                     key={track.id}
                     onClick={() => onTrackSelect(track)}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      setContextMenu({ x: e.clientX, y: e.clientY, track });
+                    }}
                     className="w-full flex items-center gap-4 bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300"
                   >
                     <div className="relative w-14 h-14 flex-shrink-0">
@@ -326,6 +333,15 @@ export default function SearchContent() {
             </section>
           )}
         </div>
+      )}
+
+      {contextMenu && (
+        <SongContextMenu
+          track={contextMenu.track}
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </main>
   );

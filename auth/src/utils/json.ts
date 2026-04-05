@@ -36,3 +36,27 @@ export function writeUser(user: any): void {
         fs.writeFileSync(usersFilePath, JSON.stringify([user], null, 2));
     }
 }
+
+export function getUserById(id: string): any | null {
+    try {
+        const data = fs.readFileSync(usersFilePath, 'utf-8');
+        const users = JSON.parse(data);
+        return users.find((user: any) => user.id === id) || null;
+    } catch (error) {
+        return null;
+    }
+}
+
+export function updateUser(id: string, updater: (user: any) => any): any | null {
+    try {
+        const data = fs.readFileSync(usersFilePath, 'utf-8');
+        const users = JSON.parse(data);
+        const index = users.findIndex((user: any) => user.id === id);
+        if (index === -1) return null;
+        users[index] = updater(users[index]);
+        fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+        return users[index];
+    } catch (error) {
+        return null;
+    }
+}

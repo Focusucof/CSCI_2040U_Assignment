@@ -11,8 +11,20 @@
     "id": "b5799f22-4b26-40e6-a0c6-1e7868137938",
     "username": "dev",
     "password": "$2b$10$8AUn1l.Cj.oKADNEXH9G0OSIJ59f/7DgiVA6I9to5dJO5e0Wag9Fq",
-    "likedSongs": [],
-    "playlists": [],
+    "likedSongs": [
+      "c4ca9045-b8f1-448d-a81a-ea7e315cf3d6",
+      "ce70e8cb-8adb-4a59-a45a-4b49fc9dba4a"
+    ],
+    "playlists": [
+      {
+        "id": "bef55d59-1f24-4dbd-8863-3ab947446233",
+        "name": "test",
+        "songIds": [
+          "ce70e8cb-8adb-4a59-a45a-4b49fc9dba4a"
+        ],
+        "createdAt": "2026-04-04T22:57:40.353Z"
+      }
+    ],
     "isAdmin": true
   },
   {

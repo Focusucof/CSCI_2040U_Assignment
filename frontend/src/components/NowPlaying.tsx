@@ -3,6 +3,8 @@
 import { Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Maximize2, Heart } from 'lucide-react';
 import Image from 'next/image';
 import { useAudio } from '@/context/AudioContext';
+import { useUser } from '@/context/UserContext';
+import { useToast } from '@/components/ToastProvider';
 
 function formatTime(time: number) {
   const minutes = Math.floor(time / 60);
@@ -12,8 +14,11 @@ function formatTime(time: number) {
 
 export default function NowPlaying() {
   const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek } = useAudio();
+  const { isLoggedIn, likedSongs, toggleLike } = useUser();
+  const { addToast } = useToast();
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const isLiked = currentTrack ? likedSongs.has(currentTrack.id) : false;
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (duration > 0) {
@@ -29,6 +34,15 @@ export default function NowPlaying() {
       const x = e.clientX - rect.left;
       setVolume(Math.max(0, Math.min(1, x / rect.width)));
     }
+  };
+
+  const handleLike = () => {
+    if (!currentTrack) return;
+    if (!isLoggedIn) {
+      addToast('Log in to like songs', 'error');
+      return;
+    }
+    toggleLike(currentTrack.id);
   };
 
   if (!currentTrack) return null;
@@ -50,8 +64,11 @@ export default function NowPlaying() {
           <h4 className="text-sm font-medium text-white truncate">{currentTrack.title}</h4>
           <p className="text-xs text-zinc-400 truncate">{currentTrack.artists?.join(', ')}</p>
         </div>
-        <button className="text-zinc-400 hover:text-rose-500 transition-colors ml-2">
-          <Heart className="w-4 h-4" />
+        <button
+          onClick={handleLike}
+          className={`transition-colors ml-2 ${isLiked ? 'text-rose-500' : 'text-zinc-400 hover:text-rose-500'}`}
+        >
+          <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
         </button>
       </div>
 

@@ -5,20 +5,14 @@ import { UserCircle, LogIn, LogOut, Shield } from 'lucide-react';
 import { Link } from 'next-view-transitions';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ToastProvider';
+import { useUser } from '@/context/UserContext';
 
 export default function AccountMenu() {
   const router = useRouter();
   const { addToast } = useToast();
+  const { user, refreshUser } = useUser();
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState<{ username: string; isAdmin: boolean } | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    fetch('http://localhost:3001/auth/me', { credentials: 'include' })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => { if (data) setUser(data); })
-      .catch(() => {});
-  }, []);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -32,9 +26,9 @@ export default function AccountMenu() {
 
   async function handleLogout() {
     await fetch('http://localhost:3001/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
-    setUser(null);
     setOpen(false);
     addToast('Logged out successfully.', 'success');
+    await refreshUser();
     router.push('/');
     router.refresh();
   }
