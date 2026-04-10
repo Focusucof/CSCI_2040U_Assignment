@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Heart, Clock, Disc3, ArrowLeft } from 'lucide-react';
+import { Play, Heart, Clock, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Sidebar from '@/components/Sidebar';
 import { Track, Album } from '@/lib/types';

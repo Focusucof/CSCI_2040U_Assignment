@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Music2, Plus, Pencil, Trash2, X, Music, Disc3, Mic2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/components/ToastProvider';
+import * as mm from 'music-metadata';
 
 const API = 'http://localhost:8080';
 
@@ -150,8 +151,35 @@ export default function AdminPage() {
           const minutes = Math.floor(duration / 60);
           const seconds = Math.floor(duration % 60);
           const durationStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-          setFormData((prev) => ({ ...prev, duration: durationStr }));
+          setFormData((prev) => {
+            if (!('title' in prev) || !prev.title) prev.title = '';
+            if (!('artists' in prev) || !prev.artists) prev.artists = '';
+            if (!('album' in prev) || !prev.album) prev.album = '';
+            if (!('genres' in prev) || !prev.genres) prev.genres = '';
+            if (!('releaseDate' in prev) || !prev.releaseDate) prev.releaseDate = '';
+            return { ...prev, duration: durationStr };
+          });
           URL.revokeObjectURL(audio.src);
+        });
+
+        file.arrayBuffer().then((buffer) => {
+          const uint8Array = new Uint8Array(buffer);
+          const mimeType = file.type || 'audio/mpeg';
+          mm.parseBuffer(uint8Array, { mimeType }).then((metadata) => {
+            const common = metadata.common;
+            console.log('Parsed metadata:', common);
+            setFormData((prev) => {
+              const updated = { ...prev };
+              if (common.title) updated.title = common.title;
+              if (common.artist) updated.artists = common.artist;
+              if (common.album) updated.album = common.album;
+              if (common.genre && common.genre.length > 0) updated.genres = common.genre.join(', ');
+              if (common.year) updated.releaseDate = String(common.year);
+              return updated;
+            });
+          }).catch((err) => {
+            console.warn('Failed to parse audio metadata:', err);
+          });
         });
       }
     } else {
