@@ -1,6 +1,6 @@
 'use client';
 
-import { Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Maximize2, Heart } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Maximize2, Heart, Radio } from 'lucide-react';
 import Image from 'next/image';
 import { useAudio } from '@/context/AudioContext';
 import { useUser } from '@/context/UserContext';
@@ -13,7 +13,7 @@ function formatTime(time: number) {
 }
 
 export default function NowPlaying() {
-  const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek, playNext, playPrevious, loop, shuffle, toggleLoop, toggleShuffle } = useAudio();
+  const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek, playNext, playPrevious, loop, shuffle, toggleLoop, toggleShuffle, isInfiniteQueue } = useAudio();
   const { isLoggedIn, likedSongs, toggleLike } = useUser();
   const { addToast } = useToast();
 
@@ -132,6 +132,12 @@ export default function NowPlaying() {
             />
           </div>
           <span className="text-[10px] text-zinc-500 font-mono">{formatTime(duration || 0)}</span>
+          {isInfiniteQueue && (
+            <div className="flex items-center gap-1 text-purple-400" title="Radio mode">
+              <Radio className="w-3 h-3" />
+              <span className="text-[10px]">Radio</span>
+            </div>
+          )}
         </div>
       </div>
 

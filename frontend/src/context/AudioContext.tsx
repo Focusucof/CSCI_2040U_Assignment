@@ -12,6 +12,7 @@ interface AudioContextValue {
   queue: Track[];
   loop: 'none' | 'one' | 'all';
   shuffle: boolean;
+  isInfiniteQueue: boolean;
   onTrackSelect: (track: Track) => void;
   onPlayPause: (playing: boolean) => void;
   setVolume: (volume: number) => void;
@@ -21,6 +22,8 @@ interface AudioContextValue {
   setQueue: (tracks: Track[]) => void;
   toggleLoop: () => void;
   toggleShuffle: () => void;
+  playOneInfinite: (track: Track, allSongs: Track[]) => void;
+  fetchAndSetAllSongs: () => Promise<void>;
 }
 
 const AudioContext = createContext<AudioContextValue>({
@@ -32,6 +35,7 @@ const AudioContext = createContext<AudioContextValue>({
   queue: [],
   loop: 'none',
   shuffle: false,
+  isInfiniteQueue: false,
   onTrackSelect: () => {},
   onPlayPause: () => {},
   setVolume: () => {},
@@ -41,6 +45,8 @@ const AudioContext = createContext<AudioContextValue>({
   setQueue: () => {},
   toggleLoop: () => {},
   toggleShuffle: () => {},
+  playOneInfinite: () => {},
+  fetchAndSetAllSongs: () => Promise.resolve(),
 });
 
 export function useAudio() {
@@ -55,8 +61,10 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
   const [duration, setDuration] = useState(0);
   const [queue, setQueue] = useState<Track[]>([]);
   const [originalQueue, setOriginalQueue] = useState<Track[]>([]);
+  const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [loop, setLoop] = useState<'none' | 'one' | 'all'>('none');
   const [shuffle, setShuffle] = useState(false);
+  const [isInfiniteQueue, setIsInfiniteQueue] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const shuffleQueue = useCallback((tracks: Track[]) => {
@@ -67,6 +75,27 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
     }
     return shuffled;
   }, []);
+
+  const normalizeTrackUrl = (track: Track): Track => {
+    const BACKEND_URL = 'http://localhost:8080';
+    let normalized = track;
+    if (track.coverUrl && !track.coverUrl.startsWith('http')) {
+      const prefix = track.coverUrl.startsWith('/') ? '' : '/';
+      normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
+    }
+    if (track.audioUrl && !track.audioUrl.startsWith('http')) {
+      const prefix = track.audioUrl.startsWith('/') ? '' : '/';
+      normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
+    }
+    return normalized;
+  };
+
+  const fillQueueWithRandom = useCallback((currentSongId: string | undefined, count: number = 20) => {
+    if (allSongs.length === 0) return [];
+    const available = allSongs.filter(s => s.id !== currentSongId && s.audioUrl);
+    const shuffled = shuffleQueue(available);
+    return shuffled.slice(0, count).map(normalizeTrackUrl);
+  }, [allSongs, shuffleQueue]);
 
   const playNext = useCallback(() => {
     if (queue.length === 0) return;
@@ -82,6 +111,24 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
     const currentIndex = queue.findIndex(t => t.id === currentTrack?.id);
     let nextIndex = currentIndex + 1;
     
+    if (isInfiniteQueue && nextIndex >= queue.length) {
+      const newTracks = fillQueueWithRandom(currentTrack?.id, 20);
+      const updatedQueue = [...queue.slice(nextIndex), ...newTracks];
+      if (updatedQueue.length === 0) {
+        setIsPlaying(false);
+        return;
+      }
+      setQueue(updatedQueue);
+      setCurrentTrack(updatedQueue[0]);
+      setIsPlaying(true);
+      if (updatedQueue[0].id) {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/admin/songs/${updatedQueue[0].id}/play`, {
+          method: 'POST',
+        }).catch(console.error);
+      }
+      return;
+    }
+    
     if (nextIndex >= queue.length) {
       if (loop === 'all') {
         nextIndex = 0;
@@ -92,6 +139,8 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
     }
     
     const nextTrack = queue[nextIndex];
+    if (!nextTrack) return;
+    
     setCurrentTrack(nextTrack);
     setIsPlaying(true);
     if (nextTrack.id) {
@@ -99,7 +148,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
         method: 'POST',
       }).catch(console.error);
     }
-  }, [queue, currentTrack, loop]);
+  }, [queue, currentTrack, loop, isInfiniteQueue, fillQueueWithRandom]);
 
   const playPrevious = useCallback(() => {
     if (queue.length === 0) return;
@@ -113,7 +162,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
     let prevIndex = currentIndex - 1;
     
     if (prevIndex < 0) {
-      if (loop === 'all') {
+      if (loop === 'all' || isInfiniteQueue) {
         prevIndex = queue.length - 1;
       } else {
         prevIndex = 0;
@@ -121,6 +170,8 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
     }
     
     const prevTrack = queue[prevIndex];
+    if (!prevTrack) return;
+    
     setCurrentTrack(prevTrack);
     setIsPlaying(true);
     if (prevTrack.id) {
@@ -128,7 +179,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
         method: 'POST',
       }).catch(console.error);
     }
-  }, [queue, currentTrack, loop]);
+  }, [queue, currentTrack, loop, isInfiniteQueue]);
 
   const toggleLoop = useCallback(() => {
     setLoop(prev => prev === 'none' ? 'all' : prev === 'all' ? 'one' : 'none');
@@ -144,6 +195,48 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
       return !prev;
     });
   }, [queue, originalQueue, shuffleQueue]);
+
+  const playOneInfinite = useCallback((track: Track, songs: Track[]) => {
+    setAllSongs(songs);
+    setIsInfiniteQueue(true);
+    const randomQueue = fillQueueWithRandom(track.id, 30);
+    setQueue(randomQueue);
+    setOriginalQueue(randomQueue);
+    setCurrentTrack(track);
+    setIsPlaying(true);
+    if (track.id) {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/admin/songs/${track.id}/play`, {
+        method: 'POST',
+      }).catch(console.error);
+    }
+  }, [fillQueueWithRandom]);
+
+  const fetchAndSetAllSongs = useCallback(async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/admin/songs`);
+      if (res.ok) {
+        const data = await res.json();
+        setAllSongs(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch songs:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const loadSongs = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/admin/songs`);
+        if (res.ok) {
+          const data = await res.json();
+          setAllSongs(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch songs:', error);
+      }
+    };
+    loadSongs();
+  }, []);
 
   useEffect(() => {
     const audio = new Audio();
@@ -200,6 +293,16 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
   }, [volume]);
 
   const onTrackSelect = useCallback((track: Track) => {
+    if (isInfiniteQueue) {
+      const randomQueue = fillQueueWithRandom(track.id, 30);
+      setQueue(randomQueue);
+      setOriginalQueue(randomQueue);
+    } else if (queue.length === 0 && allSongs.length > 0) {
+      const randomQueue = fillQueueWithRandom(track.id, 30);
+      setQueue(randomQueue);
+      setOriginalQueue(randomQueue);
+      setIsInfiniteQueue(true);
+    }
     setCurrentTrack(track);
     setIsPlaying(true);
     if (track.id) {
@@ -207,7 +310,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
         method: 'POST',
       }).catch(console.error);
     }
-  }, []);
+  }, [isInfiniteQueue, queue.length, allSongs, fillQueueWithRandom]);
 
   const onPlayPause = useCallback((playing: boolean) => {
     setIsPlaying(playing);
@@ -224,6 +327,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
   }, []);
 
   const handleSetQueue = useCallback((tracks: Track[]) => {
+    setIsInfiniteQueue(false);
     setOriginalQueue(tracks);
     if (shuffle) {
       setQueue(shuffleQueue(tracks));
@@ -243,6 +347,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
         queue,
         loop,
         shuffle,
+        isInfiniteQueue,
         onTrackSelect,
         onPlayPause,
         setVolume,
@@ -252,6 +357,8 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
         setQueue: handleSetQueue,
         toggleLoop,
         toggleShuffle,
+        playOneInfinite,
+        fetchAndSetAllSongs,
       }}
     >
       {children}
