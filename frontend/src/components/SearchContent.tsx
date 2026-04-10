@@ -306,7 +306,7 @@ export default function SearchContent() {
               <SectionHeader icon={Disc3} title={`Albums (${displayedAlbums.length})`} />
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                 {displayedAlbums.map((album) => (
-                  <div key={album.id} className="flex-shrink-0 w-44">
+                  <Link key={album.id} href={`/album/${album.id}`} className="flex-shrink-0 w-44 no-underline">
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer">
                       <div className="relative w-36 h-36 mb-3">
                         <Image
@@ -320,7 +320,7 @@ export default function SearchContent() {
                       <h3 className="text-sm font-semibold text-white truncate">{album.title}</h3>
                       <p className="text-xs text-zinc-400 truncate">{album.artist}</p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </section>
@@ -332,7 +332,7 @@ export default function SearchContent() {
               <SectionHeader icon={Mic2} title={`Artists (${displayedArtists.length})`} />
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                 {displayedArtists.map((artist) => (
-                  <div key={artist.id} className="flex-shrink-0 w-44">
+                  <Link key={artist.id} href={`/artist/${artist.id}`} className="flex-shrink-0 w-44 no-underline">
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer text-center">
                       <div className="relative w-36 h-36 mx-auto mb-3 rounded-full overflow-hidden">
                         <Image
@@ -346,7 +346,7 @@ export default function SearchContent() {
                       <h3 className="text-sm font-semibold text-white truncate">{artist.name}</h3>
                       <p className="text-xs text-zinc-400 truncate">{artist.genre}</p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </section>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Maximize2, Heart, Radio, Music } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Volume2, Maximize2, Heart, Radio, Music } from 'lucide-react';
 import Image from 'next/image';
 import { useAudio } from '@/context/AudioContext';
 import { useUser } from '@/context/UserContext';
@@ -13,7 +13,7 @@ function formatTime(time: number) {
 }
 
 export default function NowPlaying() {
-  const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek, playNext, playPrevious, loop, shuffle, toggleLoop, toggleShuffle, isInfiniteQueue } = useAudio();
+  const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek, playNext, playPrevious, isInfiniteQueue } = useAudio();
   const { isLoggedIn, likedSongs, toggleLike } = useUser();
   const { addToast } = useToast();
 
@@ -41,18 +41,6 @@ export default function NowPlaying() {
       return;
     }
     toggleLike(currentTrack.id);
-  };
-
-  const getLoopIcon = () => {
-    if (loop === 'one') {
-      return (
-        <div className="relative">
-          <Repeat className="w-4 h-4" />
-          <span className="absolute -top-1 -right-1 text-[8px] font-bold">1</span>
-        </div>
-      );
-    }
-    return <Repeat className="w-4 h-4" />;
   };
 
   if (!currentTrack) return null;
@@ -95,12 +83,6 @@ export default function NowPlaying() {
       <div className="flex flex-col items-center gap-2 w-1/3">
         <div className="flex items-center gap-6">
           <button
-            className={`transition-colors ${shuffle ? 'text-purple-400' : 'text-zinc-400 hover:text-white'}`}
-            onClick={toggleShuffle}
-          >
-            <Shuffle className="w-4 h-4" />
-          </button>
-          <button
             className="text-zinc-400 hover:text-white transition-colors"
             onClick={playPrevious}
           >
@@ -121,12 +103,6 @@ export default function NowPlaying() {
             onClick={playNext}
           >
             <SkipForward className="w-5 h-5 fill-current" />
-          </button>
-          <button
-            className={`transition-colors ${loop !== 'none' ? 'text-purple-400' : 'text-zinc-400 hover:text-white'}`}
-            onClick={toggleLoop}
-          >
-            {getLoopIcon()}
           </button>
         </div>
         <div className="w-full max-w-md flex items-center gap-3">
