@@ -1,6 +1,6 @@
 'use client';
 
-import { Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Maximize2, Heart, Radio } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Maximize2, Heart, Radio, Music } from 'lucide-react';
 import Image from 'next/image';
 import { useAudio } from '@/context/AudioContext';
 import { useUser } from '@/context/UserContext';
@@ -61,14 +61,20 @@ export default function NowPlaying() {
     <div className="h-24 bg-[#0a0a0a] border-t border-white/5 px-6 flex items-center justify-between fixed bottom-0 left-0 right-0 z-50">
       {/* Track Info */}
       <div className="flex items-center gap-4 w-1/3">
-        <div className="relative w-14 h-14 rounded-none overflow-hidden flex-shrink-0 shadow-lg">
-          <Image
-            src={currentTrack.coverUrl}
-            alt={currentTrack.title}
-            fill
-            className="object-cover"
-            referrerPolicy="no-referrer"
-          />
+        <div className="relative w-14 h-14 rounded-none overflow-hidden flex-shrink-0 shadow-lg bg-[#252525]">
+          {currentTrack.coverUrl ? (
+            <Image
+              src={currentTrack.coverUrl}
+              alt={currentTrack.title}
+              fill
+              className="object-cover"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <Music className="w-6 h-6 text-zinc-500" />
+            </div>
+          )}
         </div>
         <div className="min-w-0">
           <h4 className="text-sm font-medium text-white truncate">{currentTrack.title}</h4>

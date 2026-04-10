@@ -17,6 +17,7 @@ interface UserContextValue {
   toggleLike: (songId: string) => Promise<void>;
   createPlaylist: (name: string) => Promise<UserPlaylist | null>;
   deletePlaylist: (id: string) => Promise<void>;
+  renamePlaylist: (id: string, name: string) => Promise<boolean>;
   addSongToPlaylist: (playlistId: string, songId: string) => Promise<void>;
   removeSongFromPlaylist: (playlistId: string, songId: string) => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -30,6 +31,7 @@ const UserContext = createContext<UserContextValue>({
   toggleLike: async () => {},
   createPlaylist: async () => null,
   deletePlaylist: async () => {},
+  renamePlaylist: async () => false,
   addSongToPlaylist: async () => {},
   removeSongFromPlaylist: async () => {},
   refreshUser: async () => {},
@@ -150,6 +152,27 @@ export default function UserProvider({ children }: { children: React.ReactNode }
     } catch {}
   }, []);
 
+  const renamePlaylist = useCallback(async (id: string, name: string): Promise<boolean> => {
+    try {
+      const res = await fetch(`${AUTH_URL}/auth/playlists/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ name }),
+      });
+      if (res.ok) {
+        const updated: UserPlaylist = await res.json();
+        setPlaylists((prev) =>
+          prev.map((p) => (p.id === id ? updated : p))
+        );
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  }, []);
+
   const addSongToPlaylist = useCallback(async (playlistId: string, songId: string) => {
     try {
       const res = await fetch(`${AUTH_URL}/auth/playlists/${playlistId}/songs`, {
@@ -192,6 +215,7 @@ export default function UserProvider({ children }: { children: React.ReactNode }
         toggleLike,
         createPlaylist,
         deletePlaylist,
+        renamePlaylist,
         addSongToPlaylist,
         removeSongFromPlaylist,
         refreshUser: fetchUserData,

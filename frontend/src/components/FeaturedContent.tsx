@@ -169,7 +169,6 @@ export default function FeaturedContent() {
   const handleSuggestionClick = (track: Track) => {
     setSearchFocused(false);
     setSearchQuery('');
-    setQueue(searchSuggestions);
     onTrackSelect(track);
   };
 
@@ -258,7 +257,7 @@ export default function FeaturedContent() {
           {allSongs.slice(0, 6).map((track) => (
             <button
               key={track.id}
-              onClick={() => { setQueue(allSongs.slice(0, 6)); onTrackSelect(track); }}
+              onClick={() => onTrackSelect(track)}
               onContextMenu={(e) => {
                 e.preventDefault();
                 setContextMenu({ x: e.clientX, y: e.clientY, track });

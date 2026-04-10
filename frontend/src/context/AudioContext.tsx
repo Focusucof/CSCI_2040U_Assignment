@@ -293,14 +293,21 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
   }, [volume]);
 
   const onTrackSelect = useCallback((track: Track) => {
-    if (isInfiniteQueue) {
-      const randomQueue = fillQueueWithRandom(track.id, 30);
-      setQueue(randomQueue);
-      setOriginalQueue(randomQueue);
-    } else if (queue.length === 0 && allSongs.length > 0) {
-      const randomQueue = fillQueueWithRandom(track.id, 30);
-      setQueue(randomQueue);
-      setOriginalQueue(randomQueue);
+    if (allSongs.length === 0) {
+      setCurrentTrack(track);
+      setIsPlaying(true);
+      if (track.id) {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/admin/songs/${track.id}/play`, {
+          method: 'POST',
+        }).catch(console.error);
+      }
+      return;
+    }
+
+    const randomQueue = fillQueueWithRandom(track.id, 30);
+    setQueue(randomQueue);
+    setOriginalQueue(randomQueue);
+    if (!isInfiniteQueue) {
       setIsInfiniteQueue(true);
     }
     setCurrentTrack(track);
@@ -310,7 +317,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
         method: 'POST',
       }).catch(console.error);
     }
-  }, [isInfiniteQueue, queue.length, allSongs, fillQueueWithRandom]);
+  }, [isInfiniteQueue, allSongs, fillQueueWithRandom]);
 
   const onPlayPause = useCallback((playing: boolean) => {
     setIsPlaying(playing);

@@ -5,29 +5,34 @@ import { X } from 'lucide-react';
 import { useUser } from '@/context/UserContext';
 import { useToast } from '@/components/ToastProvider';
 
-interface CreatePlaylistModalProps {
+interface RenamePlaylistModalProps {
+  playlistId: string;
+  currentName: string;
   onClose: () => void;
 }
 
-export default function CreatePlaylistModal({ onClose }: CreatePlaylistModalProps) {
-  const [name, setName] = useState('');
+export default function RenamePlaylistModal({ playlistId, currentName, onClose }: RenamePlaylistModalProps) {
+  const [name, setName] = useState(currentName);
   const [loading, setLoading] = useState(false);
-  const { createPlaylist } = useUser();
+  const { renamePlaylist } = useUser();
   const { addToast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || name.trim() === currentName) {
+      onClose();
+      return;
+    }
 
     setLoading(true);
-    const playlist = await createPlaylist(name.trim());
+    const success = await renamePlaylist(playlistId, name.trim());
     setLoading(false);
 
-    if (playlist) {
-      addToast(`Playlist "${playlist.name}" created!`, 'success');
+    if (success) {
+      addToast(`Playlist renamed to "${name.trim()}"`, 'success');
       onClose();
     } else {
-      addToast('Failed to create playlist', 'error');
+      addToast('Failed to rename playlist', 'error');
     }
   };
 
@@ -39,7 +44,7 @@ export default function CreatePlaylistModal({ onClose }: CreatePlaylistModalProp
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-white">Create Playlist</h2>
+          <h2 className="text-lg font-bold text-white">Rename Playlist</h2>
           <button onClick={onClose} className="text-zinc-400 hover:text-white transition-colors">
             <X className="w-5 h-5" />
           </button>
@@ -64,10 +69,10 @@ export default function CreatePlaylistModal({ onClose }: CreatePlaylistModalProp
             </button>
             <button
               type="submit"
-              disabled={loading || !name.trim()}
+              disabled={loading || !name.trim() || name.trim() === currentName}
               className="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-cyan-500 rounded-none hover:opacity-90 transition-opacity disabled:opacity-50"
             >
-              {loading ? 'Creating...' : 'Create'}
+              {loading ? 'Renaming...' : 'Rename'}
             </button>
           </div>
         </form>

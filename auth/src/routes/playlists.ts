@@ -62,6 +62,39 @@ router.delete("/auth/playlists/:id", requireAuth, (req: AuthRequest, res) => {
   res.json({ message: "Playlist deleted" });
 });
 
+router.put("/auth/playlists/:id", requireAuth, (req: AuthRequest, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  if (!name || !name.trim()) {
+    return res.status(400).json({ message: "Playlist name is required" });
+  }
+
+  const user = getUserById(req.user!.userId);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const playlists = user.playlists || [];
+  const playlist = playlists.find((p: any) => p.id === id);
+  if (!playlist) {
+    return res.status(404).json({ message: "Playlist not found" });
+  }
+
+  const updated = updateUser(req.user!.userId, (user) => {
+    const playlists = user.playlists || [];
+    return {
+      ...user,
+      playlists: playlists.map((p: any) =>
+        p.id === id ? { ...p, name: name.trim() } : p
+      ),
+    };
+  });
+
+  const updatedPlaylist = updated!.playlists.find((p: any) => p.id === id);
+  res.json(updatedPlaylist);
+});
+
 router.post("/auth/playlists/:id/songs", requireAuth, (req: AuthRequest, res) => {
   const { id } = req.params;
   const { songId } = req.body;

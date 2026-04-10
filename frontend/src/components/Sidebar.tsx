@@ -7,6 +7,7 @@ import { Home, Search, Library, PlusSquare, Heart, Music2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/context/UserContext';
 import CreatePlaylistModal from '@/components/CreatePlaylistModal';
+import PlaylistContextMenu from '@/components/PlaylistContextMenu';
 
 const navItems = [
   { icon: Home, label: 'Home', href: '/' },
@@ -18,6 +19,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { isLoggedIn, playlists } = useUser();
   const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
+  const [playlistContextMenu, setPlaylistContextMenu] = useState<{ x: number; y: number; playlist: any } | null>(null);
 
   return (
     <>
@@ -79,13 +81,20 @@ export default function Sidebar() {
             <div className="space-y-1 overflow-y-auto max-h-[300px] pr-2">
               {isLoggedIn && playlists.length > 0 ? (
                 playlists.map((playlist) => (
-                  <Link
+                  <div
                     key={playlist.id}
-                    href={`/playlist/${playlist.id}`}
-                    className="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-none transition-all duration-200 truncate"
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      setPlaylistContextMenu({ x: e.clientX, y: e.clientY, playlist });
+                    }}
                   >
-                    {playlist.name}
-                  </Link>
+                    <Link
+                      href={`/playlist/${playlist.id}`}
+                      className="block w-full text-left px-4 py-2.5 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-none transition-all duration-200 truncate"
+                    >
+                      {playlist.name}
+                    </Link>
+                  </div>
                 ))
               ) : (
                 <p className="px-4 text-xs text-zinc-600">
@@ -99,6 +108,14 @@ export default function Sidebar() {
 
       {showCreatePlaylist && (
         <CreatePlaylistModal onClose={() => setShowCreatePlaylist(false)} />
+      )}
+      {playlistContextMenu && (
+        <PlaylistContextMenu
+          playlist={playlistContextMenu.playlist}
+          x={playlistContextMenu.x}
+          y={playlistContextMenu.y}
+          onClose={() => setPlaylistContextMenu(null)}
+        />
       )}
     </>
   );

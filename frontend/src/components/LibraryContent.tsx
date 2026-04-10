@@ -8,6 +8,8 @@ import { Track } from '@/lib/types';
 import { useUser } from '@/context/UserContext';
 import { useAudio } from '@/context/AudioContext';
 import SongContextMenu from '@/components/SongContextMenu';
+import PlaylistContextMenu from '@/components/PlaylistContextMenu';
+import CoverImage from '@/components/CoverImage';
 
 const SONGS_API = 'http://localhost:8080/admin/songs';
 const BACKEND_URL = 'http://localhost:8080';
@@ -39,6 +41,7 @@ export default function LibraryContent() {
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
+  const [playlistContextMenu, setPlaylistContextMenu] = useState<{ x: number; y: number; playlist: any } | null>(null);
 
   useEffect(() => {
     fetch(SONGS_API)
@@ -97,7 +100,7 @@ export default function LibraryContent() {
                   </span>
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="relative w-10 h-10 rounded-none overflow-hidden flex-shrink-0">
-                      <Image src={normalizeImageUrl(track.coverUrl)} alt={track.title} fill className="object-cover" sizes="40px" />
+                      <CoverImage src={track.coverUrl} alt={track.title} />
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm text-white truncate">{track.title}</p>
@@ -129,22 +132,29 @@ export default function LibraryContent() {
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {playlists.map((playlist) => (
-                <Link
+                <div
                   key={playlist.id}
-                  href={`/playlist/${playlist.id}`}
-                  className="bg-[#181818] hover:bg-[#252525] rounded-none p-4 transition-all duration-300 hover:-translate-y-1"
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setPlaylistContextMenu({ x: e.clientX, y: e.clientY, playlist });
+                  }}
                 >
-                  <div className="w-full aspect-square bg-gradient-to-br from-purple-900/60 to-cyan-900/60 rounded-none flex items-center justify-center mb-4">
-                    <Music className="w-12 h-12 text-zinc-400" />
-                  </div>
-                  <h3 className="text-sm font-bold text-white truncate">{playlist.name}</h3>
-                  <p className="text-xs text-zinc-400 mt-1">
-                    {playlist.songIds.length} song{playlist.songIds.length !== 1 ? 's' : ''}
-                  </p>
-                  <p className="text-[10px] text-zinc-600 mt-1">
-                    {new Date(playlist.createdAt).toLocaleDateString()}
-                  </p>
-                </Link>
+                  <Link
+                    href={`/playlist/${playlist.id}`}
+                    className="bg-[#181818] hover:bg-[#252525] rounded-none p-4 transition-all duration-300 hover:-translate-y-1 block"
+                  >
+                    <div className="w-full aspect-square bg-gradient-to-br from-purple-900/60 to-cyan-900/60 rounded-none flex items-center justify-center mb-4">
+                      <Music className="w-12 h-12 text-zinc-400" />
+                    </div>
+                    <h3 className="text-sm font-bold text-white truncate">{playlist.name}</h3>
+                    <p className="text-xs text-zinc-400 mt-1">
+                      {playlist.songIds.length} song{playlist.songIds.length !== 1 ? 's' : ''}
+                    </p>
+                    <p className="text-[10px] text-zinc-600 mt-1">
+                      {new Date(playlist.createdAt).toLocaleDateString()}
+                    </p>
+                  </Link>
+                </div>
               ))}
             </div>
           )}
@@ -157,6 +167,14 @@ export default function LibraryContent() {
           x={contextMenu.x}
           y={contextMenu.y}
           onClose={() => setContextMenu(null)}
+        />
+      )}
+      {playlistContextMenu && (
+        <PlaylistContextMenu
+          playlist={playlistContextMenu.playlist}
+          x={playlistContextMenu.x}
+          y={playlistContextMenu.y}
+          onClose={() => setPlaylistContextMenu(null)}
         />
       )}
     </main>
