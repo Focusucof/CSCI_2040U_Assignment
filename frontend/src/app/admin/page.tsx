@@ -142,6 +142,18 @@ export default function AdminPage() {
   function handleFileChange(key: string, file: File | null) {
     if (file) {
       setFormFiles((prev) => ({ ...prev, [key]: file }));
+      if (key === 'audioUrl') {
+        const audio = new Audio();
+        audio.src = URL.createObjectURL(file);
+        audio.addEventListener('loadedmetadata', () => {
+          const duration = audio.duration;
+          const minutes = Math.floor(duration / 60);
+          const seconds = Math.floor(duration % 60);
+          const durationStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+          setFormData((prev) => ({ ...prev, duration: durationStr }));
+          URL.revokeObjectURL(audio.src);
+        });
+      }
     } else {
       setFormFiles((prev) => {
         const next = { ...prev };

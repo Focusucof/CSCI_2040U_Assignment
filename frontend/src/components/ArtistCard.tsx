@@ -2,6 +2,7 @@
 
 import { Play } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Artist } from '@/lib/types';
 
 interface ArtistCardProps {
@@ -9,8 +10,17 @@ interface ArtistCardProps {
 }
 
 export default function ArtistCard({ artist }: ArtistCardProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/artist/${artist.id}`);
+  };
+
   return (
-    <div className="relative bg-[#181818] hover:bg-[#252525] rounded-none overflow-hidden transition-all duration-300 cursor-pointer text-center p-4 hover:-translate-y-1">
+    <div
+      className="relative bg-[#181818] hover:bg-[#252525] rounded-none overflow-hidden transition-all duration-300 cursor-pointer text-center p-4 hover:-translate-y-1"
+      onClick={handleClick}
+    >
       {/* Artist Image with Glowing Ring */}
       <div className="relative w-32 h-32 mx-auto mb-4">
         {/* Glowing Ring */}

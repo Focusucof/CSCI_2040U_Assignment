@@ -7,6 +7,7 @@ import loginRoutes from "./routes/login";
 import meRoutes from "./routes/me";
 import likesRoutes from "./routes/likes";
 import playlistsRoutes from "./routes/playlists";
+import logoutRoutes from "./routes/logout";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,6 +24,7 @@ app.use(loginRoutes);
 app.use(meRoutes);
 app.use(likesRoutes);
 app.use(playlistsRoutes);
+app.use(logoutRoutes);
 
 app.get("/ping", (req, res) => {
     res.send("Pong!");

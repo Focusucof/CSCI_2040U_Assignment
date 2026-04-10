@@ -5,10 +5,12 @@ import { Music2, Mail, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ToastProvider';
+import { useUser } from '@/context/UserContext';
 
 export default function LoginPage() {
   const router = useRouter();
   const { addToast } = useToast();
+  const { refreshUser } = useUser();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,6 +28,7 @@ export default function LoginPage() {
       const data = await res.json();
       if (res.ok) {
         addToast('Logged in successfully.', 'success');
+        await refreshUser();
         router.push('/');
       } else {
         const msg = data.message || 'Login failed.';

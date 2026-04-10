@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, ListPlus, Disc3, Mic2 } from 'lucide-react';
+import { Heart, ListPlus, Disc3, Mic2, Info } from 'lucide-react';
 import ContextMenu, { MenuItem, MenuDivider } from './ContextMenu';
 import AddToPlaylistDropdown from './AddToPlaylistDropdown';
+import SongInfoModal from './SongInfoModal';
 import { useUser } from '@/context/UserContext';
 import { useToast } from '@/components/ToastProvider';
 import { Track } from '@/lib/types';
@@ -20,6 +21,7 @@ export default function SongContextMenu({ track, x, y, onClose }: SongContextMen
   const { addToast } = useToast();
   const isLiked = likedSongs.has(track.id);
   const [showPlaylistDropdown, setShowPlaylistDropdown] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const handleGoToAlbum = () => {
     addToast('Album page coming soon', 'success');
@@ -67,6 +69,15 @@ export default function SongContextMenu({ track, x, y, onClose }: SongContextMen
         label={isLiked ? 'Remove from Liked Songs' : 'Add to Liked Songs'}
         onClick={handleLike}
       />
+      <MenuDivider />
+      <MenuItem
+        icon={<Info className="w-4 h-4" />}
+        label="Get Info"
+        onClick={() => setShowInfoModal(true)}
+      />
+      {showInfoModal && (
+        <SongInfoModal trackId={track.id} onClose={() => setShowInfoModal(false)} />
+      )}
     </ContextMenu>
   );
 }

@@ -47,4 +47,22 @@ public class SongController {
     public List<Song> searchSongs(@RequestParam String q) {
         return songService.searchSongs(q);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Song> getSong(@PathVariable String id) {
+        Song song = songService.getSong(id);
+        if (song == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(song);
+    }
+
+    @PostMapping("/{id}/play")
+    public ResponseEntity<Song> recordPlay(@PathVariable String id) {
+        Song song = songService.incrementPlayCount(id);
+        if (song == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(song);
+    }
 }

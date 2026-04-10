@@ -103,7 +103,7 @@ function HorizontalScroll({ children }: { children: React.ReactNode }) {
 
 export default function FeaturedContent() {
   const router = useRouter();
-  const { onTrackSelect } = useAudio();
+  const { onTrackSelect, setQueue } = useAudio();
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
@@ -169,6 +169,7 @@ export default function FeaturedContent() {
   const handleSuggestionClick = (track: Track) => {
     setSearchFocused(false);
     setSearchQuery('');
+    setQueue(searchSuggestions);
     onTrackSelect(track);
   };
 
@@ -257,7 +258,7 @@ export default function FeaturedContent() {
           {allSongs.slice(0, 6).map((track) => (
             <button
               key={track.id}
-              onClick={() => onTrackSelect(track)}
+              onClick={() => { setQueue(allSongs.slice(0, 6)); onTrackSelect(track); }}
               onContextMenu={(e) => {
                 e.preventDefault();
                 setContextMenu({ x: e.clientX, y: e.clientY, track });

@@ -20,9 +20,22 @@ function normalizeImageUrl(url: string): string {
   return url;
 }
 
+function normalizeTrackUrl(track: Track): Track {
+  let normalized = track;
+  if (track.coverUrl && !track.coverUrl.startsWith('http')) {
+    const prefix = track.coverUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
+  }
+  if (track.audioUrl && !track.audioUrl.startsWith('http')) {
+    const prefix = track.audioUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
+  }
+  return normalized;
+}
+
 export default function LibraryContent() {
   const { likedSongs, playlists, toggleLike } = useUser();
-  const { onTrackSelect } = useAudio();
+  const { onTrackSelect, setQueue } = useAudio();
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
@@ -35,7 +48,7 @@ export default function LibraryContent() {
       .finally(() => setLoading(false));
   }, []);
 
-  const likedTracks = allSongs.filter((song) => likedSongs.has(song.id));
+  const likedTracks = allSongs.filter((song) => likedSongs.has(song.id)).map(normalizeTrackUrl);
 
   return (
     <main className="flex-1 overflow-y-auto pb-28">
@@ -72,7 +85,7 @@ export default function LibraryContent() {
                 <div
                   key={track.id}
                   className="grid grid-cols-[auto_1fr_1fr_80px_40px] gap-4 px-4 py-2 items-center hover:bg-white/5 rounded-none transition-colors group cursor-pointer"
-                  onClick={() => onTrackSelect(track)}
+                  onClick={() => { setQueue(likedTracks); onTrackSelect(track); }}
                   onContextMenu={(e) => {
                     e.preventDefault();
                     setContextMenu({ x: e.clientX, y: e.clientY, track });

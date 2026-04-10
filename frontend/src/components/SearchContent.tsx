@@ -47,7 +47,7 @@ function normalizeImageUrl(url: string): string {
 export default function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { onTrackSelect } = useAudio();
+  const { onTrackSelect, setQueue } = useAudio();
 
   const urlQuery = searchParams.get('q') || '';
   const [searchQuery, setSearchQuery] = useState(urlQuery);
@@ -58,6 +58,7 @@ export default function SearchContent() {
   const [genreFilter, setGenreFilter] = useState<string>('');
   const [explicitFilter, setExplicitFilter] = useState<string>('');
   const [durationFilter, setDurationFilter] = useState<string>('');
+  const [yearFilter, setYearFilter] = useState<string>('');
 
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
 
@@ -67,7 +68,14 @@ export default function SearchContent() {
     return Array.from(genres).sort();
   }, [songs]);
 
-  const parseDuration = (duration: string): number => {
+  const availableYears = useMemo(() => {
+    const years = new Set<number>();
+    albums.forEach(album => { if (album.year) years.add(album.year); });
+    return Array.from(years).sort((a, b) => b - a);
+  }, [albums]);
+
+  const parseDuration = (duration: string | null | undefined): number => {
+    if (!duration) return 0;
     const parts = duration.split(':');
     if (parts.length === 2) {
       return parseInt(parts[0]) * 60 + parseInt(parts[1]);
@@ -140,10 +148,10 @@ export default function SearchContent() {
   // Derive display state: don't show stale results when query is empty
   const hasQuery = searchQuery.trim() !== '';
   const displayedSongs = hasQuery ? songs.filter(filterSong) : [];
-  const displayedAlbums = hasQuery ? albums : [];
+  const displayedAlbums = hasQuery ? albums.filter(a => !yearFilter || a.year === parseInt(yearFilter)) : [];
   const displayedArtists = hasQuery ? artists : [];
   const hasResults = displayedSongs.length > 0 || displayedAlbums.length > 0 || displayedArtists.length > 0;
-  const hasActiveFilters = genreFilter || explicitFilter || durationFilter;
+  const hasActiveFilters = genreFilter || explicitFilter || durationFilter || yearFilter;
 
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
@@ -220,9 +228,20 @@ export default function SearchContent() {
             <option value="long">Long (&gt; 5 min)</option>
           </select>
 
+          <select
+            value={yearFilter}
+            onChange={(e) => setYearFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">Any Year</option>
+            {availableYears.map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+
           {hasActiveFilters && (
             <button
-              onClick={() => { setGenreFilter(''); setExplicitFilter(''); setDurationFilter(''); }}
+              onClick={() => { setGenreFilter(''); setExplicitFilter(''); setDurationFilter(''); setYearFilter(''); }}
               className="text-zinc-400 hover:text-white text-sm underline transition-colors"
             >
               Clear filters
@@ -254,7 +273,7 @@ export default function SearchContent() {
                 {displayedSongs.map((track) => (
                   <button
                     key={track.id}
-                    onClick={() => onTrackSelect(track)}
+                    onClick={() => { setQueue(displayedSongs); onTrackSelect(track); }}
                     onContextMenu={(e) => {
                       e.preventDefault();
                       setContextMenu({ x: e.clientX, y: e.clientY, track });

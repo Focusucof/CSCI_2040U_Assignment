@@ -13,7 +13,7 @@ function formatTime(time: number) {
 }
 
 export default function NowPlaying() {
-  const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek } = useAudio();
+  const { currentTrack, isPlaying, volume, currentTime, duration, onPlayPause, setVolume, seek, playNext, playPrevious, loop, shuffle, toggleLoop, toggleShuffle } = useAudio();
   const { isLoggedIn, likedSongs, toggleLike } = useUser();
   const { addToast } = useToast();
 
@@ -29,11 +29,9 @@ export default function NowPlaying() {
   };
 
   const handleVolumeChange = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.parentElement?.getBoundingClientRect();
-    if (rect) {
-      const x = e.clientX - rect.left;
-      setVolume(Math.max(0, Math.min(1, x / rect.width)));
-    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    setVolume(Math.max(0, Math.min(1, x / rect.width)));
   };
 
   const handleLike = () => {
@@ -43,6 +41,18 @@ export default function NowPlaying() {
       return;
     }
     toggleLike(currentTrack.id);
+  };
+
+  const getLoopIcon = () => {
+    if (loop === 'one') {
+      return (
+        <div className="relative">
+          <Repeat className="w-4 h-4" />
+          <span className="absolute -top-1 -right-1 text-[8px] font-bold">1</span>
+        </div>
+      );
+    }
+    return <Repeat className="w-4 h-4" />;
   };
 
   if (!currentTrack) return null;
@@ -75,12 +85,15 @@ export default function NowPlaying() {
       {/* Controls */}
       <div className="flex flex-col items-center gap-2 w-1/3">
         <div className="flex items-center gap-6">
-          <button className="text-zinc-400 hover:text-white transition-colors">
+          <button
+            className={`transition-colors ${shuffle ? 'text-purple-400' : 'text-zinc-400 hover:text-white'}`}
+            onClick={toggleShuffle}
+          >
             <Shuffle className="w-4 h-4" />
           </button>
           <button
             className="text-zinc-400 hover:text-white transition-colors"
-            onClick={() => seek(Math.max(0, currentTime - 10))}
+            onClick={playPrevious}
           >
             <SkipBack className="w-5 h-5 fill-current" />
           </button>
@@ -96,12 +109,15 @@ export default function NowPlaying() {
           </button>
           <button
             className="text-zinc-400 hover:text-white transition-colors"
-            onClick={() => seek(Math.min(duration, currentTime + 10))}
+            onClick={playNext}
           >
             <SkipForward className="w-5 h-5 fill-current" />
           </button>
-          <button className="text-zinc-400 hover:text-white transition-colors">
-            <Repeat className="w-4 h-4" />
+          <button
+            className={`transition-colors ${loop !== 'none' ? 'text-purple-400' : 'text-zinc-400 hover:text-white'}`}
+            onClick={toggleLoop}
+          >
+            {getLoopIcon()}
           </button>
         </div>
         <div className="w-full max-w-md flex items-center gap-3">
@@ -124,11 +140,13 @@ export default function NowPlaying() {
         <button className="text-zinc-400 hover:text-white transition-colors">
           <Volume2 className="w-4 h-4" />
         </button>
-        <div className="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden">
+        <div
+          className="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden cursor-pointer"
+          onClick={handleVolumeChange}
+        >
           <div
-            className="h-full bg-gradient-to-r from-purple-500 to-cyan-500 cursor-pointer"
+            className="h-full bg-gradient-to-r from-purple-500 to-cyan-500"
             style={{ width: `${volume * 100}%` }}
-            onClick={handleVolumeChange}
           />
         </div>
         <button className="text-zinc-400 hover:text-white transition-colors">

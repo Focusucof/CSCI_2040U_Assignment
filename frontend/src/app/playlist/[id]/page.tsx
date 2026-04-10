@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Trash2, Heart, Clock, Music, X } from 'lucide-react';
+import { Play, Trash2, Heart, Clock, Music, X, Search } from 'lucide-react';
 import Image from 'next/image';
 import Sidebar from '@/components/Sidebar';
 import { Track } from '@/lib/types';
@@ -22,15 +22,29 @@ function normalizeImageUrl(url: string): string {
   return url;
 }
 
+function normalizeTrackUrl(track: Track): Track {
+  let normalized = track;
+  if (track.coverUrl && !track.coverUrl.startsWith('http')) {
+    const prefix = track.coverUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
+  }
+  if (track.audioUrl && !track.audioUrl.startsWith('http')) {
+    const prefix = track.audioUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, audioUrl: BACKEND_URL + prefix + track.audioUrl };
+  }
+  return normalized;
+}
+
 export default function PlaylistPage() {
   const params = useParams();
   const router = useRouter();
   const playlistId = params.id as string;
   const { playlists, deletePlaylist, removeSongFromPlaylist, likedSongs, toggleLike } = useUser();
-  const { onTrackSelect } = useAudio();
+  const { onTrackSelect, setQueue } = useAudio();
   const { addToast } = useToast();
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
 
   const playlist = playlists.find((p) => p.id === playlistId);
@@ -44,8 +58,18 @@ export default function PlaylistPage() {
   }, []);
 
   const playlistTracks = playlist
-    ? allSongs.filter((song) => playlist.songIds.includes(song.id))
+    ? allSongs.filter((song) => playlist.songIds.includes(song.id)).map(normalizeTrackUrl)
     : [];
+
+  const filteredTracks = playlistTracks.filter((track) => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      track.title.toLowerCase().includes(query) ||
+      track.artists?.some((a) => a.toLowerCase().includes(query)) ||
+      track.album.toLowerCase().includes(query)
+    );
+  });
 
   const handleDelete = async () => {
     if (!playlist) return;
@@ -103,6 +127,20 @@ export default function PlaylistPage() {
             </div>
           )}
 
+          {/* Search within playlist */}
+          {playlistTracks.length > 0 && (
+            <div className="relative mb-4">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+              <input
+                type="text"
+                placeholder="Search in playlist..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[#1E1E1E] text-white placeholder-zinc-400 pl-10 pr-4 py-2 rounded-none text-sm focus:outline-none border border-transparent focus:border-white/20 transition-all"
+              />
+            </div>
+          )}
+
           {/* Song List */}
           {loading ? (
             <p className="text-zinc-500 text-sm">Loading...</p>
@@ -110,6 +148,8 @@ export default function PlaylistPage() {
             <p className="text-zinc-500 text-sm">
               No songs in this playlist yet. Use the + button on any song card to add songs.
             </p>
+          ) : filteredTracks.length === 0 ? (
+            <p className="text-zinc-500 text-sm py-4">No songs match &quot;{searchQuery}&quot;</p>
           ) : (
             <div className="space-y-1">
               <div className="grid grid-cols-[auto_1fr_1fr_80px_40px_40px] gap-4 px-4 py-2 text-xs text-zinc-500 uppercase tracking-wider border-b border-white/5">
@@ -120,11 +160,11 @@ export default function PlaylistPage() {
                 <span></span>
                 <span></span>
               </div>
-              {playlistTracks.map((track, index) => (
+              {filteredTracks.map((track, index) => (
                 <div
                   key={track.id}
                   className="grid grid-cols-[auto_1fr_1fr_80px_40px_40px] gap-4 px-4 py-2 items-center hover:bg-white/5 rounded-none transition-colors group cursor-pointer"
-                  onClick={() => onTrackSelect(track)}
+                  onClick={() => { setQueue(filteredTracks); onTrackSelect(track); }}
                   onContextMenu={(e) => {
                     e.preventDefault();
                     setContextMenu({ x: e.clientX, y: e.clientY, track });

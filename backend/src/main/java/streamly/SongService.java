@@ -15,13 +15,21 @@ import java.util.*;
 public class SongService {
 
     private final String dataFile;
+    private final AlbumService albumService;
+    private final ArtistService artistService;
 
     public SongService() {
-        this("../data/songs.json");
+        this("../data/songs.json", new AlbumService(), new ArtistService());
     }
 
     public SongService(String dataFile) {
+        this(dataFile, new AlbumService(), new ArtistService());
+    }
+
+    public SongService(String dataFile, AlbumService albumService, ArtistService artistService) {
         this.dataFile = dataFile;
+        this.albumService = albumService;
+        this.artistService = artistService;
         File file = new File(dataFile);
         File parentDir = file.getParentFile();
         if (parentDir != null && !parentDir.exists()) {
@@ -80,6 +88,7 @@ public class SongService {
         
         song.setReleaseDate(obj.optString("releaseDate", null));
         song.setExplicit(obj.optBoolean("explicit", false));
+        song.setPlayCount(obj.optInt("playCount", 0));
         
         return song;
     }
@@ -96,6 +105,7 @@ public class SongService {
         obj.put("genres", song.getGenres());
         obj.put("releaseDate", song.getReleaseDate());
         obj.put("explicit", song.isExplicit());
+        obj.put("playCount", song.getPlayCount());
         return obj;
     }
 
@@ -126,11 +136,47 @@ public class SongService {
     }
 
     public Song createSong(Song song) {
+        if (song.getAlbum() != null && !song.getAlbum().isEmpty()) {
+            findOrCreateAlbumByTitle(song.getAlbum(), song.getArtists() != null && !song.getArtists().isEmpty() ? song.getArtists().get(0) : null);
+        }
+        if (song.getArtists() != null) {
+            for (String artistName : song.getArtists()) {
+                if (artistName != null && !artistName.isEmpty()) {
+                    findOrCreateArtistByName(artistName);
+                }
+            }
+        }
+
         List<Song> songs = readSongs();
         song.setId(UUID.randomUUID().toString());
         songs.add(song);
         writeSongs(songs);
         return song;
+    }
+
+    private Album findOrCreateAlbumByTitle(String title, String artist) {
+        List<Album> albums = albumService.readAlbums();
+        for (Album album : albums) {
+            if (album.getTitle() != null && album.getTitle().equalsIgnoreCase(title)) {
+                return album;
+            }
+        }
+        Album newAlbum = new Album();
+        newAlbum.setTitle(title);
+        newAlbum.setArtist(artist);
+        return albumService.createAlbum(newAlbum);
+    }
+
+    private Artist findOrCreateArtistByName(String name) {
+        List<Artist> artists = artistService.readArtists();
+        for (Artist artist : artists) {
+            if (artist.getName() != null && artist.getName().equalsIgnoreCase(name)) {
+                return artist;
+            }
+        }
+        Artist newArtist = new Artist();
+        newArtist.setName(name);
+        return artistService.createArtist(newArtist);
     }
 
     public Song updateSong(String id, Song updated) {
@@ -155,6 +201,30 @@ public class SongService {
         return removed;
     }
 
+    public Song incrementPlayCount(String id) {
+        List<Song> songs = readSongs();
+        for (int i = 0; i < songs.size(); i++) {
+            if (songs.get(i).getId().equals(id)) {
+                Song song = songs.get(i);
+                Integer current = song.getPlayCount();
+                song.setPlayCount((current != null ? current : 0) + 1);
+                writeSongs(songs);
+                return song;
+            }
+        }
+        return null;
+    }
+
+    public Song getSong(String id) {
+        List<Song> songs = readSongs();
+        for (Song song : songs) {
+            if (song.getId().equals(id)) {
+                return song;
+            }
+        }
+        return null;
+    }
+
     public List<Song> searchSongs(String query) {
         if (query == null || query.trim().isEmpty()) {
             return readSongs();
@@ -162,18 +232,12 @@ public class SongService {
 
         String lowerQuery = query.toLowerCase().trim();
         List<Song> allSongs = readSongs();
-//        List<Song> results = new ArrayList<>();
-//
-//        for (Song song : allSongs) {
-//            if (matchesSearch(song, lowerQuery)) {
-//                results.add(song);
-//            }
-//        }
-//
-//        return results;
-        HashMap<Song, Float> results = new LinkedHashMap<>();
 
-        allSongs.sort((o1, o2) -> (int) (10000 * (matchesSearch(o1, lowerQuery) - matchesSearch(o2, lowerQuery))));
+        allSongs.sort((o1, o2) -> {
+            float score1 = matchesSearch(o1, lowerQuery) + 0.1f * (float) Math.log10((o1.getPlayCount() != null ? o1.getPlayCount() : 0) + 1);
+            float score2 = matchesSearch(o2, lowerQuery) + 0.1f * (float) Math.log10((o2.getPlayCount() != null ? o2.getPlayCount() : 0) + 1);
+            return (int) (10000 * (score2 - score1));
+        });
         allSongs = allSongs.subList(0, Math.min(25, allSongs.size()));
 
         return allSongs;
