@@ -10,6 +10,7 @@ import { useAudio } from '@/context/AudioContext';
 import SongContextMenu from '@/components/SongContextMenu';
 import PlaylistContextMenu from '@/components/PlaylistContextMenu';
 import CoverImage from '@/components/CoverImage';
+import { UserPlaylist } from '@/lib/types';
 
 const SONGS_API = 'http://localhost:8080/admin/songs';
 const BACKEND_URL = 'http://localhost:8080';
@@ -41,7 +42,7 @@ export default function LibraryContent() {
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [loading, setLoading] = useState(true);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
-  const [playlistContextMenu, setPlaylistContextMenu] = useState<{ x: number; y: number; playlist: any } | null>(null);
+  const [playlistContextMenu, setPlaylistContextMenu] = useState<{ x: number; y: number; playlist: UserPlaylist } | null>(null);
 
   useEffect(() => {
     fetch(SONGS_API)

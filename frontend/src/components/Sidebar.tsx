@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { useUser } from '@/context/UserContext';
 import CreatePlaylistModal from '@/components/CreatePlaylistModal';
 import PlaylistContextMenu from '@/components/PlaylistContextMenu';
+import { UserPlaylist } from '@/lib/types';
 
 const navItems = [
   { icon: Home, label: 'Home', href: '/' },
@@ -19,7 +20,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { isLoggedIn, playlists } = useUser();
   const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
-  const [playlistContextMenu, setPlaylistContextMenu] = useState<{ x: number; y: number; playlist: any } | null>(null);
+  const [playlistContextMenu, setPlaylistContextMenu] = useState<{ x: number; y: number; playlist: UserPlaylist } | null>(null);
 
   return (
     <>

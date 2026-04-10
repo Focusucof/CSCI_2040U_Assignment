@@ -167,7 +167,6 @@ export default function AdminPage() {
           const mimeType = file.type || 'audio/mpeg';
           mm.parseBuffer(uint8Array, { mimeType }).then((metadata) => {
             const common = metadata.common;
-            console.log('Parsed metadata:', common);
             setFormData((prev) => {
               const updated = { ...prev };
               if (common.title) updated.title = common.title;
@@ -177,6 +176,13 @@ export default function AdminPage() {
               if (common.year) updated.releaseDate = String(common.year);
               return updated;
             });
+
+            if (common.picture && common.picture.length > 0) {
+              const pic = common.picture[0];
+              const blob = new Blob([new Uint8Array(pic.data)], { type: pic.format });
+              const coverFile = new File([blob], 'cover.jpg', { type: pic.format });
+              setFormFiles((prev) => ({ ...prev, coverUrl: coverFile }));
+            }
           }).catch((err) => {
             console.warn('Failed to parse audio metadata:', err);
           });

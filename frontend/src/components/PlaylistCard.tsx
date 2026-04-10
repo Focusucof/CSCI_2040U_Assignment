@@ -51,7 +51,7 @@ export default function PlaylistCard({ playlist }: PlaylistCardProps) {
       </div>
       {contextMenu && (
         <PlaylistContextMenu
-          playlist={playlist as any}
+          playlist={{ id: playlist.id, name: playlist.title, songIds: [], createdAt: '' }}
           x={contextMenu.x}
           y={contextMenu.y}
           onClose={() => setContextMenu(null)}

@@ -20,6 +20,10 @@ public class Song {
     public Song(){
     }
 
+    public Song(String id, String title, List<String> artists, String album, String coverUrl, String audioURL, String duration, List<String> genres, String releaseDate, boolean explicit) {
+        this(id, title, artists, album, coverUrl, audioURL, duration, genres, releaseDate, explicit, 0);
+    }
+
     public Song(String id, String title, List<String> artists, String album, String coverUrl, String audioURL, String duration, List<String> genres, String releaseDate, boolean explicit, Integer playCount) {
         this.id = id;
         this.title = title;
