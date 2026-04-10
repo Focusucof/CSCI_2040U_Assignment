@@ -4,17 +4,20 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Play, Music, Disc3, ListMusic, Mic2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import { Track } from '@/lib/types';
-import { newAlbums, featuredPlaylists, featuredArtists } from '@/lib/mockData';
+import { Track, Album, Artist, Playlist } from '@/lib/types';
 import SectionHeader from '@/components/SectionHeader';
 import SongCard from '@/components/SongCard';
 import AlbumCard from '@/components/AlbumCard';
 import PlaylistCard from '@/components/PlaylistCard';
 import ArtistCard from '@/components/ArtistCard';
 import AccountMenu from '@/components/AccountMenu';
+import SongContextMenu from '@/components/SongContextMenu';
 import { useAudio } from '@/context/AudioContext';
 
 const API_BASE = 'http://localhost:8080/admin/songs';
+const ALBUMS_API = 'http://localhost:8080/admin/albums';
+const ARTISTS_API = 'http://localhost:8080/admin/artists';
+const PLAYLISTS_API = 'http://localhost:3001/auth/playlists';
 const BACKEND_URL = 'http://localhost:8080';
 
 function normalizeTrackUrl(track: Track): Track {
@@ -23,7 +26,7 @@ function normalizeTrackUrl(track: Track): Track {
     const prefix = track.coverUrl.startsWith('/') ? '' : '/';
     normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
   } else if (!track.coverUrl || track.coverUrl.trim() === '') {
-    normalized = { ...normalized, coverUrl: '/placeholder-album.png' };
+    normalized = { ...normalized, coverUrl: '/placeholder-music.svg' };
   }
   if (track.audioUrl && !track.audioUrl.startsWith('http')) {
     const prefix = track.audioUrl.startsWith('/') ? '' : '/';
@@ -35,6 +38,28 @@ function normalizeTrackUrl(track: Track): Track {
   }
   if (track.genres === undefined && raw.genre) {
     normalized = { ...normalized, genres: [String(raw.genre)] };
+  }
+  return normalized;
+}
+
+function normalizeAlbumUrl(album: Album): Album {
+  let normalized = album;
+  if (album.coverUrl && album.coverUrl.trim() !== '' && !album.coverUrl.startsWith('http')) {
+    const prefix = album.coverUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + album.coverUrl };
+  } else if (!album.coverUrl || album.coverUrl.trim() === '') {
+    normalized = { ...normalized, coverUrl: '/placeholder-music.svg' };
+  }
+  return normalized;
+}
+
+function normalizeArtistUrl(artist: Artist): Artist {
+  let normalized = artist;
+  if (artist.imageUrl && artist.imageUrl.trim() !== '' && !artist.imageUrl.startsWith('http')) {
+    const prefix = artist.imageUrl.startsWith('/') ? '' : '/';
+    normalized = { ...normalized, imageUrl: BACKEND_URL + prefix + artist.imageUrl };
+  } else if (!artist.imageUrl || artist.imageUrl.trim() === '') {
+    normalized = { ...normalized, imageUrl: '/placeholder-music.svg' };
   }
   return normalized;
 }
@@ -78,28 +103,59 @@ function HorizontalScroll({ children }: { children: React.ReactNode }) {
 
 export default function FeaturedContent() {
   const router = useRouter();
-  const { onTrackSelect } = useAudio();
+  const { onTrackSelect, setQueue } = useAudio();
   const [allSongs, setAllSongs] = useState<Track[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [artists, setArtists] = useState<Artist[]>([]);
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    async function fetchSongs() {
+    async function fetchData() {
       try {
-        const response = await fetch(API_BASE);
-        if (response.ok && !cancelled) {
-          const data = await response.json();
-          setAllSongs(data.map(normalizeTrackUrl));
+        const [songsRes, albumsRes, artistsRes, playlistsRes] = await Promise.all([
+          fetch(API_BASE),
+          fetch(ALBUMS_API),
+          fetch(ARTISTS_API),
+          fetch(PLAYLISTS_API, { credentials: 'include' }),
+        ]);
+
+        if (!cancelled) {
+          if (songsRes.ok) {
+            const songsData = await songsRes.json();
+            setAllSongs(songsData.map(normalizeTrackUrl));
+          }
+          if (albumsRes.ok) {
+            const albumsData = await albumsRes.json();
+            setAlbums(albumsData.map(normalizeAlbumUrl));
+          }
+          if (artistsRes.ok) {
+            const artistsData = await artistsRes.json();
+            setArtists(artistsData.map(normalizeArtistUrl));
+          }
+          if (playlistsRes.ok) {
+            const playlistsData = await playlistsRes.json();
+            const mappedPlaylists: Playlist[] = (playlistsData.playlists || []).map((p: { id: string; name: string; songIds: string[] }) => ({
+              id: p.id,
+              title: p.name,
+              description: '',
+              coverUrl: '/placeholder-music.svg',
+              trackCount: p.songIds?.length || 0,
+            }));
+            setPlaylists(mappedPlaylists);
+          }
         }
       } catch (error) {
-        console.error('Failed to fetch songs:', error);
+        console.error('Failed to fetch data:', error);
       } finally {
         if (!cancelled) setLoading(false);
       }
     }
-    fetchSongs();
+    fetchData();
     return () => { cancelled = true; };
   }, []);
 
@@ -156,12 +212,16 @@ export default function FeaturedContent() {
                 <button
                   key={track.id}
                   onClick={() => handleSuggestionClick(track)}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setContextMenu({ x: e.clientX, y: e.clientY, track });
+                  }}
                   onKeyDown={(e) => e.key === 'Enter' && handleSuggestionClick(track)}
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#303030] transition-all duration-200 text-left"
                 >
                   <div className="relative w-10 h-10 flex-shrink-0">
                     <Image
-                      src={track.coverUrl}
+                      src={track.coverUrl || '/placeholder-music.svg'}
                       alt={track.title}
                       fill
                       className="object-cover"
@@ -211,11 +271,15 @@ export default function FeaturedContent() {
             <button
               key={track.id}
               onClick={() => onTrackSelect(track)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                setContextMenu({ x: e.clientX, y: e.clientY, track });
+              }}
               className="group flex items-center gap-3 bg-[#1E1E1E] hover:bg-[#2A2A2A] rounded-none transition-all duration-300 hover:-translate-y-1"
             >
               <div className="relative w-14 h-14 flex-shrink-0">
                 <Image
-                  src={track.coverUrl}
+                  src={track.coverUrl || '/placeholder-music.svg'}
                   alt={track.title}
                   fill
                   className="object-cover"
@@ -242,7 +306,7 @@ export default function FeaturedContent() {
           <HorizontalScroll>
             {allSongs.slice(0, 10).map((track) => (
               <div key={track.id} className="flex-shrink-0 w-48">
-                <SongCard track={track} onPlay={onTrackSelect} />
+                <SongCard track={track} onPlay={onTrackSelect} onContextMenu={(e, t) => setContextMenu({ x: e.clientX, y: e.clientY, track: t })} />
               </div>
             ))}
           </HorizontalScroll>
@@ -252,38 +316,63 @@ export default function FeaturedContent() {
       {/* New Albums */}
       <section className="mb-10">
         <SectionHeader icon={Disc3} title="New Albums" />
-        <HorizontalScroll>
-          {newAlbums.map((album) => (
-            <div key={album.id} className="flex-shrink-0 w-48">
-              <AlbumCard album={album} />
-            </div>
-          ))}
-        </HorizontalScroll>
+        {loading ? (
+          <p className="text-zinc-400">Loading albums...</p>
+        ) : albums.length === 0 ? (
+          <p className="text-zinc-400">No albums available.</p>
+        ) : (
+          <HorizontalScroll>
+            {albums.map((album) => (
+              <div key={album.id} className="flex-shrink-0 w-48">
+                <AlbumCard album={album} />
+              </div>
+            ))}
+          </HorizontalScroll>
+        )}
       </section>
 
-      {/* Featured Playlists */}
+      {/* User Playlists */}
       <section className="mb-10">
-        <SectionHeader icon={ListMusic} title="Featured Playlists" />
-        <HorizontalScroll>
-          {featuredPlaylists.map((playlist) => (
-            <div key={playlist.id} className="flex-shrink-0 w-48">
-              <PlaylistCard playlist={playlist} />
-            </div>
-          ))}
-        </HorizontalScroll>
+        <SectionHeader icon={ListMusic} title="Your Playlists" />
+        {playlists.length === 0 ? (
+          <p className="text-zinc-400">No playlists yet.</p>
+        ) : (
+          <HorizontalScroll>
+            {playlists.map((playlist) => (
+              <div key={playlist.id} className="flex-shrink-0 w-48">
+                <PlaylistCard playlist={playlist} />
+              </div>
+            ))}
+          </HorizontalScroll>
+        )}
       </section>
 
       {/* Featured Artists */}
       <section className="mb-10">
         <SectionHeader icon={Mic2} title="Featured Artists" />
-        <HorizontalScroll>
-          {featuredArtists.map((artist) => (
-            <div key={artist.id} className="flex-shrink-0 w-48">
-              <ArtistCard artist={artist} />
-            </div>
-          ))}
-        </HorizontalScroll>
+        {loading ? (
+          <p className="text-zinc-400">Loading artists...</p>
+        ) : artists.length === 0 ? (
+          <p className="text-zinc-400">No artists available.</p>
+        ) : (
+          <HorizontalScroll>
+            {artists.map((artist) => (
+              <div key={artist.id} className="flex-shrink-0 w-48">
+                <ArtistCard artist={artist} />
+              </div>
+            ))}
+          </HorizontalScroll>
+        )}
       </section>
+
+      {contextMenu && (
+        <SongContextMenu
+          track={contextMenu.track}
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
     </main>
   );
 }

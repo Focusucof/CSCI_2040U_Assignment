@@ -356,10 +356,11 @@ genre      String   Primary genre
 
 ## Setup & Running
 
-### Prerequisites
+### Prerequisites (Development)
 
 - **Java 25** - For the Spring Boot backend
-- **Node.js** or **Bun** - For the frontend and auth server
+- **Node.js^v22.22.0** - For NextJS frontend
+- **Bun** - For expressJS auth backend
 - **Maven** - For building the Java backend
 
 ### 1. Start the Auth Server (Port 3001)
@@ -383,6 +384,23 @@ mvn spring-boot:run
 cd frontend
 npm install
 npm run dev
+```
+
+### Prerequisites (Deployment)
+
+- Docker
+- Docker Compose
+
+### 1. Build the Project
+
+```bash
+docker compose build
+```
+
+### 2. Run the Project
+
+```bash
+docker compose up -d
 ```
 
 ### Access Points

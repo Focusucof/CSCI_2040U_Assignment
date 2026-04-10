@@ -1,12 +1,153 @@
 [
-  {"id": "1", "title": "A Night at the Opera", "artist": "Queen", "coverUrl": "https://picsum.photos/seed/album1/300/300", "year": 1975, "trackCount": 12},
-  {"id": "2", "title": "Led Zeppelin IV", "artist": "Led Zeppelin", "coverUrl": "https://picsum.photos/seed/album2/300/300", "year": 1971, "trackCount": 8},
-  {"id": "3", "title": "Hotel California", "artist": "Eagles", "coverUrl": "https://picsum.photos/seed/album3/300/300", "year": 1976, "trackCount": 9},
-  {"id": "4", "title": "Appetite for Destruction", "artist": "Guns N' Roses", "coverUrl": "https://picsum.photos/seed/album4/300/300", "year": 1987, "trackCount": 12},
-  {"id": "5", "title": "Nevermind", "artist": "Nirvana", "coverUrl": "https://picsum.photos/seed/album5/300/300", "year": 1991, "trackCount": 12},
-  {"id": "6", "title": "Thriller", "artist": "Michael Jackson", "coverUrl": "https://picsum.photos/seed/album6/300/300", "year": 1982, "trackCount": 9},
-  {"id": "7", "title": "Purple Rain", "artist": "Prince", "coverUrl": "https://picsum.photos/seed/album7/300/300", "year": 1984, "trackCount": 11},
-  {"id": "8", "title": "The Wall", "artist": "Pink Floyd", "coverUrl": "https://picsum.photos/seed/album8/300/300", "year": 1979, "trackCount": 26},
-  {"id": "9", "title": "1989", "artist": "Taylor Swift", "coverUrl": "https://picsum.photos/seed/album9/300/300", "year": 2014, "trackCount": 13},
-  {"id": "10", "title": "21", "artist": "Adele", "coverUrl": "https://picsum.photos/seed/album10/300/300", "year": 2011, "trackCount": 11}
+  {
+    "coverUrl": "/uploads/6e93d68a-2a03-4bb9-8c2c-9097e5bc7071.jpg",
+    "trackCount": 1,
+    "artist": "Dave",
+    "year": 0,
+    "id": "album-raindance",
+    "title": "Raindance"
+  },
+  {
+    "coverUrl": "/uploads/f8bd3913-3ae6-4a3a-b4c9-5c33c6fe5c1d.jpg",
+    "trackCount": 1,
+    "artist": "Drake",
+    "year": 2011,
+    "id": "album-take-care",
+    "title": "Take Care"
+  },
+  {
+    "coverUrl": "/uploads/fb26ddd7-4632-4832-a78f-b3a1abc9735a.jpg",
+    "trackCount": 1,
+    "artist": "Drake",
+    "year": 2016,
+    "id": "album-views",
+    "title": "Views"
+  },
+  {
+    "coverUrl": "/uploads/10d9e098-3ca7-46e9-aa6f-55662b3f05e8.png",
+    "trackCount": 1,
+    "artist": "Nelly",
+    "year": 2002,
+    "id": "album-hot-in-herre",
+    "title": "Hot In Herre"
+  },
+  {
+    "coverUrl": "/uploads/4915700a-d8ad-4854-9106-813f9d381902.png",
+    "trackCount": 1,
+    "artist": "Kendrick Lamar",
+    "year": 2017,
+    "id": "album-damn",
+    "title": "Damn"
+  },
+  {
+    "coverUrl": "/uploads/745dde9a-6275-44b8-901e-ac8496ff0e63.png",
+    "trackCount": 1,
+    "artist": "Ed Sheeran",
+    "year": 2017,
+    "id": "album-divide",
+    "title": "÷"
+  },
+  {
+    "coverUrl": "/uploads/38271e0e-fd50-45f5-84b4-b3ff3902919e.png",
+    "trackCount": 1,
+    "artist": "The Weeknd",
+    "year": 2016,
+    "id": "album-starboy",
+    "title": "Starboy"
+  },
+  {
+    "coverUrl": "/uploads/e7c37fe3-5281-4558-a21f-ac2c195d8599.png",
+    "trackCount": 1,
+    "artist": "The Weeknd",
+    "year": 2019,
+    "id": "album-after-hours",
+    "title": "After Hours"
+  },
+  {
+    "coverUrl": "/uploads/49f44d45-75d2-4ebe-b644-70f6d4ba1b30.png",
+    "trackCount": 1,
+    "artist": "Shakira",
+    "year": 2006,
+    "id": "album-oral-fixation-vol-2",
+    "title": "Oral Fixation Vol 2."
+  },
+  {
+    "coverUrl": "/uploads/f1cf05a4-f616-4f23-b81c-fe397d405ec6.jpg",
+    "trackCount": 1,
+    "artist": "Charly Black",
+    "year": 2016,
+    "id": "album-jambean-riddim",
+    "title": "Jambean Riddim"
+  },
+  {
+    "coverUrl": "/uploads/20041ad0-47e3-4068-a7c6-6331cb718076.jpg",
+    "trackCount": 1,
+    "artist": "Ne-Yo",
+    "year": 2008,
+    "id": "album-miss-independent",
+    "title": "Miss Independent"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Beenie Man",
+    "year": 0,
+    "id": "2bf93088-c847-4b70-887f-65427b65da60",
+    "title": "Playground Riddim"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Sean Paul",
+    "year": 0,
+    "id": "42044703-dfbf-4c2b-a004-c1057eeec844",
+    "title": "Buzz Riddim"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Lil Baby",
+    "year": 0,
+    "id": "6a873c18-bbb7-4ac5-bdac-cae1fe3e0f57",
+    "title": "Freestyle"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Brick & Lace",
+    "year": 0,
+    "id": "f126e03d-da69-4f27-81dc-1bd0f2b5aa6b",
+    "title": "Diwali Riddim"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Jason Derulo",
+    "year": 0,
+    "id": "1f706247-6385-44b9-9527-7621e57611a5",
+    "title": "Acapulco"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Motto",
+    "year": 0,
+    "id": "5c7d2019-c116-40c5-a1f3-a02943155aa3",
+    "title": "Ole Ting Riddim"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Mr. Vegas",
+    "year": 0,
+    "id": "5d352f48-3ab6-41fc-8567-fc5b7d648d97",
+    "title": "Good Life Riddim"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Nina Sky Ft. Jabba",
+    "year": 0,
+    "id": "8bf4bc8e-e71a-47b9-87e4-0a53d6c6c446",
+    "title": "Coolie Dance Riddim"
+  },
+  {
+    "trackCount": 0,
+    "artist": "Shenseea",
+    "year": 0,
+    "id": "0fab10fd-6553-4e81-aa6f-8117fcff7b80",
+    "title": "Talk To Me Nuh"
+  }
 ]

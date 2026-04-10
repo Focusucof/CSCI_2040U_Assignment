@@ -4,6 +4,7 @@ import { ViewTransitions } from 'next-view-transitions';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
 import AudioProvider from '@/context/AudioContext';
+import UserProvider from '@/context/UserContext';
 import ClientLayout from '@/components/ClientLayout';
 
 const inter = Inter({
@@ -26,9 +27,11 @@ export default function RootLayout({
       <body suppressHydrationWarning className="bg-vibrant text-zinc-100 font-sans antialiased">
         <ToastProvider>
           <ViewTransitions>
-            <AudioProvider>
-              <ClientLayout>{children}</ClientLayout>
-            </AudioProvider>
+            <UserProvider>
+              <AudioProvider>
+                <ClientLayout>{children}</ClientLayout>
+              </AudioProvider>
+            </UserProvider>
           </ViewTransitions>
         </ToastProvider>
       </body>

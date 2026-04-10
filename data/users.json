@@ -11,8 +11,37 @@
     "id": "b5799f22-4b26-40e6-a0c6-1e7868137938",
     "username": "dev",
     "password": "$2b$10$8AUn1l.Cj.oKADNEXH9G0OSIJ59f/7DgiVA6I9to5dJO5e0Wag9Fq",
-    "likedSongs": [],
-    "playlists": [],
+    "likedSongs": [
+      "c4ca9045-b8f1-448d-a81a-ea7e315cf3d6",
+      "ce70e8cb-8adb-4a59-a45a-4b49fc9dba4a",
+      "c0f5cd56-c21a-4ee8-b776-9e0c02c7f6f7",
+      "c946d258-4c8a-4f39-aa43-f8477f65d86f",
+      "2cbbcb9f-2a23-448a-9e2f-8d8211b56c02",
+      "683033d1-7547-44ef-8052-9255e5122847",
+      "7dd34544-fbf1-42b5-8992-08b62b79c66e",
+      "5152caf3-6f60-4452-badb-f97374d46c4c",
+      "967eca82-6e87-4975-bc32-3a2280fdbe3d",
+      "d3f40a3e-b972-4967-b1e7-34f61495f97b"
+    ],
+    "playlists": [
+      {
+        "id": "bef55d59-1f24-4dbd-8863-3ab947446233",
+        "name": "drake",
+        "songIds": [
+          "c4ca9045-b8f1-448d-a81a-ea7e315cf3d6",
+          "83a7ed01-2328-428e-99bc-9e45c2d77f9f"
+        ],
+        "createdAt": "2026-04-04T22:57:40.353Z"
+      },
+      {
+        "id": "f808fa07-5135-45b3-8aa8-89b1bb1a68c7",
+        "name": "new",
+        "songIds": [
+          "ce70e8cb-8adb-4a59-a45a-4b49fc9dba4a"
+        ],
+        "createdAt": "2026-04-10T20:28:16.603Z"
+      }
+    ],
     "isAdmin": true
   },
   {
@@ -27,6 +56,14 @@
     "id": "83d50162-597c-4be9-99cd-24430c195b99",
     "username": "admin",
     "password": "$2b$10$BfY/OvaEDixcYagwh9wXuuXRwd/ecCzVQEmK6PFO4E4wP3dSGLYya",
+    "likedSongs": [],
+    "playlists": [],
+    "isAdmin": false
+  },
+  {
+    "id": "3f412b39-d42f-4689-a8ff-77cb5822edcd",
+    "username": "testing123",
+    "password": "$2b$10$arQ1a1ZDmGHtz4AAWDm48uWWYLv25wjRfKJs7hOPIu9ns.xkGe3gi",
     "likedSongs": [],
     "playlists": [],
     "isAdmin": false

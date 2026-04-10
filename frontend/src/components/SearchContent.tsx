@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Music, Disc3, Mic2, Search, X, ArrowLeft } from 'lucide-react';
+import { Music, Disc3, Mic2, Search, X, ArrowLeft, Filter } from 'lucide-react';
 import Image from 'next/image';
 import { Link } from 'next-view-transitions';
 import { Track, Album, Artist } from '@/lib/types';
 import SectionHeader from '@/components/SectionHeader';
 import AccountMenu from '@/components/AccountMenu';
 import { useAudio } from '@/context/AudioContext';
+import SongContextMenu from '@/components/SongContextMenu';
 
 const SONGS_API = 'http://localhost:8080/admin/songs';
 const ALBUMS_API = 'http://localhost:8080/admin/albums';
@@ -46,13 +47,54 @@ function normalizeImageUrl(url: string): string {
 export default function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { onTrackSelect } = useAudio();
+  const { onTrackSelect, setQueue } = useAudio();
 
   const urlQuery = searchParams.get('q') || '';
   const [searchQuery, setSearchQuery] = useState(urlQuery);
   const [songs, setSongs] = useState<Track[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
+
+  const [genreFilter, setGenreFilter] = useState<string>('');
+  const [explicitFilter, setExplicitFilter] = useState<string>('');
+  const [durationFilter, setDurationFilter] = useState<string>('');
+  const [yearFilter, setYearFilter] = useState<string>('');
+
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; track: Track } | null>(null);
+
+  const availableGenres = useMemo(() => {
+    const genres = new Set<string>();
+    songs.forEach(track => track.genres?.forEach(g => genres.add(g)));
+    return Array.from(genres).sort();
+  }, [songs]);
+
+  const availableYears = useMemo(() => {
+    const years = new Set<number>();
+    albums.forEach(album => { if (album.year) years.add(album.year); });
+    return Array.from(years).sort((a, b) => b - a);
+  }, [albums]);
+
+  const parseDuration = (duration: string | null | undefined): number => {
+    if (!duration) return 0;
+    const parts = duration.split(':');
+    if (parts.length === 2) {
+      return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+    return 0;
+  };
+
+  const filterSong = (track: Track): boolean => {
+    if (genreFilter && !track.genres?.includes(genreFilter)) return false;
+    if (explicitFilter === 'explicit' && !track.explicit) return false;
+    if (explicitFilter === 'clean' && track.explicit) return false;
+    if (durationFilter) {
+      const duration = parseDuration(track.duration);
+      if (durationFilter === 'short' && duration >= 180) return false;
+      if (durationFilter === 'medium' && (duration < 180 || duration > 300)) return false;
+      if (durationFilter === 'long' && duration <= 300) return false;
+    }
+    return true;
+  };
 
   // Fetch search results with debounce and cancellation
   useEffect(() => {
@@ -105,10 +147,11 @@ export default function SearchContent() {
 
   // Derive display state: don't show stale results when query is empty
   const hasQuery = searchQuery.trim() !== '';
-  const displayedSongs = hasQuery ? songs : [];
-  const displayedAlbums = hasQuery ? albums : [];
+  const displayedSongs = hasQuery ? songs.filter(filterSong) : [];
+  const displayedAlbums = hasQuery ? albums.filter(a => !yearFilter || a.year === parseInt(yearFilter)) : [];
   const displayedArtists = hasQuery ? artists : [];
   const hasResults = displayedSongs.length > 0 || displayedAlbums.length > 0 || displayedArtists.length > 0;
+  const hasActiveFilters = genreFilter || explicitFilter || durationFilter || yearFilter;
 
   return (
     <main className="flex-1 overflow-y-auto pb-28 px-6 py-6 lg:px-8">
@@ -145,6 +188,68 @@ export default function SearchContent() {
         </div>
       </div>
 
+      {/* Filters */}
+      {(
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <div className="flex items-center gap-2 text-zinc-400 text-sm">
+            <Filter className="w-4 h-4" />
+            <span>Filters:</span>
+          </div>
+
+          <select
+            value={genreFilter}
+            onChange={(e) => setGenreFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">All Genres</option>
+            {availableGenres.map(genre => (
+              <option key={genre} value={genre}>{genre}</option>
+            ))}
+          </select>
+
+          <select
+            value={explicitFilter}
+            onChange={(e) => setExplicitFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">All Content</option>
+            <option value="explicit">Explicit</option>
+            <option value="clean">Clean</option>
+          </select>
+
+          <select
+            value={durationFilter}
+            onChange={(e) => setDurationFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">Any Duration</option>
+            <option value="short">Short (&lt; 3 min)</option>
+            <option value="medium">Medium (3-5 min)</option>
+            <option value="long">Long (&gt; 5 min)</option>
+          </select>
+
+          <select
+            value={yearFilter}
+            onChange={(e) => setYearFilter(e.target.value)}
+            className="bg-[#1E1E1E] text-white text-sm px-3 py-2 rounded-none border border-zinc-700 focus:outline-none focus:border-white cursor-pointer"
+          >
+            <option value="">Any Year</option>
+            {availableYears.map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+
+          {hasActiveFilters && (
+            <button
+              onClick={() => { setGenreFilter(''); setExplicitFilter(''); setDurationFilter(''); setYearFilter(''); }}
+              className="text-zinc-400 hover:text-white text-sm underline transition-colors"
+            >
+              Clear filters
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Results */}
       {!hasQuery ? (
         <div className="text-center py-20">
@@ -168,12 +273,16 @@ export default function SearchContent() {
                 {displayedSongs.map((track) => (
                   <button
                     key={track.id}
-                    onClick={() => onTrackSelect(track)}
+                    onClick={() => { setQueue(displayedSongs); onTrackSelect(track); }}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      setContextMenu({ x: e.clientX, y: e.clientY, track });
+                    }}
                     className="w-full flex items-center gap-4 bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300"
                   >
                     <div className="relative w-14 h-14 flex-shrink-0">
                       <Image
-                        src={track.coverUrl}
+                        src={track.coverUrl || '/placeholder-music.svg'}
                         alt={track.title}
                         fill
                         className="object-cover"
@@ -197,11 +306,11 @@ export default function SearchContent() {
               <SectionHeader icon={Disc3} title={`Albums (${displayedAlbums.length})`} />
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                 {displayedAlbums.map((album) => (
-                  <div key={album.id} className="flex-shrink-0 w-44">
+                  <Link key={album.id} href={`/album/${album.id}`} className="flex-shrink-0 w-44 no-underline">
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer">
                       <div className="relative w-36 h-36 mb-3">
                         <Image
-                          src={album.coverUrl}
+                          src={album.coverUrl || '/placeholder-music.svg'}
                           alt={album.title}
                           fill
                           className="object-cover"
@@ -211,7 +320,7 @@ export default function SearchContent() {
                       <h3 className="text-sm font-semibold text-white truncate">{album.title}</h3>
                       <p className="text-xs text-zinc-400 truncate">{album.artist}</p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </section>
@@ -223,11 +332,11 @@ export default function SearchContent() {
               <SectionHeader icon={Mic2} title={`Artists (${displayedArtists.length})`} />
               <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                 {displayedArtists.map((artist) => (
-                  <div key={artist.id} className="flex-shrink-0 w-44">
+                  <Link key={artist.id} href={`/artist/${artist.id}`} className="flex-shrink-0 w-44 no-underline">
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer text-center">
                       <div className="relative w-36 h-36 mx-auto mb-3 rounded-full overflow-hidden">
                         <Image
-                          src={artist.imageUrl}
+                          src={artist.imageUrl || '/placeholder-music.svg'}
                           alt={artist.name}
                           fill
                           className="object-cover"
@@ -237,12 +346,21 @@ export default function SearchContent() {
                       <h3 className="text-sm font-semibold text-white truncate">{artist.name}</h3>
                       <p className="text-xs text-zinc-400 truncate">{artist.genre}</p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </section>
           )}
         </div>
+      )}
+
+      {contextMenu && (
+        <SongContextMenu
+          track={contextMenu.track}
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </main>
   );

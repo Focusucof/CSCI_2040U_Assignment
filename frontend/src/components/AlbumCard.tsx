@@ -2,6 +2,7 @@
 
 import { Play } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Album } from '@/lib/types';
 
 interface AlbumCardProps {
@@ -9,15 +10,24 @@ interface AlbumCardProps {
 }
 
 export default function AlbumCard({ album }: AlbumCardProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/album/${album.id}`);
+  };
+
   return (
-    <div className="relative bg-[#181818] hover:bg-[#252525] rounded-none transition-all duration-300 cursor-pointer hover:-translate-y-1">
+    <div
+      className="relative bg-[#181818] hover:bg-[#252525] rounded-none transition-all duration-300 cursor-pointer hover:-translate-y-1"
+      onClick={handleClick}
+    >
       {/* Album Art */}
       <div className="relative aspect-square">
         <Image
-          src={album.coverUrl}
+          src={album.coverUrl || '/placeholder-music.svg'}
           alt={album.title}
           fill
-          className="object-cover hover:scale-105 transition-transform duration-500"
+          className="object-cover transition-transform duration-500"
           sizes="200px"
         />
         

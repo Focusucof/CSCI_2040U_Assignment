@@ -1,17 +1,198 @@
 [
-  {"id": "1", "name": "Queen", "imageUrl": "https://picsum.photos/seed/artist1/300/300", "genre": "Rock"},
-  {"id": "2", "name": "Led Zeppelin", "imageUrl": "https://picsum.photos/seed/artist2/300/300", "genre": "Rock"},
-  {"id": "3", "name": "Eagles", "imageUrl": "https://picsum.photos/seed/artist3/300/300", "genre": "Rock"},
-  {"id": "4", "name": "Guns N' Roses", "imageUrl": "https://picsum.photos/seed/artist4/300/300", "genre": "Rock"},
-  {"id": "5", "name": "Nirvana", "imageUrl": "https://picsum.photos/seed/artist5/300/300", "genre": "Grunge"},
-  {"id": "6", "name": "Michael Jackson", "imageUrl": "https://picsum.photos/seed/artist6/300/300", "genre": "Pop"},
-  {"id": "7", "name": "Prince", "imageUrl": "https://picsum.photos/seed/artist7/300/300", "genre": "Pop"},
-  {"id": "8", "name": "Pink Floyd", "imageUrl": "https://picsum.photos/seed/artist8/300/300", "genre": "Progressive Rock"},
-  {"id": "9", "name": "Taylor Swift", "imageUrl": "https://picsum.photos/seed/artist9/300/300", "genre": "Pop"},
-  {"id": "10", "name": "Adele", "imageUrl": "https://picsum.photos/seed/artist10/300/300", "genre": "Pop Soul"},
-  {"id": "11", "name": "Ed Sheeran", "imageUrl": "https://picsum.photos/seed/artist11/300/300", "genre": "Pop"},
-  {"id": "12", "name": "Bruno Mars", "imageUrl": "https://picsum.photos/seed/artist12/300/300", "genre": "Pop"},
-  {"id": "13", "name": "The Weeknd", "imageUrl": "https://picsum.photos/seed/artist13/300/300", "genre": "R&B"},
-  {"id": "14", "name": "Drake", "imageUrl": "https://picsum.photos/seed/artist14/300/300", "genre": "Hip Hop"},
-  {"id": "15", "name": "Rihanna", "imageUrl": "https://picsum.photos/seed/artist15/300/300", "genre": "R&B"}
+  {
+    "imageUrl": "/uploads/6e93d68a-2a03-4bb9-8c2c-9097e5bc7071.jpg",
+    "name": "Dave",
+    "genre": "Afrobeat",
+    "id": "artist-dave"
+  },
+  {
+    "imageUrl": "/uploads/6e93d68a-2a03-4bb9-8c2c-9097e5bc7071.jpg",
+    "name": "Tems",
+    "genre": "Afrobeat",
+    "id": "artist-tems"
+  },
+  {
+    "imageUrl": "/uploads/f8bd3913-3ae6-4a3a-b4c9-5c33c6fe5c1d.jpg",
+    "name": "Drake",
+    "genre": "Hip Hop",
+    "id": "artist-drake"
+  },
+  {
+    "imageUrl": "/uploads/fb26ddd7-4632-4832-a78f-b3a1abc9735a.jpg",
+    "name": "Wizkid",
+    "genre": "Hip Hop",
+    "id": "artist-wizkid"
+  },
+  {
+    "imageUrl": "/uploads/fb26ddd7-4632-4832-a78f-b3a1abc9735a.jpg",
+    "name": "Kyla",
+    "genre": "Hip Hop",
+    "id": "artist-kyla"
+  },
+  {
+    "imageUrl": "/uploads/10d9e098-3ca7-46e9-aa6f-55662b3f05e8.png",
+    "name": "Nelly",
+    "genre": "Hip Hop",
+    "id": "artist-nelly"
+  },
+  {
+    "imageUrl": "/uploads/4915700a-d8ad-4854-9106-813f9d381902.png",
+    "name": "Kendrick Lamar",
+    "genre": "Hip Hop",
+    "id": "artist-kendrick-lamar"
+  },
+  {
+    "imageUrl": "/uploads/745dde9a-6275-44b8-901e-ac8496ff0e63.png",
+    "name": "Ed Sheeran",
+    "genre": "Pop",
+    "id": "artist-ed-sheeran"
+  },
+  {
+    "imageUrl": "/uploads/38271e0e-fd50-45f5-84b4-b3ff3902919e.png",
+    "name": "The Weeknd",
+    "genre": "R&B",
+    "id": "artist-the-weeknd"
+  },
+  {
+    "imageUrl": "/uploads/38271e0e-fd50-45f5-84b4-b3ff3902919e.png",
+    "name": "Daft Punk",
+    "genre": "R&B",
+    "id": "artist-daft-punk"
+  },
+  {
+    "imageUrl": "/uploads/49f44d45-75d2-4ebe-b644-70f6d4ba1b30.png",
+    "name": "Shakira",
+    "genre": "Pop",
+    "id": "artist-shakira"
+  },
+  {
+    "imageUrl": "/uploads/49f44d45-75d2-4ebe-b644-70f6d4ba1b30.png",
+    "name": "Wyclef Jean",
+    "genre": "Pop",
+    "id": "artist-wyclef-jean"
+  },
+  {
+    "imageUrl": "/uploads/f1cf05a4-f616-4f23-b81c-fe397d405ec6.jpg",
+    "name": "Charly Black",
+    "genre": "Dancehall",
+    "id": "artist-charly-black"
+  },
+  {
+    "imageUrl": "/uploads/20041ad0-47e3-4068-a7c6-6331cb718076.jpg",
+    "name": "Ne-Yo",
+    "genre": "R&B",
+    "id": "artist-ne-yo"
+  },
+  {
+    "name": "Rema",
+    "id": "5f02317b-0f11-4542-bbe0-57e0eb842d1f"
+  },
+  {
+    "name": "Beenie Man",
+    "id": "082308e2-e4c1-4cc6-ad02-b86a75d4e1c3"
+  },
+  {
+    "name": "Prince Swanny",
+    "id": "1e465676-3b84-4c2d-b6ea-f4c62833cad5"
+  },
+  {
+    "name": "Sean Paul",
+    "id": "340b1f5e-3ac1-4b1e-866f-e51a79b70abd"
+  },
+  {
+    "name": "Lil Baby",
+    "id": "58d14c52-90d1-4d01-ba85-8ef29cdb66bf"
+  },
+  {
+    "name": "PARTYNEXTDOOR & DRAKE",
+    "id": "24e77c20-2b17-49ec-80ef-d6d81cb663be"
+  },
+  {
+    "name": "TLC",
+    "id": "da22df63-8b28-4894-8837-d73814563275"
+  },
+  {
+    "name": "Brick & Lace",
+    "id": "42862fce-f2f9-4e0b-b3eb-96d3d104e043"
+  },
+  {
+    "name": "PartyNextDoor Ft. Drake",
+    "id": "1c1daec5-7c5a-4683-8318-c0c8a3705a81"
+  },
+  {
+    "name": "Major Lazer ft PARTYNEXTDOOR & Nicki Minaj",
+    "id": "50acd4d0-de7a-476d-9c32-86b6442a844a"
+  },
+  {
+    "name": "Fetty Wap",
+    "id": "75cd1705-7d0b-4283-8dcb-e928fb55f58c"
+  },
+  {
+    "name": "Future Ft. Drake & Tems",
+    "id": "f950ade9-518a-4082-8bf0-7a70d88af783"
+  },
+  {
+    "name": "Gabzy",
+    "id": "cc41441c-05ba-4da8-b860-e2af75ceb839"
+  },
+  {
+    "name": "Gbmnutron",
+    "id": "63270d77-3e35-4184-9e37-14c9483fba50"
+  },
+  {
+    "name": "Imagine Dragons",
+    "id": "f1eed9e0-5d37-4115-aad2-d4a93b03e18a"
+  },
+  {
+    "name": "Jason Derulo",
+    "id": "b4b937b4-7d13-419a-a949-a1b112802844"
+  },
+  {
+    "name": "Jayo",
+    "id": "e8ccf7e2-1fa6-45cb-98c3-4989f95a5bff"
+  },
+  {
+    "name": "Motto",
+    "id": "dc6204e5-8fda-4853-9d59-7d4a6332eb4a"
+  },
+  {
+    "name": "Mr. Vegas",
+    "id": "0c96e1f2-ac50-4fac-854a-fa0acec7c7bb"
+  },
+  {
+    "name": "Nicki Minaj",
+    "id": "ecf1eebd-e5fc-4acc-b05a-7754656ad377"
+  },
+  {
+    "name": "Nina Sky Ft. Jabba",
+    "id": "6324a900-9831-416f-8c56-33006965955e"
+  },
+  {
+    "name": "One Direction",
+    "id": "2cf5418a-e980-4794-80eb-b23ee0a4f7a8"
+  },
+  {
+    "name": "Pop Smoke",
+    "id": "ddb7c96f-8cb3-4e3f-b37b-5ecaa98dfb0d"
+  },
+  {
+    "name": "Selena Gomez",
+    "id": "d4e4983c-6a19-43d4-8b06-36f0357d1527"
+  },
+  {
+    "name": "PartyNextDoor Ft. Drake and Bad Bunny",
+    "id": "6da2c592-384d-47d4-8d6f-3045480bd023"
+  },
+  {
+    "name": "Shenseea",
+    "id": "41db63a6-d620-4171-a695-d10a4a572210"
+  },
+  {
+    "name": "Tory Lanez Ft. Koffee",
+    "id": "fbd65e59-d908-43ed-b98b-e36cbf730ce7"
+  },
+  {
+    "name": "French Montana Ft. Swae Lee",
+    "id": "f6b56dc8-a507-4205-b2a3-c9f28d76e3cf"
+  }
 ]
