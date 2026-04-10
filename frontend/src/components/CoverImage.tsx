@@ -14,7 +14,13 @@ export default function CoverImage({ src, alt, className = '', sizes = '40px' }:
   if (!src || src.trim() === '') {
     return (
       <div className={`relative flex items-center justify-center bg-[#252525] ${className}`}>
-        <Music className="w-1/3 h-1/3 text-zinc-500" />
+        <Image
+          src="/placeholder-music.svg"
+          alt={alt}
+          fill
+          className={`object-cover ${className}`}
+          sizes={sizes}
+        />
       </div>
     );
   }

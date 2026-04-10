@@ -4,8 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Play, Music, Disc3, ListMusic, Mic2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import { Track, Album, Artist } from '@/lib/types';
-import { featuredPlaylists } from '@/lib/mockData';
+import { Track, Album, Artist, Playlist } from '@/lib/types';
 import SectionHeader from '@/components/SectionHeader';
 import SongCard from '@/components/SongCard';
 import AlbumCard from '@/components/AlbumCard';
@@ -18,6 +17,7 @@ import { useAudio } from '@/context/AudioContext';
 const API_BASE = 'http://localhost:8080/admin/songs';
 const ALBUMS_API = 'http://localhost:8080/admin/albums';
 const ARTISTS_API = 'http://localhost:8080/admin/artists';
+const PLAYLISTS_API = 'http://localhost:3001/auth/playlists';
 const BACKEND_URL = 'http://localhost:8080';
 
 function normalizeTrackUrl(track: Track): Track {
@@ -26,7 +26,7 @@ function normalizeTrackUrl(track: Track): Track {
     const prefix = track.coverUrl.startsWith('/') ? '' : '/';
     normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + track.coverUrl };
   } else if (!track.coverUrl || track.coverUrl.trim() === '') {
-    normalized = { ...normalized, coverUrl: '/placeholder-album.png' };
+    normalized = { ...normalized, coverUrl: '/placeholder-music.svg' };
   }
   if (track.audioUrl && !track.audioUrl.startsWith('http')) {
     const prefix = track.audioUrl.startsWith('/') ? '' : '/';
@@ -48,7 +48,7 @@ function normalizeAlbumUrl(album: Album): Album {
     const prefix = album.coverUrl.startsWith('/') ? '' : '/';
     normalized = { ...normalized, coverUrl: BACKEND_URL + prefix + album.coverUrl };
   } else if (!album.coverUrl || album.coverUrl.trim() === '') {
-    normalized = { ...normalized, coverUrl: '/placeholder-album.png' };
+    normalized = { ...normalized, coverUrl: '/placeholder-music.svg' };
   }
   return normalized;
 }
@@ -59,7 +59,7 @@ function normalizeArtistUrl(artist: Artist): Artist {
     const prefix = artist.imageUrl.startsWith('/') ? '' : '/';
     normalized = { ...normalized, imageUrl: BACKEND_URL + prefix + artist.imageUrl };
   } else if (!artist.imageUrl || artist.imageUrl.trim() === '') {
-    normalized = { ...normalized, imageUrl: '/placeholder-album.png' };
+    normalized = { ...normalized, imageUrl: '/placeholder-music.svg' };
   }
   return normalized;
 }
@@ -107,6 +107,7 @@ export default function FeaturedContent() {
   const [allSongs, setAllSongs] = useState<Track[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
@@ -116,10 +117,11 @@ export default function FeaturedContent() {
     let cancelled = false;
     async function fetchData() {
       try {
-        const [songsRes, albumsRes, artistsRes] = await Promise.all([
+        const [songsRes, albumsRes, artistsRes, playlistsRes] = await Promise.all([
           fetch(API_BASE),
           fetch(ALBUMS_API),
           fetch(ARTISTS_API),
+          fetch(PLAYLISTS_API, { credentials: 'include' }),
         ]);
 
         if (!cancelled) {
@@ -134,6 +136,17 @@ export default function FeaturedContent() {
           if (artistsRes.ok) {
             const artistsData = await artistsRes.json();
             setArtists(artistsData.map(normalizeArtistUrl));
+          }
+          if (playlistsRes.ok) {
+            const playlistsData = await playlistsRes.json();
+            const mappedPlaylists: Playlist[] = (playlistsData.playlists || []).map((p: { id: string; name: string; songIds: string[] }) => ({
+              id: p.id,
+              title: p.name,
+              description: '',
+              coverUrl: '/placeholder-music.svg',
+              trackCount: p.songIds?.length || 0,
+            }));
+            setPlaylists(mappedPlaylists);
           }
         }
       } catch (error) {
@@ -208,7 +221,7 @@ export default function FeaturedContent() {
                 >
                   <div className="relative w-10 h-10 flex-shrink-0">
                     <Image
-                      src={track.coverUrl}
+                      src={track.coverUrl || '/placeholder-music.svg'}
                       alt={track.title}
                       fill
                       className="object-cover"
@@ -266,7 +279,7 @@ export default function FeaturedContent() {
             >
               <div className="relative w-14 h-14 flex-shrink-0">
                 <Image
-                  src={track.coverUrl}
+                  src={track.coverUrl || '/placeholder-music.svg'}
                   alt={track.title}
                   fill
                   className="object-cover"
@@ -318,16 +331,20 @@ export default function FeaturedContent() {
         )}
       </section>
 
-      {/* Featured Playlists */}
+      {/* User Playlists */}
       <section className="mb-10">
-        <SectionHeader icon={ListMusic} title="Featured Playlists" />
-        <HorizontalScroll>
-          {featuredPlaylists.map((playlist) => (
-            <div key={playlist.id} className="flex-shrink-0 w-48">
-              <PlaylistCard playlist={playlist} />
-            </div>
-          ))}
-        </HorizontalScroll>
+        <SectionHeader icon={ListMusic} title="Your Playlists" />
+        {playlists.length === 0 ? (
+          <p className="text-zinc-400">No playlists yet.</p>
+        ) : (
+          <HorizontalScroll>
+            {playlists.map((playlist) => (
+              <div key={playlist.id} className="flex-shrink-0 w-48">
+                <PlaylistCard playlist={playlist} />
+              </div>
+            ))}
+          </HorizontalScroll>
+        )}
       </section>
 
       {/* Featured Artists */}

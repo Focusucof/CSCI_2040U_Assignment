@@ -41,7 +41,7 @@ export default function SongCard({ track, onPlay, onContextMenu }: SongCardProps
         onClick={() => onPlay(track)}
       >
         <Image
-          src={track.coverUrl}
+          src={track.coverUrl || '/placeholder-music.svg'}
           alt={track.title}
           fill
           className="object-cover"

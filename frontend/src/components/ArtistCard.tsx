@@ -29,7 +29,7 @@ export default function ArtistCard({ artist }: ArtistCardProps) {
         {/* Image Container */}
         <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-transparent hover:border-purple-400 transition-all duration-300">
           <Image
-            src={artist.imageUrl}
+            src={artist.imageUrl || '/placeholder-music.svg'}
             alt={artist.name}
             fill
             className="object-cover hover:scale-110 transition-transform duration-500"

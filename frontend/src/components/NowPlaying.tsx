@@ -71,9 +71,12 @@ export default function NowPlaying() {
               referrerPolicy="no-referrer"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <Music className="w-6 h-6 text-zinc-500" />
-            </div>
+            <Image
+              src="/placeholder-music.svg"
+              alt={currentTrack.title}
+              fill
+              className="object-cover"
+            />
           )}
         </div>
         <div className="min-w-0">

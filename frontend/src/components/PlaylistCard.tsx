@@ -26,7 +26,7 @@ export default function PlaylistCard({ playlist }: PlaylistCardProps) {
       >
         <div className="relative aspect-square">
           <Image
-            src={playlist.coverUrl}
+            src={playlist.coverUrl || '/placeholder-music.svg'}
             alt={playlist.title}
             fill
             className="object-cover hover:scale-105 transition-transform duration-500"

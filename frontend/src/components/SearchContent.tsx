@@ -282,7 +282,7 @@ export default function SearchContent() {
                   >
                     <div className="relative w-14 h-14 flex-shrink-0">
                       <Image
-                        src={track.coverUrl}
+                        src={track.coverUrl || '/placeholder-music.svg'}
                         alt={track.title}
                         fill
                         className="object-cover"
@@ -310,7 +310,7 @@ export default function SearchContent() {
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer">
                       <div className="relative w-36 h-36 mb-3">
                         <Image
-                          src={album.coverUrl}
+                          src={album.coverUrl || '/placeholder-music.svg'}
                           alt={album.title}
                           fill
                           className="object-cover"
@@ -336,7 +336,7 @@ export default function SearchContent() {
                     <div className="group bg-[#181818] hover:bg-[#252525] rounded-none p-3 transition-all duration-300 cursor-pointer text-center">
                       <div className="relative w-36 h-36 mx-auto mb-3 rounded-full overflow-hidden">
                         <Image
-                          src={artist.imageUrl}
+                          src={artist.imageUrl || '/placeholder-music.svg'}
                           alt={artist.name}
                           fill
                           className="object-cover"

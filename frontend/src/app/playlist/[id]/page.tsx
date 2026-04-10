@@ -177,7 +177,7 @@ export default function PlaylistPage() {
                   </span>
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="relative w-10 h-10 rounded-none overflow-hidden flex-shrink-0">
-                      <Image src={normalizeImageUrl(track.coverUrl)} alt={track.title} fill className="object-cover" sizes="40px" />
+                      <Image src={normalizeImageUrl(track.coverUrl) || '/placeholder-music.svg'} alt={track.title} fill className="object-cover" sizes="40px" />
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm text-white truncate">{track.title}</p>

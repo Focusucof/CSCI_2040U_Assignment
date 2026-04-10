@@ -24,7 +24,7 @@ export default function AlbumCard({ album }: AlbumCardProps) {
       {/* Album Art */}
       <div className="relative aspect-square">
         <Image
-          src={album.coverUrl}
+          src={album.coverUrl || '/placeholder-music.svg'}
           alt={album.title}
           fill
           className="object-cover transition-transform duration-500"
