@@ -5,6 +5,9 @@ services:
       - "3000:3000"
     environment:
       - AUTH_INTERNAL_URL=http://auth:3001
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8080
+      - NEXT_PUBLIC_AUTH_URL=http://auth:3001
+      - NEXT_PUBLIC_API_URL=http://backend:8080
     depends_on:
       - auth
       - backend
@@ -15,6 +18,7 @@ services:
       - "3001:3001"
     environment:
       - PORT=3001
+      - CORS_ORIGIN=http://localhost:3000
     volumes:
       - ./data:/data
 
@@ -22,5 +26,7 @@ services:
     build: ./backend
     ports:
       - "8080:8080"
+    environment:
+      - CORS_ORIGIN=http://localhost:3000
     volumes:
       - ./data:/data

@@ -12,8 +12,8 @@ import { useToast } from '@/components/ToastProvider';
 import SongContextMenu from '@/components/SongContextMenu';
 import CoverImage from '@/components/CoverImage';
 
-const SONGS_API = 'http://localhost:8080/admin/songs';
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const SONGS_API = `${BACKEND_URL}/admin/songs`;
 
 function normalizeImageUrl(url: string): string {
   if (url && !url.startsWith('http')) {

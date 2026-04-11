@@ -14,11 +14,12 @@ import AccountMenu from '@/components/AccountMenu';
 import SongContextMenu from '@/components/SongContextMenu';
 import { useAudio } from '@/context/AudioContext';
 
-const API_BASE = 'http://localhost:8080/admin/songs';
-const ALBUMS_API = 'http://localhost:8080/admin/albums';
-const ARTISTS_API = 'http://localhost:8080/admin/artists';
-const PLAYLISTS_API = 'http://localhost:3001/auth/playlists';
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL || 'http://localhost:3001';
+const API_BASE = `${BACKEND_URL}/admin/songs`;
+const ALBUMS_API = `${BACKEND_URL}/admin/albums`;
+const ARTISTS_API = `${BACKEND_URL}/admin/artists`;
+const PLAYLISTS_API = `${AUTH_URL}/auth/playlists`;
 
 function normalizeTrackUrl(track: Track): Track {
   let normalized = track;

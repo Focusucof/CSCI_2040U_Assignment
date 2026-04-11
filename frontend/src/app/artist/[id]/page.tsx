@@ -10,9 +10,9 @@ import { useUser } from '@/context/UserContext';
 import { useAudio } from '@/context/AudioContext';
 import SongContextMenu from '@/components/SongContextMenu';
 
-const SONGS_API = 'http://localhost:8080/admin/songs';
-const ARTISTS_API = 'http://localhost:8080/admin/artists';
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const SONGS_API = `${BACKEND_URL}/admin/songs`;
+const ARTISTS_API = `${BACKEND_URL}/admin/artists`;
 
 function normalizeImageUrl(url: string): string {
   if (url && !url.startsWith('http')) {

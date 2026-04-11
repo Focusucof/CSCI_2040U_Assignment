@@ -77,7 +77,7 @@ export default function AudioProvider({ children }: { children: React.ReactNode 
   }, []);
 
   const normalizeTrackUrl = (track: Track): Track => {
-    const BACKEND_URL = 'http://localhost:8080';
+    const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
     let normalized = track;
     if (track.coverUrl && !track.coverUrl.startsWith('http')) {
       const prefix = track.coverUrl.startsWith('/') ? '' : '/';

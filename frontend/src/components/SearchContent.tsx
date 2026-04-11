@@ -11,10 +11,10 @@ import AccountMenu from '@/components/AccountMenu';
 import { useAudio } from '@/context/AudioContext';
 import SongContextMenu from '@/components/SongContextMenu';
 
-const SONGS_API = 'http://localhost:8080/admin/songs';
-const ALBUMS_API = 'http://localhost:8080/admin/albums';
-const ARTISTS_API = 'http://localhost:8080/admin/artists';
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const SONGS_API = `${BACKEND_URL}/admin/songs`;
+const ALBUMS_API = `${BACKEND_URL}/admin/albums`;
+const ARTISTS_API = `${BACKEND_URL}/admin/artists`;
 
 function normalizeTrackUrl(track: Track): Track {
   let normalized = track;

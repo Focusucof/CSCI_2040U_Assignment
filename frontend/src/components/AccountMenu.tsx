@@ -25,7 +25,7 @@ export default function AccountMenu() {
   }, []);
 
   async function handleLogout() {
-    await fetch('http://localhost:3001/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+    await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL || 'http://localhost:3001'}/auth/logout`, { method: 'POST', credentials: 'include' }).catch(() => {});
     setOpen(false);
     addToast('Logged out successfully.', 'success');
     await refreshUser();
