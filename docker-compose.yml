@@ -5,9 +5,9 @@ services:
       - "3003:3000"
     environment:
       - AUTH_INTERNAL_URL=http://auth:3001
-      - NEXT_PUBLIC_BACKEND_URL=http://backend:8080
-      - NEXT_PUBLIC_AUTH_URL=http://auth:3001
-      - NEXT_PUBLIC_API_URL=http://backend:8080
+      - NEXT_PUBLIC_BACKEND_URL=https://streamly.boodoo.dev
+      - NEXT_PUBLIC_AUTH_URL=https://streamly.boodoo.dev:3004
+      - NEXT_PUBLIC_API_URL=https://streamly.boodoo.dev
     depends_on:
       - auth
       - backend
@@ -18,7 +18,7 @@ services:
       - "3004:3001"
     environment:
       - PORT=3001
-      - CORS_ORIGIN=http://localhost:3003
+      - CORS_ORIGIN=https://streamly.boodoo.dev
     volumes:
       - ./data:/data
 
@@ -27,6 +27,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - CORS_ORIGIN=http://localhost:3003
+      - CORS_ORIGIN=https://streamly.boodoo.dev
     volumes:
       - ./data:/data
