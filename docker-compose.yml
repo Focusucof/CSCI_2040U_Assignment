@@ -1,13 +1,15 @@
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - NEXT_PUBLIC_BACKEND_URL=https://streamly.boodoo.dev
+        - NEXT_PUBLIC_AUTH_URL=https://streamly.boodoo.dev
+        - NEXT_PUBLIC_API_URL=https://streamly.boodoo.dev
     ports:
       - "3003:3000"
     environment:
       - AUTH_INTERNAL_URL=http://auth:3001
-      - NEXT_PUBLIC_BACKEND_URL=https://streamly.boodoo.dev
-      - NEXT_PUBLIC_AUTH_URL=https://streamly.boodoo.dev
-      - NEXT_PUBLIC_API_URL=https://streamly.boodoo.dev
     depends_on:
       - auth
       - backend
