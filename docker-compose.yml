@@ -2,7 +2,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3003:3000"
     environment:
       - AUTH_INTERNAL_URL=http://auth:3001
       - NEXT_PUBLIC_BACKEND_URL=http://backend:8080
@@ -15,7 +15,7 @@ services:
   auth:
     build: ./auth
     ports:
-      - "3001:3001"
+      - "3004:3001"
     environment:
       - PORT=3001
       - CORS_ORIGIN=http://localhost:3000
