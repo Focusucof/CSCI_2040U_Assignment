@@ -18,7 +18,7 @@ services:
       - "3004:3001"
     environment:
       - PORT=3001
-      - CORS_ORIGIN=http://localhost:3000
+      - CORS_ORIGIN=http://localhost:3003
     volumes:
       - ./data:/data
 
@@ -27,6 +27,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - CORS_ORIGIN=http://localhost:3000
+      - CORS_ORIGIN=http://localhost:3003
     volumes:
       - ./data:/data

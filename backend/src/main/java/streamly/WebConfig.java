@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         String allowedOrigin = System.getenv("CORS_ORIGIN") != null
             ? System.getenv("CORS_ORIGIN")
-            : "http://localhost:3000";
+            : "http://localhost:3003";
 
         registry.addMapping("/**")
                 .allowedOrigins(allowedOrigin)
