@@ -25,7 +25,7 @@ export default function CoverImage({ src, alt, className = '', sizes = '40px' }:
     );
   }
 
-  const BACKEND_URL = 'http://localhost:8080';
+  const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
   const fullUrl = src.startsWith('http') ? src : BACKEND_URL + (src.startsWith('/') ? '' : '/') + src;
 
   return (

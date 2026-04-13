@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useToast } from '@/components/ToastProvider';
 import * as mm from 'music-metadata';
 
-const API = 'http://localhost:8080';
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 function getImageUrl(url: string | undefined): string {
   if (!url) return '';
@@ -78,7 +78,7 @@ export default function AdminPage() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    fetch('http://localhost:3001/auth/me', { credentials: 'include' })
+      fetch(`${process.env.NEXT_PUBLIC_AUTH_URL || 'http://localhost:3001'}/auth/me`, { credentials: 'include' })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data?.isAdmin) {

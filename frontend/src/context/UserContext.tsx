@@ -41,7 +41,7 @@ export function useUser() {
   return useContext(UserContext);
 }
 
-const AUTH_URL = 'http://localhost:3001';
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL || 'http://localhost:3001';
 
 export default function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserData | null>(null);
